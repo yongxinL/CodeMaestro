@@ -106,4 +106,29 @@ Assign task to team member
 
 ---
 
-**Full documentation in COMMANDS.md**
+## MCP Tool Commands (v1.0)
+
+### `/research [topic]`
+Combined WebSearch + Context7 research
+
+### `/lookup [library]`
+Get library documentation via Context7
+
+### `/validate api [library] [method]`
+Confirm API exists via Context7
+
+### `/example [library] [feature]`
+Get code examples from Context7
+
+### `/security check [library]`
+Research vulnerabilities via WebSearch
+
+### `/compliance [standard]`
+Look up compliance requirements via WebSearch
+
+### `/sources`
+List all MCP tool sources used in project
+
+---
+
+**Full documentation:** See [COMMANDS.md](COMMANDS.md) and [docs/config/mcp-tools.md](docs/config/mcp-tools.md)

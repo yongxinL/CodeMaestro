@@ -1,222 +1,364 @@
-# CodeMaestro
+# CLAUDE.md
 
-## Quick Reference
-
-| Field | Value |
-|-------|-------|
-| **Version** | 1.0.0 |
-| **Project** | [Set during Phase 1] |
-| **Skill Tier** | [Beginner / Advanced / Ninja] |
-| **Current Phase** | [Auto-detected] |
-| **Active Role** | [Auto-loaded] |
-| **Git Branch** | [Current] |
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ---
 
-## What is CodeMaestro?
+## Project Overview
 
-A **role-based state machine** that orchestrates software development through 5 phases:
+**CodeMaestro v1.0** (Codename: Phoenix) is a role-based automated development system that orchestrates software development through a 5-phase lifecycle. This is a **framework/tool**, not a traditional codebase—it's designed to guide developers (and AI) through structured software development processes.
 
-1. **Requirements** → Product Manager transforms ideas into specifications
-2. **Planning** → Software Architect creates actionable blueprints
-3. **Implementation** → Senior Developer builds production code
-4. **Verification** → QA Lead validates with evidence
-5. **Release** → Release Manager coordinates delivery
-
-**Each phase activates specific roles. Failures are learning opportunities. Everything is versioned.**
+**Key Characteristics:**
+- Documentation-driven architecture
+- Progressive disclosure for token efficiency (50-55% reduction)
+- Role-based state machine orchestrating 5 development phases
+- Skill tier adaptation (Beginner/Advanced/Ninja)
+- Knowledge base for project-specific learning
+- Session management with recovery checkpoints
 
 ---
 
-## Getting Started
+## Repository Structure & Architecture
 
-### New Project
+### Core Directory Layout
+
+```
+CodeMaestro/
+├── CLAUDE.md                 # This file (developer guide)
+├── README.md                 # Installation & user guide
+├── COMMANDS.md               # Command reference
+├── LICENSE                   # GNU GPL v3
+├── .gitignore               # Multi-ecosystem ignores
+├── init-docs.sh             # Project initialization script
+└── docs/
+    ├── prompts/             # Core system prompts
+    │   ├── 00-core.md       # System config (MUST load first)
+    │   ├── 01-requirement.md # Phase 1: Requirements
+    │   ├── 01-requirement-templates.md
+    │   ├── 02-planning.md    # Phase 2: Planning
+    │   ├── 02-planning-templates.md
+    │   ├── 03-implementation.md # Phase 3: Implementation
+    │   ├── 03-implementation-templates.md
+    │   ├── 04-verification.md # Phase 4: Verification
+    │   ├── 04-verification-templates.md
+    │   ├── 05-master-control.md # Phase 5: Release
+    │   └── 05-master-control-templates.md
+    ├── config/
+    │   ├── git-commands.md        # Git workflow templates
+    │   ├── constraints-reference.md # Constraints A1-E33
+    │   └── roles/                 # Role definitions
+    │       ├── product-manager.md
+    │       ├── software-architect.md
+    │       ├── senior-developer.md
+    │       ├── qa-lead.md
+    │       ├── release-manager.md
+    │       ├── data-interpreter.md
+    │       └── ethics-security-engineer.md
+    ├── standalone-prompts/  # For Claude Desktop/claude.ai users
+    │   ├── phase1-standalone-prompt.md
+    │   ├── phase2-standalone-prompt.md
+    │   ├── phase3-standalone-prompt.md
+    │   ├── phase4-standalone-prompt.md
+    │   └── phase5-standalone-prompt.md
+    └── [other]              # specifications/, architecture/, implementation/, verification/, release/, knowledge-base/, portfolio/ (created by init-docs.sh)
+```
+
+### Key Files to Understand
+
+| File | Purpose |
+|------|---------|
+| **[docs/prompts/00-core.md](docs/prompts/00-core.md)** | System configuration: roles, constraints (A1-E33), thresholds, skill tiers |
+| **[docs/config/git-commands.md](docs/config/git-commands.md)** | Git workflow templates and commands |
+| **[docs/config/constraints-reference.md](docs/config/constraints-reference.md)** | Complete constraint list (production-ready, SRP, documentation, etc.) |
+| **[docs/config/mcp-tools.md](docs/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) |
+| **[init-docs.sh](init-docs.sh)** | Creates directory structure for user projects |
+| **[README.md](README.md)** | Installation instructions and feature overview |
+| **[COMMANDS.md](COMMANDS.md)** | Command reference (/status, /next, /kb, /portfolio, etc.) |
+
+---
+
+## Architecture Concepts
+
+### 5-Phase Lifecycle
+
+```
+Phase 1: Requirements          Phase 2: Planning           Phase 3: Implementation
+Product Manager role    →      Software Architect role    →      Senior Developer role
+Lock specification             Create blueprint, task DAG,         Build production code
+Competitive analysis           Gantt chart, architectural vision   Track effort vs estimates
+
+                                    ↓
+
+Phase 4: Verification          Phase 5: Release
+QA Lead role            →       Release Manager role
+Evidence package, GO/NO-GO       Release coordination, lessons learned
+Security scan, performance test  Organizational learning
+```
+
+### Progressive Disclosure (Token Optimization)
+
+The system reduces token usage by loading templates **on-demand**:
+- **Phase prompts** (`0N-*.md`) always load
+- **Templates** (`0N-*-templates.md`) load only when needed
+- **Constraints** referenced by ID (A1-E33) not full text
+- **Git commands** are templates, not inline examples
+- **Role details** in separate files, loaded conditionally
+
+**Target:** 50-55% token reduction vs. inline approach
+
+### Role-Based State Machine
+
+Each phase activates specific roles with specialized behaviors:
+
+- **Product Manager** (Phase 1): Domain expertise, requirements clarity
+- **Software Architect** (Phase 2): System design, task decomposition, architectural decisions
+- **Senior Developer** (Phase 3): Production code quality, pattern reuse, optimization
+- **QA Lead** (Phase 4): Evidence collection, security scanning, performance validation
+- **Release Manager** (Phase 5): Go/no-go decisions, delivery coordination, learning capture
+- **Data Interpreter** (Phase 4-5, NEW): Performance visualization, KPI dashboards
+- **Ethics & Security Engineer** (Phase 2, 4): Bias detection, GDPR compliance, accessibility
+
+### Skill Tier Adaptation
+
+Communication style determined at Phase 1 start:
+- **Beginner:** Detailed explanations, step-by-step guidance, full context
+- **Advanced:** Concise, assumes familiarity, highlights patterns
+- **Ninja:** Minimal guidance, maximum efficiency, code-first
+
+Tier affects template loading, explanation depth, and constraint emphasis.
+
+### Session Management
+
+Between phases, the system generates recovery checkpoints:
+- Handoff files with full context
+- Model recommendations
+- Lazy loading for phase artifacts
+- Context recovery protocol (/recover) if interrupted
+
+### MCP Tool Integration (NEW v1.0)
+
+CodeMaestro integrates with Model Context Protocol (MCP) tools:
+
+**Available Tools:**
+- **Context7**: Library documentation, API validation, code examples (Phase 1-4)
+- **WebSearch**: Competitive research, technology comparison (Phase 1, 2, 4)
+- **WebFetch**: Specific URL documentation retrieval (Phase 1-4)
+
+**Usage:**
+- Context7: `/lookup [library]`, `/example [lib] [feature]`, max 3 calls per question
+- WebSearch: Include year (2026) in queries, cite sources in decisions
+- WebFetch: Fetch specific documentation pages, 15-minute cache
+
+**Constraints:**
+- A7 enforced: Only use confirmed APIs from Context7
+- All sources must be cited in decision log
+- Validate information from multiple sources
+
+**Configuration:** See [docs/config/mcp-tools.md](docs/config/mcp-tools.md) for complete integration guide.
+
+---
+
+## Working with the CodeMaestro System
+
+### Testing Changes to the System
+
+To verify modifications work correctly:
+
 ```bash
-./init-docs.sh          # Initialize structure
-git init && git checkout -b develop
-# Start Phase 1 - CodeMaestro will guide you
+# 1. Create test project directory
+mkdir /tmp/codemaestro-test && cd /tmp/codemaestro-test
+
+# 2. Copy system files
+cp /path/to/CodeMaestro/init-docs.sh .
+cp /path/to/CodeMaestro/CLAUDE.md .
+cp -r /path/to/CodeMaestro/docs .
+
+# 3. Initialize
+chmod +x init-docs.sh
+./init-docs.sh
+
+# 4. Setup git
+git init
+git checkout -b develop
+git add .
+git commit -m "Initial CodeMaestro setup"
+
+# 5. Test in Claude Code
+# Open this directory in Claude Code and test the system
 ```
 
-### Existing Project
-```bash
-/status                 # See current state
-/recover               # Restore context if lost
+### Modifying Core System Components
+
+#### Updating Phase Workflows
+
+**Files:** `docs/prompts/0[1-5]-phase-name.md`
+
+- Each phase prompt is self-contained
+- Must reference `00-core.md` for roles/constraints
+- Use template references, not inline templates
+- Update version tag if changing behavior
+
+**Example:**
+```markdown
+## Phase 2: Planning
+
+> Reference roles from 00-core.md, constraint IDs not full text
+
+[Phase content]
+See templates in `02-planning-templates.md` for detailed task structures.
 ```
 
----
+#### Adding/Modifying Roles
 
-## Essential Commands
+**Files:** `docs/config/roles/*.md` and `docs/prompts/00-core.md`
 
-| Command | What It Does |
-|---------|--------------|
-| `/status` | Show current phase, progress, git state |
-| `/next` | Load next pending task |
-| `/recover` | Restore lost context |
-| `/help` | Full command list |
+1. Define role in `00-core.md` with template format
+2. Create detailed file in `docs/config/roles/new-role.md`
+3. Reference in phase prompts where role is active
+4. Update COMMANDS.md if adding role-specific commands
 
-**Full command reference:** `COMMANDS.md`
+#### Updating Constraints
 
----
+**File:** `docs/config/constraints-reference.md`
 
-## How It Works
+- Constraints use ID format: `A#` (Architecture), `B#` (Best Practice), `C#` (Code Quality), `D#` (Documentation), `E#` (Evidence)
+- In prompts, reference by ID only (e.g., "See constraint A1")
+- Update full text in constraints-reference.md
+- Document rationale and examples
 
-### Automatic Phase Detection
+#### Modifying Git Workflow
 
-CodeMaestro checks your project state and activates the correct phase:
+**File:** `docs/config/git-commands.md`
 
-- No specification? → **Phase 1** (Requirements)
-- No blueprint? → **Phase 2** (Planning)
-- Pending tasks? → **Phase 3** (Implementation)
-- No evidence? → **Phase 4** (Verification)
-- Evidence exists? → **Phase 5** (Release)
+- Contains templates for common git operations
+- Reference templates in phase prompts
+- Template format: descriptive section with shell commands
+- Version tagging convention: `v0.[phase].x-[phase-name]`, `v1.0.0+` for releases
 
-### Role Transitions
+### Token Optimization Principles
 
-```
-═══════════════════════════════════════════════════════════
-🎭 ROLE TRANSITION
-─────────────────────────────────────────────────────────
-   Activating: [Role Name]
-   Phase: [N]: [Phase Name]
-   Skill Tier: [Your Level] → [Adapted Behavior]
-═══════════════════════════════════════════════════════════
-```
+When modifying the system:
+
+1. **Progressive Disclosure:** Load templates only when needed
+2. **Conditional Loading:** Skip irrelevant skill tiers or domains
+3. **Reference, Don't Inline:** Use IDs for constraints, links for templates
+4. **Domain Adaptation:** Auto-detect project type (Mobile/Web/Cloud/AI)
+5. **Lazy Artifact Loading:** Don't include full Gantt charts or massive diagrams inline
 
 ---
 
-## Key Locations
+## Documentation Standards
 
-```
-docs/
-├── prompts/           # System workflows (AI loads these)
-├── config/            # Git, roles, constraints
-├── specifications/    # Requirements
-├── architecture/      # Blueprints, tasks
-├── implementation/    # Code, decisions, tracking
-├── verification/      # Tests, evidence
-├── knowledge-base/    # Project learning (NEW v1.0)
-└── portfolio/         # Generated materials (NEW v1.0)
-```
+### File Naming Conventions
 
-**Full structure:** `README.md`
+- Phase prompts: `0N-phase-name.md` (e.g., `02-planning.md`)
+- Phase templates: `0N-phase-name-templates.md`
+- Role files: `role-name.md` (e.g., `product-manager.md`)
+- Configuration: descriptive names (`git-commands.md`, `constraints-reference.md`)
 
----
+### Markdown Standards
 
-## Session Management
+- Headers: H1 for title, H2 for major sections, H3 for subsections
+- Tables for structured data (roles, commands, thresholds)
+- Code blocks for examples and templates
+- Links to related files, not duplication
 
-### Phase Boundaries = New Session
+### Git Workflow Integration
 
-At each phase completion, CodeMaestro provides:
-- ✅ Handoff file with context
-- ✅ "Start new session" recommendation  
-- ✅ Model suggestion for next phase
-- ✅ Action plan for startup
+**Branch Strategy:** Git-flow variant
+- `main` - production-ready code/docs
+- `develop` - integration branch
+- `feature/*` - milestone features
+- `task/*` - individual improvements
+- `release/*` - release preparation
+- `hotfix/*` - emergency fixes
 
-**Location:** `docs/implementation/.recovery-checkpoint.md`
+**Version Tags:**
+- `v0.1.x-spec` - Specification versions
+- `v0.2.x-plan` - Planning versions
+- `v0.3.x-impl` - Implementation versions
+- `v0.4.x-verify` - Verification versions
+- `v1.0.0+` - Production releases
 
----
+### Quality Gates
 
-## New in v1.0
+Non-negotiable minimums:
+- **Test Coverage:** ≥70% (blocking)
+- **Security Issues:** 0 critical/high (blocking)
+- **Acceptance Criteria Pass Rate:** 100% (blocking)
 
-- 🧠 **Knowledge Base** - Learn from failures/successes
-- 📊 **Data Interpreter** - Auto-generate performance visuals
-- ⚖️ **Ethics Validation** - Bias detection for all projects
-- 🎯 **Domain Adaptation** - Mobile/Web/Cloud/AI specialized
-- 📅 **Gantt Charts** - Visual timelines
-- 🎨 **Portfolio Generator** - Professional docs on-demand
-- ⚡ **50% Token Reduction** - Faster, more efficient
-
-**Full feature list:** `SUMMARY.md`
+Override in `docs/config/thresholds.md` if needed for specific projects.
 
 ---
 
-## Git Integration
+## Development Workflow
 
-**Convention:** Standard git-flow with phase tags
-**Details:** `config/git-commands.md`
+### Making Changes
 
-**Quick Tags:**
-- `v0.1.0-spec` → Specification locked
-- `v0.2.0-plan` → Planning complete  
-- `v0.3.0-impl` → Implementation done
-- `v0.4.0-verify` → Verification passed
-- `v1.0.0` → Production release
+1. **Understand current state:** Read relevant prompt files and config files
+2. **Identify scope:** Which phase(s) or components affected?
+3. **Plan approach:** Consider token impact and progressive disclosure
+4. **Test in isolation:** Use test project approach above
+5. **Update documentation:** Modify prompts, templates, constraints as needed
+6. **Commit with clarity:** Reference constraints and provide context
+7. **Version appropriately:** Tag changes with v0.X.X format
 
----
+### Common Tasks
 
-## Quality Gates
+#### Add a new command
+1. Define command in relevant phase prompt
+2. Document in [COMMANDS.md](COMMANDS.md)
+3. Create implementation guidance in phase-specific templates
+4. Test command flow in test project
 
-| Metric | Minimum | Blocking |
-|--------|---------|----------|
-| Test Coverage | 70% | Yes |
-| Critical Security | 0 | Yes |
-| High Security | 0 | Yes |
-| AC Pass Rate | 100% | Yes |
+#### Modify a role's responsibilities
+1. Update role definition in `docs/config/roles/*.md`
+2. Update role entry in `00-core.md`
+3. Adjust phase prompts that reference the role
+4. Test role transitions in test project
 
-**Full thresholds:** `config/thresholds.md`
+#### Improve token efficiency
+1. Identify inline content that should be templated
+2. Move to `0N-*-templates.md` files
+3. Replace with reference links
+4. Test with different skill tiers to ensure conditional loading works
 
----
-
-## Help & Documentation
-
-| Need | Look Here |
-|------|-----------|
-| Installation | `README.md` |
-| All Commands | `COMMANDS.md` |
-| Feature Overview | `SUMMARY.md` |
-| Version Info | `VERSION.md` |
-| File Locations | `REQUIRED-FILES.md` |
-| Current Phase Details | `docs/prompts/0[N]-*.md` |
-
----
-
-## Configuration Files
-
-**Core System:** `docs/prompts/00-core.md` (AI loads first)
-
-**Role Details:** `docs/config/roles/[role-name].md`
-- product-manager.md
-- software-architect.md
-- senior-developer.md
-- qa-lead.md
-- release-manager.md
-- data-interpreter.md (NEW)
-- ethics-security-engineer.md
-
-**Git Templates:** `docs/config/git-commands.md`
-
-**Constraints:** `docs/config/constraints-reference.md`
+#### Fix a bug in prompt logic
+1. Identify which prompt files are affected
+2. Reproduce issue in test project
+3. Fix in isolated prompt files
+4. Verify fix doesn't break role transitions
+5. Update version tag appropriately
 
 ---
 
-## Skill Tiers
+## Key Principles
 
-Set once in Phase 1, applies throughout:
-
-- **Beginner:** Detailed explanations, step-by-step
-- **Advanced:** Concise, assumes familiarity
-- **Ninja:** Minimal guidance, maximum efficiency
+1. **Self-Documenting:** The prompt files explain themselves; avoid duplication
+2. **Progressive Disclosure:** Load only what's needed; templates on-demand
+3. **Token Efficiency:** Target 50-55% reduction; reference, don't inline
+4. **Role Clarity:** Each role has clear responsibilities; no overlaps
+5. **Evidence-Based:** All decisions backed by constraints (A1-E33)
+6. **Quality First:** Meet quality gates before considering feature-complete
+7. **Backward Compatibility:** Changes should not break existing workflows
+8. **Documentation Driven:** If it's not documented, it doesn't exist
 
 ---
 
-## Support
+## Common References
 
-**Something wrong?**
-- Lost context? → `/recover`
-- Not sure where you are? → `/status`
-- Need to start over? → Check git tags, rollback if needed
-
-**Need files?** See `REQUIRED-FILES.md` for complete file list
-
-**Want updates?** See `FILE-SOURCING-GUIDE.md` for v1.0 changes
+- **For installation:** See [README.md](README.md)
+- **For available commands:** See [COMMANDS.md](COMMANDS.md)
+- **For system configuration:** See [docs/prompts/00-core.md](docs/prompts/00-core.md)
+- **For constraints:** See [docs/config/constraints-reference.md](docs/config/constraints-reference.md)
+- **For git workflows:** See [docs/config/git-commands.md](docs/config/git-commands.md)
+- **For help with CodeMaestro (as a user):** Run `/help` in Claude Code once initialized
 
 ---
 
 ## Version
 
-**CodeMaestro:** 1.0.0  
-**Release:** 2026-01-01  
+**CodeMaestro:** 1.0.0
+**Release:** 2026-01-01
 **Codename:** Phoenix
-
----
-
-**🚀 Ready to build? Run `/status` to begin!**
+**Last Updated:** 2026-01-12
