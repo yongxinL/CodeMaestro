@@ -106,6 +106,26 @@ This provides **harmonic resonance** - understanding the architectural vision fo
 
 **Start timer**.
 
+#### 3.3.1b: Generate Test Stubs (Optional) [NEW v1.1]
+
+**For tasks involving acceptance criteria validation:**
+
+Generate test stubs from acceptance criteria:
+```bash
+/generate test AC-X.Y    # Generate test stub for specific AC
+/generate test AC-X.*    # Generate all stubs for AC-X group
+```
+
+**Benefits:**
+- Ensures AC traceability
+- Provides test structure
+- Reduces boilerplate
+- Enforces Given/When/Then/And pattern
+
+**Note:** Developers implement test logic in TODO sections. This is scaffolding, not complete tests.
+
+**See:** `docs/config/code-generation-from-ac.md` for details.
+
 #### 3.3.2: Update Status
 
 Mark task as 🔄 In Progress.
@@ -188,12 +208,22 @@ Update status to ✅.
 
 #### 3.3.9: Git Commit
 
-**Load commit template:**
+**Option 1: Manual (Default)**
 ```
 view /mnt/project/config/git-commands.md#TASK_COMPLETE
 ```
+Copy template, modify, and execute manually.
+
+**Option 2: Automated (v1.1)** [NEW]
+```bash
+/commit --auto        # Auto-generate with confirmation
+/commit --preview     # Preview without executing
+/commit --edit        # Generate and edit before commit
+```
 
 Commit with appropriate strategy (by tier).
+
+**See:** `docs/config/git-automation.md` for automation details.
 
 ---
 

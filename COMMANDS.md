@@ -55,7 +55,31 @@ Multi-role consultation
 ## Git Commands
 
 ### `/commit`
-Generate git commit for current state
+Generate git commit for current state (default: shows template)
+
+**Syntax:**
+```bash
+/commit                    # Show commit template (default)
+/commit --auto             # Auto-generate and execute with confirmation
+/commit --preview          # Preview generated message without executing
+/commit --edit             # Generate message, open editor, then execute
+/commit --dry-run          # Show what would be committed without changes
+```
+
+**Features:**
+- Default behavior unchanged (shows template for manual use)
+- Opt-in automation with safety confirmation
+- Auto-detects phase, role, changed files
+- Formats according to git-commands.md templates
+- Includes metadata (phase, task ID, effort tracking)
+
+**Safety:**
+- Always shows preview before executing
+- Requires explicit confirmation
+- Allows editing before commit
+- Maintains audit trail
+
+**See:** [docs/config/git-automation.md](docs/config/git-automation.md)
 
 ### `/checkpoint`
 Pause for human review, show git commands
@@ -193,6 +217,62 @@ Check acceptance criteria pass rate only
 ---
 
 ## Generation & Automation Commands (v1.1)
+
+### `/generate test [AC-ID]`
+Generate test stubs from acceptance criteria (Phase 3)
+
+**Syntax:**
+```bash
+/generate test AC-1.2           # Generate test stub for specific AC
+/generate test AC-1.*           # Generate stubs for all AC-1.x
+/generate test --all            # Generate stubs for all ACs
+/generate test AC-1.2 --lang python  # Force specific language
+/generate test AC-1.2 --preview # Preview without creating file
+```
+
+**Supported Languages:**
+- TypeScript/JavaScript (Jest, Vitest, Mocha)
+- Python (pytest, unittest)
+- Java (JUnit 5)
+- Go (testing package)
+- Rust (built-in test framework)
+- C# (xUnit, NUnit)
+
+**Generated Content:**
+- Test file structure matching AC ID
+- Given/When/Then/And sections as test cases
+- TODO markers for implementation
+- Boilerplate setup/teardown hooks
+- AC traceability comments
+
+**Features:**
+- Parses Given/When/Then/And from locked specification
+- Detects project language from codebase
+- Creates test file in appropriate directory
+- Ensures 100% AC coverage tracking
+- Developers implement test logic in TODO sections
+
+**Example Output:**
+```typescript
+// AC-1.2: User login with valid credentials
+describe('AC-1.2: User login with valid credentials', () => {
+  it('redirects to dashboard on valid login', async () => {
+    // Given: User has valid username and password
+    // TODO: Create test fixtures
+
+    // When: User submits login form
+    // TODO: Make API request
+
+    // Then: User is redirected to dashboard
+    // TODO: Verify redirect
+
+    // And: Session cookie is set
+    // TODO: Verify session cookie
+  });
+});
+```
+
+**See:** [docs/config/code-generation-from-ac.md](docs/config/code-generation-from-ac.md)
 
 ### `/generate ci-cd`
 Generate CI/CD pipeline configurations
