@@ -49,8 +49,8 @@ Load full role definition: `view /mnt/project/config/roles/software-architect.md
 - Technology stack selected with lock files
 - API contracts defined
 - Task DAG with parallel groups generated
-- **Gantt timeline created** [NEW v1.0]
-- **Domain adaptations applied** [NEW v1.0]
+- **Gantt timeline created**
+- **Domain adaptations applied**
 - All task files created
 - Supporting plans documented
 - Git commit and tag created
@@ -138,7 +138,7 @@ view /mnt/project/02-planning-templates.md#blueprint
 
 ---
 
-### Step 2.3.5: Domain-Specific Adaptation [NEW v1.0]
+### Step 2.3.5: Domain-Specific Adaptation
 
 **Action**: Detect project domain and apply specialized architecture patterns.
 
@@ -275,7 +275,7 @@ view /mnt/project/config/roles/ethics-security-engineer.md
 
 ---
 
-### Step 2.7.5: Generate Gantt Timeline [NEW v1.0]
+### Step 2.7.5: Generate Gantt Timeline
 
 **Action**: Create visual timeline alongside dependency DAG.
 
@@ -323,7 +323,7 @@ view /mnt/project/02-planning-templates.md#task-template
 
 ---
 
-### Step 2.8.5: Competitive Integration in ADRs [NEW v1.0]
+### Step 2.8.5: Competitive Integration in ADRs
 
 **Action**: Enhance architectural decisions with competitive context.
 
@@ -408,7 +408,7 @@ Generate:
 > - Pattern: [Pattern]
 > - Components: [X]
 > - Tech Stack: [Technologies]
-> - **Domain**: [Mobile/Web/Cloud/AI] [NEW v1.0]
+> - **Domain**: [Mobile/Web/Cloud/AI]
 > - **Domain Adaptations**: [Applied patterns]
 > 
 > **Task Summary**:
@@ -417,9 +417,9 @@ Generate:
 > - Tasks: [Z] total
 > - Parallel Groups: [N]
 > - Estimated Effort: [H] hours
-> - **Visual Timeline**: Gantt chart created [NEW v1.0]
+> - **Visual Timeline**: Gantt chart created
 > 
-> **Competitive-Informed Decisions**: [NEW v1.0]
+> **Competitive-Informed Decisions**:
 > - [Key decision 1] - Differentiator: [X]
 > - [Key decision 2] - Strategic advantage: [Y]
 > 
@@ -430,7 +430,7 @@ Generate:
 > **📁 Artifacts Created:**
 > ```
 > docs/architecture/blueprint-v1.0.md
-> docs/architecture/gantt-timeline.mermaid [NEW]
+> docs/architecture/gantt-timeline.mermaid
 > docs/architecture/technology-stack.md
 > docs/architecture/task-dag.mermaid
 > docs/architecture/api-contracts/openapi.yaml
@@ -460,8 +460,8 @@ Generate:
 | Artifact | Status |
 |----------|--------|
 | Blueprint (versioned) | ⏳ |
-| Gantt Timeline [NEW] | ⏳ |
-| Domain Adaptations [NEW] | ⏳ |
+| Gantt Timeline | ⏳ |
+| Domain Adaptations | ⏳ |
 | Technology Stack | ⏳ |
 | API Contracts | ⏳ |
 | Threat Model | ⏳ |

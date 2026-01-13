@@ -25,11 +25,33 @@ This package contains:
 # Extract the CodeMaestro.zip to your project
 unzip CodeMaestro.zip
 cd CodeMaestro
+
+# Copy CLAUDE.md to your project root (if not already there)
+cp CLAUDE.md ../my-project/CLAUDE.md
+cp init-docs.sh ../my-project/init-docs.sh
+cp -r docs ../my-project/
 ```
 
-### Step 2: Prompt Files
+### Step 2: Choose Your Usage Mode
 
-#### Prompt Files in `docs/prompts/`:
+CodeMaestro supports two usage modes:
+
+**A. Claude Code (CLI) - Recommended** ✅
+- Uses modular prompt files for token efficiency
+- Progressive disclosure (50-55% token reduction)
+- Automatic file loading on-demand
+- Files: `docs/prompts/` (modular phase prompts + templates)
+
+**B. Claude Desktop / claude.ai** 📋
+- Uses standalone prompts (copy-paste workflow)
+- Complete phase prompts in single files
+- Files: `docs/standalone-prompts/` (phase1-standalone-prompt.md, etc.)
+
+---
+
+### Step 2A: Prompt Files for Claude Code
+
+#### Prompt Files in `docs/prompts/` (for Claude Code):
 1. `00-core.md` - Core system configuration (roles, thresholds, constraints)
 2. `01-requirement.md` - Phase 1 workflow
 3. `01-requirement-templates.md` - Phase 1 templates
@@ -52,20 +74,30 @@ cd CodeMaestro
 - `senior-developer.md` - Full Senior Developer role definition
 - `qa-lead.md` - Full QA Lead role definition
 - `release-manager.md` - Full Release Manager role definition
-- `data-interpreter.md` - Data Interpreter role (NEW in v1.0)
-- `ethics-security-engineer.md` - Ethics & Security Engineer role (ENHANCED in v1.0)
+- `data-interpreter.md` - Data Interpreter role
+- `ethics-security-engineer.md` - Ethics & Security Engineer role
 
-#### Standalone Prompts (Optional) in `docs/standalone-prompts/` (for Claude Desktop/claude.ai users):
-- `phase1-standalone-prompt.md`
-- `phase2-standalone-prompt.md`
-- `phase3-standalone-prompt.md` (NEW in v1.0)
-- `phase4-standalone-prompt.md` (NEW in v1.0)
-- `phase5-standalone-prompt.md` (NEW in v1.0)
+---
 
+### Step 2B: Standalone Prompts (for Claude Desktop / claude.ai only)
+
+**Note:** Claude Code users should **skip this section** - use modular prompts above instead.
+
+#### Standalone Prompts in `docs/standalone-prompts/` (for Claude Desktop):
+- `phase1-standalone-prompt.md` - Copy-paste for Phase 1
+- `phase2-standalone-prompt.md` - Copy-paste for Phase 2
+- `phase3-standalone-prompt.md` - Copy-paste for Phase 3
+- `phase4-standalone-prompt.md` - Copy-paste for Phase 4
+- `phase5-standalone-prompt.md` - Copy-paste for Phase 5
+
+**How to use:** Copy the entire content of the phase file and paste into Claude Desktop/claude.ai at the start of each phase.
+
+---
 
 ### Step 3: Initialize Project
 
 ```bash
+cd ../my-project
 # Make the init script executable
 chmod +x init-docs.sh
 
@@ -81,11 +113,8 @@ chmod +x init-docs.sh
 # Initialize git repository
 git init
 
-# Copy CLAUDE.md to your project root (if not already there)
-cp CLAUDE.md ../my-project/CLAUDE.md
-
 # Create develop branch
-git checkout -b develop
+git checkout -b dev
 
 # Initial commit
 git add .
@@ -130,22 +159,43 @@ my-project/
 
 ## 🎯 Quick Start
 
-### 1. Start Claude Code
+### Option A: Claude Code (CLI) - Recommended ✅
+
+**Best for:** Token efficiency, automatic file loading, full feature set
 
 With all files in place:
 
 ```bash
-# Open Claude Code
-# It will automatically detect CodeMaestro and begin Phase 1
+# Open Claude Code in your project directory
+# It will automatically detect CLAUDE.md and load CodeMaestro
 ```
 
-### 2. Or Use Claude Desktop / claude.ai
+**In Claude Code, say:**
+```
+"Let's start Phase 1. I want to build a [describe your project]."
+```
+
+Claude Code will automatically:
+- Load `docs/prompts/00-core.md` (system config)
+- Load phase prompts progressively
+- Load templates on-demand
+- Use 50-55% fewer tokens vs. standalone approach
+
+---
+
+### Option B: Claude Desktop / claude.ai 📋
+
+**Best for:** Users without CLI access
 
 If using Claude Desktop or claude.ai instead of Claude Code:
 
-1. Copy the contents of `docs/standalone-prompts/phase1-standalone-prompt.md`
-2. Paste into Claude Desktop/claude.ai
-3. Follow the guided workflow
+1. Navigate to `docs/standalone-prompts/`
+2. Copy the contents of `phase1-standalone-prompt.md`
+3. Paste into Claude Desktop/claude.ai
+4. Follow the guided workflow
+5. At Phase 2, copy `phase2-standalone-prompt.md` and repeat
+
+**Note:** Standalone prompts are self-contained but use more tokens (no progressive disclosure).
 
 ---
 
@@ -162,7 +212,7 @@ If using Claude Desktop or claude.ai instead of Claude Code:
 - Searchable pattern library
 - Self-evolving intelligence
 
-### Data Interpreter Role (NEW)
+### Data Interpreter Role
 - Automatic performance visualization
 - KPI dashboard generation
 - Trend analysis

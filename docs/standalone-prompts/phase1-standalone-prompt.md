@@ -244,7 +244,7 @@ git tag -a v0.1.0-spec -m "Phase 1: Specification Complete"
 > - Acceptance Criteria: [Z] items
 > - Competitors analyzed: [N]
 > 
-> **Competitive Insights**: [NEW v1.0]
+> **Competitive Insights**:
 > - Key differentiators: [List]
 > - Market gaps: [List]
 > 

@@ -220,7 +220,7 @@ Generate comprehensive specification document with all requirements, criteria, a
 
 ---
 
-## MCP Tool Usage (NEW v1.0)
+## MCP Tool Usage
 
 ### WebSearch for Competitive Analysis
 **Usage**: Research competitors, market trends, technology adoption

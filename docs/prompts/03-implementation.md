@@ -31,8 +31,8 @@ Load full role definition: `view /mnt/project/config/roles/senior-developer.md`
 - Follow **architectural guidelines**
 - Apply **KISS, DRY, SOLID** principles
 - Track **actual effort** vs estimates
-- **Optimize state management** [NEW v1.0]
-- **Maintain architectural coherence** [NEW v1.0]
+- **Optimize state management**
+- **Maintain architectural coherence**
 
 ---
 
@@ -50,8 +50,8 @@ Load full role definition: `view /mnt/project/config/roles/senior-developer.md`
 - All tasks completed (✅) or failed (❌)
 - Estimation tracking updated
 - Decision log consolidated
-- **Module context packages created** [NEW v1.0]
-- **Knowledge Base updated** [NEW v1.0]
+- **Module context packages created**
+- **Knowledge Base updated**
 - Git commits and tag created
 
 ---
@@ -97,7 +97,7 @@ npm ci  # or pip install -r requirements.lock
 
 **Read**: Task file `architecture/tasks/[M]/[MOD]/T-X.X.X.md`
 
-**Load Module Context** [NEW v1.0]:
+**Load Module Context**:
 ```
 view /mnt/project/implementation/context-packages/module-M[X]-MOD[Y]-context.md
 ```
@@ -151,7 +151,7 @@ For complex tasks:
 
 #### 3.3.4: Implement
 
-**State Management & Data Flow Optimization** [NEW v1.0]:
+**State Management & Data Flow Optimization**:
 
 For each task, explicitly optimize:
 - **Frontend-backend state sync**: Optimistic vs pessimistic updates
@@ -195,7 +195,7 @@ Add implementation log entry with:
 - Duration
 - Files modified
 - Decisions made
-- **State management approach** [NEW v1.0]
+- **State management approach**
 - Challenges and resolutions
 
 #### 3.3.7: Update Effort Tracking
@@ -214,7 +214,7 @@ view /mnt/project/config/git-commands.md#TASK_COMPLETE
 ```
 Copy template, modify, and execute manually.
 
-**Option 2: Automated (v1.1)** [NEW]
+**Option 2: Automated (v1.1)**
 ```bash
 /commit --auto        # Auto-generate with confirmation
 /commit --preview     # Preview without executing
@@ -244,7 +244,7 @@ view /mnt/project/03-implementation-templates.md#context-package
 
 Create: `implementation/context-packages/T-X.X.X-failure.md`
 
-#### 3.4.3: Log to Knowledge Base [NEW v1.0]
+#### 3.4.3: Log to Knowledge Base
 
 ```
 /kb add failure
@@ -281,7 +281,7 @@ Merge parallel branch if used.
 
 **When module completes:**
 
-**Update Module Context Package** [NEW v1.0]:
+**Update Module Context Package**:
 
 ```
 view /mnt/project/implementation/context-packages/module-M[X]-MOD[Y]-context.md
@@ -315,7 +315,7 @@ Log significant decisions with:
 - Architecture trade-offs
 - Technology usage
 
-#### Module Context Packages [NEW v1.0]
+#### Module Context Packages
 Document architectural vision:
 - Purpose and responsibility
 - Design principles
@@ -353,9 +353,9 @@ Consolidate decision log.
 > - ✅ Completed: [X]/[Y] tasks
 > - Effort: [Est]h → [Act]h ([Var]%)
 > - Coverage: [X]%
-> - **State Optimization**: [Patterns applied] [NEW v1.0]
-> - **Module Contexts**: [N] modules documented [NEW v1.0]
-> - **Knowledge Base**: [F] failures, [P] patterns logged [NEW v1.0]
+> - **State Optimization**: [Patterns applied]
+> - **Module Contexts**: [N] modules documented
+> - **Knowledge Base**: [F] failures, [P] patterns logged
 > 
 > **📁 Artifacts:**
 > ```
@@ -384,12 +384,12 @@ Consolidate decision log.
 | Artifact | Status |
 |----------|--------|
 | Updated Task Files | ⏳ |
-| Module Context Packages [NEW] | ⏳ |
-| State Flow Diagrams [NEW] | ⏳ |
+| Module Context Packages | ⏳ |
+| State Flow Diagrams | ⏳ |
 | Task Checklist | ⏳ |
 | Estimation Tracking | ⏳ |
 | Decision Log | ⏳ |
-| Knowledge Base Entries [NEW] | ⏳ |
+| Knowledge Base Entries | ⏳ |
 | Context Packages (if failures) | ⏳ |
 | Source Code | ⏳ |
 | Tests | ⏳ |
@@ -406,7 +406,7 @@ Consolidate decision log.
    Deactivating: Senior Developer
    Activating:   QA Lead (Primary)
    Supporting:   Security Engineer, Performance Engineer,
-                 Data Interpreter [NEW v1.0]
+                 Data Interpreter
    Phase:        4: Verification and Release
    
    Loading role: config/roles/qa-lead.md

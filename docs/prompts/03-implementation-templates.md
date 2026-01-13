@@ -37,7 +37,7 @@
 - `[file2.ts]`: [What changed and why]
 - `[test-file.test.ts]`: [Tests added]
 
-**State Management:** [NEW v1.0]
+**State Management:**
 - **Pattern Used:** [Redux / Zustand / Context API / etc.]
 - **Sync Strategy:** [Optimistic / Pessimistic / etc.]
 - **Source of Truth:** [Component or service that owns state]
@@ -218,7 +218,7 @@ Constraints: A7, B15, B17, D22, D24, D26
 
 ---
 
-## State Management [NEW v1.0]
+## State Management
 
 - [ ] **Single source of truth** identified and documented (A10, B15)
 - [ ] **Data flow** is unidirectional and clear
@@ -504,7 +504,7 @@ Constraints: A7, B15, B17, D22, D24, D26
 
 ---
 
-## State Management [NEW v1.0]
+## State Management
 
 **Pattern:** [Redux / Zustand / Context API / Event Sourcing]
 

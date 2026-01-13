@@ -2,7 +2,7 @@
 
 > **Prerequisite**: Load `./docs/prompts/00-core.md` first.
 > **Primary Role**: QA Lead
-> **Supporting Roles**: Security Engineer, Performance Engineer, Data Interpreter [NEW v1.0]
+> **Supporting Roles**: Security Engineer, Performance Engineer, Data Interpreter
 > **Objective**: Evidence-based validation with security, ethical, and visual performance analysis.
 
 ---
@@ -15,7 +15,7 @@
 ───────────────────────────────────────────────────────────────
    Activating:   QA Lead (Primary)
    Supporting:   Security Engineer, Performance Engineer,
-                 Data Interpreter [NEW v1.0]
+                 Data Interpreter
    Phase:        4: Verification and Release
    Skill Tier:   [Tier] → [Adaptation behavior]
    
@@ -33,8 +33,8 @@ Load full role definition: `view /mnt/project/config/roles/qa-lead.md`
 - Verify **every AC** with evidence
 - Detect **performance regressions**
 - Validate **API contracts**
-- **Include ethical validation** [NEW v1.0]
-- **Generate visual insights** [NEW v1.0]
+- **Include ethical validation**
+- **Generate visual insights**
 
 ---
 
@@ -51,7 +51,7 @@ Load full role definition: `view /mnt/project/config/roles/qa-lead.md`
 - All verification steps executed
 - Evidence package created (with visual artifacts)
 - Quality thresholds evaluated
-- **Ethics validation complete** [NEW v1.0]
+- **Ethics validation complete**
 - GO/NO-GO decision made
 - Performance baselines established (with visualizations)
 - Git commit and tag created
@@ -159,7 +159,7 @@ npm audit
 
 ---
 
-### Step 4.4.5: Security & Ethical Hardening [NEW v1.0]
+### Step 4.4.5: Security & Ethical Hardening
 
 **Execute comprehensive validation:**
 ```
@@ -241,7 +241,7 @@ Compare against baseline.
 
 ---
 
-### Step 4.6.5: Visual Performance Analysis [NEW v1.0]
+### Step 4.6.5: Visual Performance Analysis
 
 **Consult Data Interpreter:**
 ```
@@ -312,11 +312,11 @@ view /mnt/project/04-verification-templates.md#evidence-package
 **Compile** all results into evidence package:
 - Test results
 - Security scans
-- **Ethics validation** [NEW v1.0]
+- **Ethics validation**
 - API contract validation
 - Code quality metrics
 - Performance metrics
-- **Visual performance artifacts** [NEW v1.0]
+- **Visual performance artifacts**
 - AC verification
 
 **Create**: `verification/evidence-packages/v[X.Y.Z]-evidence.md`
@@ -333,7 +333,7 @@ GO if ALL:
   ✅ High Security = 0
   ✅ AC Pass Rate = 100%
   ✅ No Critical Perf Regression (>25%)
-  ✅ Ethics validation passed [NEW v1.0]
+  ✅ Ethics validation passed
 
 NO-GO if ANY blocking criterion fails
 ```
@@ -356,10 +356,10 @@ NO-GO if ANY blocking criterion fails
 > | Test Coverage | [X]% | ✅ |
 > | Security | 0 critical/high | ✅ |
 > | AC Verified | [W]/[W] | ✅ |
-> | Ethics Validation | Passed | ✅ [NEW v1.0]
+> | Ethics Validation | Passed | ✅
 > | Performance | No regressions | ✅ |
 > 
-> **Visual Insights**: [NEW v1.0]
+> **Visual Insights**:
 > - Performance dashboards generated
 > - Baseline metrics visualized
 > - Trends analysis complete
@@ -400,8 +400,8 @@ NO-GO if ANY blocking criterion fails
 |----------|--------|
 | Evidence Package | ⏳ |
 | Performance Baselines | ⏳ |
-| Visual Artifacts [NEW] | ⏳ |
-| Ethics Report [NEW] | ⏳ |
+| Visual Artifacts | ⏳ |
+| Ethics Report | ⏳ |
 | Regression Report (if applicable) | ⏳ |
 | CHANGELOG Entry | ⏳ |
 | Git commit and tag | ⏳ |
@@ -417,7 +417,7 @@ NO-GO if ANY blocking criterion fails
    Deactivating: QA Lead
    Activating:   Release Manager (Primary)
    Supporting:   Project Manager, DevOps Engineer,
-                 Data Interpreter (continued) [NEW v1.0]
+                 Data Interpreter (continued)
    Phase:        5: Master Control and Release
    
    Loading role: config/roles/release-manager.md

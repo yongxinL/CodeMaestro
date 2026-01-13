@@ -767,7 +767,7 @@ Improves testability, maintainability, and enables independent layer evolution.
 
 ---
 
-## E. Quality Thresholds (E30-E33) [NEW v1.0]
+## E. Quality Thresholds (E30-E33)
 
 ### Constraint E30: Test Coverage ≥70% Before GO
 

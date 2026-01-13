@@ -22,58 +22,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Core Directory Layout
 
-```
-CodeMaestro/
-├── CLAUDE.md                 # This file (developer guide)
-├── README.md                 # Installation & user guide
-├── COMMANDS.md               # Command reference
-├── LICENSE                   # GNU GPL v3
-├── .gitignore               # Multi-ecosystem ignores
-├── init-docs.sh             # Project initialization script
-└── docs/
-    ├── prompts/             # Core system prompts
-    │   ├── 00-core.md       # System config (MUST load first)
-    │   ├── 01-requirement.md # Phase 1: Requirements
-    │   ├── 01-requirement-templates.md
-    │   ├── 02-planning.md    # Phase 2: Planning
-    │   ├── 02-planning-templates.md
-    │   ├── 03-implementation.md # Phase 3: Implementation
-    │   ├── 03-implementation-templates.md
-    │   ├── 04-verification.md # Phase 4: Verification
-    │   ├── 04-verification-templates.md
-    │   ├── 05-master-control.md # Phase 5: Release
-    │   └── 05-master-control-templates.md
-    ├── config/
-    │   ├── git-commands.md        # Git workflow templates
-    │   ├── constraints-reference.md # Constraints A1-E33
-    │   └── roles/                 # Role definitions
-    │       ├── product-manager.md
-    │       ├── software-architect.md
-    │       ├── senior-developer.md
-    │       ├── qa-lead.md
-    │       ├── release-manager.md
-    │       ├── data-interpreter.md
-    │       └── ethics-security-engineer.md
-    ├── standalone-prompts/  # For Claude Desktop/claude.ai users
-    │   ├── phase1-standalone-prompt.md
-    │   ├── phase2-standalone-prompt.md
-    │   ├── phase3-standalone-prompt.md
-    │   ├── phase4-standalone-prompt.md
-    │   └── phase5-standalone-prompt.md
-    └── [other]              # specifications/, architecture/, implementation/, verification/, release/, knowledge-base/, portfolio/ (created by init-docs.sh)
-```
+**Key locations** (full structure available via filesystem navigation):
+
+| Directory/File | Purpose |
+|----------------|---------|
+| `docs/prompts/` | Core system prompts (00-core, phase prompts, templates) |
+| `docs/config/` | Configuration files (git-commands, constraints, roles, etc.) |
+| `docs/config/CONFIG-QUICK-REFERENCE.md` | **Quick index of all config files** (start here!) |
+| `docs/standalone-prompts/` | **For Claude Desktop users only** (not used by Claude Code) |
+| `CLAUDE.md` | This file (developer guide for Claude Code) |
+| `README.md` | User-facing installation guide (not for Claude Code) |
+| `COMMANDS-CORE.md` | Essential commands (Phases 1-5) |
+| `COMMANDS-ADVANCED.md` | Phase F commands (load in Phase 4-5 only) |
+| `init-docs.sh` | Project initialization script |
+
+**Note:** `docs/standalone-prompts/` contains complete phase prompts for Claude Desktop/claude.ai users. **Claude Code should use the modular `docs/prompts/` files** for token efficiency.
 
 ### Key Files to Understand
 
-| File | Purpose |
-|------|---------|
-| **[docs/prompts/00-core.md](docs/prompts/00-core.md)** | System configuration: roles, constraints (A1-E33), thresholds, skill tiers |
-| **[docs/config/git-commands.md](docs/config/git-commands.md)** | Git workflow templates and commands |
-| **[docs/config/constraints-reference.md](docs/config/constraints-reference.md)** | Complete constraint list (production-ready, SRP, documentation, etc.) |
-| **[docs/config/mcp-tools.md](docs/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) |
-| **[init-docs.sh](init-docs.sh)** | Creates directory structure for user projects |
-| **[README.md](README.md)** | Installation instructions and feature overview |
-| **[COMMANDS.md](COMMANDS.md)** | Command reference (/status, /next, /kb, /portfolio, etc.) |
+| File | Purpose | Load When |
+|------|---------|-----------|
+| **[docs/config/CONFIG-QUICK-REFERENCE.md](docs/config/CONFIG-QUICK-REFERENCE.md)** | **START HERE** - Quick index of all configs with loading guidance | Always reference first |
+| **[docs/prompts/00-core.md](docs/prompts/00-core.md)** | System configuration: roles, constraints (A1-E33), thresholds, skill tiers | Every session |
+| **[COMMANDS-CORE.md](COMMANDS-CORE.md)** | Essential commands (daily workflow, Phases 1-5) | Phases 1-5 |
+| **[COMMANDS-ADVANCED.md](COMMANDS-ADVANCED.md)** | Phase F commands (estimation, benchmarking, ethics/compliance) | Phases 4-5 only |
+| **[docs/config/git-commands.md](docs/config/git-commands.md)** | Git workflow templates (reference by section ID) | All phases |
+| **[docs/config/constraints-reference.md](docs/config/constraints-reference.md)** | Complete constraint list (reference by ID: A1-E33) | Reference only |
+| **[docs/config/mcp-tools.md](docs/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) | Phase 1-4 (research) |
+| **[init-docs.sh](init-docs.sh)** | Creates directory structure for user projects | Project setup |
+| **[README.md](README.md)** | User-facing installation guide (not for Claude Code) | User reference only |
 
 ---
 
@@ -115,7 +92,7 @@ Each phase activates specific roles with specialized behaviors:
 - **Senior Developer** (Phase 3): Production code quality, pattern reuse, optimization
 - **QA Lead** (Phase 4): Evidence collection, security scanning, performance validation
 - **Release Manager** (Phase 5): Go/no-go decisions, delivery coordination, learning capture
-- **Data Interpreter** (Phase 4-5, NEW): Performance visualization, KPI dashboards
+- **Data Interpreter** (Phase 4-5): Performance visualization, KPI dashboards
 - **Ethics & Security Engineer** (Phase 2, 4): Bias detection, GDPR compliance, accessibility
 
 ### Skill Tier Adaptation
@@ -135,7 +112,7 @@ Between phases, the system generates recovery checkpoints:
 - Lazy loading for phase artifacts
 - Context recovery protocol (/recover) if interrupted
 
-### MCP Tool Integration (NEW v1.0)
+### MCP Tool Integration
 
 CodeMaestro integrates with Model Context Protocol (MCP) tools:
 
@@ -347,12 +324,14 @@ Override in `docs/config/thresholds.md` if needed for specific projects.
 
 ## Common References
 
-- **For installation:** See [README.md](README.md)
-- **For available commands:** See [COMMANDS.md](COMMANDS.md)
-- **For system configuration:** See [docs/prompts/00-core.md](docs/prompts/00-core.md)
-- **For constraints:** See [docs/config/constraints-reference.md](docs/config/constraints-reference.md)
-- **For git workflows:** See [docs/config/git-commands.md](docs/config/git-commands.md)
-- **For help with CodeMaestro (as a user):** Run `/help` in Claude Code once initialized
+- **Quick config index:** See [docs/config/CONFIG-QUICK-REFERENCE.md](docs/config/CONFIG-QUICK-REFERENCE.md) ⭐ **START HERE**
+- **Core commands:** See [COMMANDS-CORE.md](COMMANDS-CORE.md) (Phases 1-5)
+- **Advanced commands:** See [COMMANDS-ADVANCED.md](COMMANDS-ADVANCED.md) (Phase F, Phases 4-5 only)
+- **System configuration:** See [docs/prompts/00-core.md](docs/prompts/00-core.md)
+- **Constraints:** See [docs/config/constraints-reference.md](docs/config/constraints-reference.md)
+- **Git workflows:** See [docs/config/git-commands.md](docs/config/git-commands.md)
+- **Installation (users):** See [README.md](README.md)
+- **Help command:** Run `/help` in Claude Code once initialized
 
 ---
 

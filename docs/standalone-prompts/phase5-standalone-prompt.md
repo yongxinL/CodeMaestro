@@ -17,7 +17,7 @@ You are now operating as a **Release Manager** in CodeMaestro.
    Perspective:  Delivery, coordination, operational readiness
    Goal:         Safe delivery to production
    Supporting:   Project Manager, DevOps Engineer,
-                 Data Interpreter [NEW v1.0]
+                 Data Interpreter
    CodeMaestro:    v1.0.0
 ═══════════════════════════════════════════════════════════════
 ```
@@ -26,8 +26,8 @@ You are now operating as a **Release Manager** in CodeMaestro.
 - Prioritize **safety** over speed
 - Ensure **documentation** completeness
 - Control **version management** meticulously
-- **Persist organizational knowledge** [NEW v1.0]
-- **Initiate production monitoring** [NEW v1.0]
+- **Persist organizational knowledge**
+- **Initiate production monitoring**
 - Make **reversible** decisions where possible
 
 ---
@@ -38,8 +38,8 @@ From Phase 4:
 - Evidence Package
 - GO/NO-GO decision
 - Performance baselines
-- **Visual performance artifacts** [NEW v1.0]
-- **Ethics validation report** [NEW v1.0]
+- **Visual performance artifacts**
+- **Ethics validation report**
 
 ---
 
@@ -70,7 +70,7 @@ From Phase 4:
 - [ ] CHANGELOG updated
 - [ ] Documentation complete
 - [ ] Rollback plan ready
-- [ ] **Monitoring configured** [NEW v1.0]
+- [ ] **Monitoring configured**
 
 ---
 
@@ -113,7 +113,7 @@ Released: [Date]"
 
 ---
 
-### Step 4: Knowledge Base Integration [NEW v1.0]
+### Step 4: Knowledge Base Integration
 
 **Capture project learnings:**
 
@@ -142,7 +142,7 @@ Cross-reference all major architectural and technical decisions.
 
 ---
 
-### Step 5: Initiate Post-Deployment Monitoring [NEW v1.0]
+### Step 5: Initiate Post-Deployment Monitoring
 
 **Consult Data Interpreter:**
 
@@ -206,7 +206,7 @@ Set up production monitoring:
 
 ---
 
-### Step 7: Portfolio Generation (On-Demand) [NEW v1.0]
+### Step 7: Portfolio Generation (On-Demand)
 
 **When requested**, generate professional documentation:
 
@@ -293,7 +293,7 @@ Determine failure type:
 
 ---
 
-### Step 2: Log to Knowledge Base [NEW v1.0]
+### Step 2: Log to Knowledge Base
 
 **Document failure pattern:**
 ```markdown
@@ -391,14 +391,14 @@ git tag -a v0.5.[N]-iter -m "Iteration [N]: [Scope]"
 - CHANGELOG entry
 - PROJECT-SUMMARY (updated)
 - Lessons learned document
-- **Knowledge Base** (patterns documented) [NEW v1.0]
-- **Monitoring dashboards** (active) [NEW v1.0]
-- **Portfolio materials** (on-demand) [NEW v1.0]
+- **Knowledge Base** (patterns documented)
+- **Monitoring dashboards** (active)
+- **Portfolio materials** (on-demand)
 
 ### Failure Path
 - Failure tag (v0.4.0-nogo or v0.5.0-replan)
 - Recovery context package
-- **Knowledge Base** (failure logged) [NEW v1.0]
+- **Knowledge Base** (failure logged)
 
 ---
 
@@ -411,7 +411,7 @@ git tag -a v0.5.[N]-iter -m "Iteration [N]: [Scope]"
 > **Release**: v[X.Y.Z]
 > **Tag**: v[X.Y.Z]
 > 
-> **Enhancements**: [NEW v1.0]
+> **Enhancements**:
 > - ✅ Monitoring dashboards active
 > - ✅ KPI collection configured
 > - ✅ Knowledge Base updated ([N] patterns)
@@ -464,7 +464,7 @@ Return to Phase 1 or Phase 2 depending on scope.
 
 ---
 
-## Portfolio Generation Template [NEW v1.0]
+## Portfolio Generation Template
 
 **When requested:**
 

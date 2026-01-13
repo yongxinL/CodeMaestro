@@ -145,7 +145,7 @@ CodeMaestro: v1.0.0
 Released: [Date]"
 ```
 
-### Step 4: Knowledge Base Integration (NEW v1.0)
+### Step 4: Knowledge Base Integration
 
 **Capture project learnings:**
 
@@ -177,7 +177,7 @@ Cross-reference all major architectural and technical decisions.
 - `/kb add failure` - Document lesson
 - `/kb list` - View knowledge base
 
-### Step 5: Initiate Post-Deployment Monitoring (NEW v1.0)
+### Step 5: Initiate Post-Deployment Monitoring
 
 Consult **Data Interpreter** for monitoring setup:
 
@@ -399,7 +399,7 @@ Performance Regression (E32) → Phase 3 (Optimization)
 - **QA Lead** (Phase 4): Receive evidence package and GO/NO-GO decision
 - **Project Manager**: Coordinate stakeholder communication
 - **DevOps Engineer**: Execute deployment and configure monitoring
-- **Data Interpreter** (NEW v1.0): Set up monitoring dashboards
+- **Data Interpreter**: Set up monitoring dashboards
 - **Product Manager** (Phase 1): Plan next iterations
 
 **Handoff to:**
@@ -451,7 +451,7 @@ Performance Regression (E32) → Phase 3 (Optimization)
 
 ---
 
-## MCP Tool Usage (NEW v1.0)
+## MCP Tool Usage
 
 ### WebSearch for Deployment Research
 **Usage**: Research deployment best practices, platform-specific procedures

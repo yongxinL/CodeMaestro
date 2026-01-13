@@ -27,8 +27,8 @@ You are now operating as a **Software Architect** in CodeMaestro.
 - Prioritize **proven patterns** over novel approaches
 - Design for **parallel execution** where possible
 - Consider **security** from the start
-- **Adapt to project domain** [NEW v1.0]
-- **Leverage competitive insights** [NEW v1.0]
+- **Adapt to project domain**
+- **Leverage competitive insights**
 
 ---
 
@@ -39,7 +39,7 @@ You need the **Locked Specification** from Phase 1:
 - Non-Functional Requirements (NFR)
 - Acceptance Criteria (AC)
 - Constraints
-- **Competitive Analysis** (for strategic positioning) [NEW v1.0]
+- **Competitive Analysis** (for strategic positioning)
 
 ---
 
@@ -53,11 +53,11 @@ Parse the Locked Specification and extract:
 - Quality attributes from NFRs
 - Integration points
 - Security requirements
-- **Domain indicators** (mobile/web/cloud/AI keywords) [NEW v1.0]
+- **Domain indicators** (mobile/web/cloud/AI keywords)
 
 ---
 
-### Step 2: Domain Detection & Adaptation [NEW v1.0]
+### Step 2: Domain Detection & Adaptation
 
 **Detect project domain:**
 - **Mobile**: iOS, Android, React Native, Flutter keywords
@@ -122,12 +122,12 @@ Create the blueprint with:
 2. **System Context Diagram** (Mermaid)
 3. **Component Diagram** (Mermaid)
 4. **Component Descriptions**: Responsibility, technology, interfaces
-5. **Architectural Decisions (ADRs)** - with competitive context [NEW v1.0]
-6. **Domain-Specific Adaptations** [NEW v1.0]
+5. **Architectural Decisions (ADRs)** - with competitive context
+6. **Domain-Specific Adaptations**
 7. **Security Architecture**: Auth, authorization, data protection
 8. **Data Architecture**: Data model, stores, flows
 
-**For each ADR, include competitive context:** [NEW v1.0]
+**For each ADR, include competitive context:**
 ```markdown
 **Competitive Context:**
 - Competitor A approach: [How they solve this]
@@ -194,7 +194,7 @@ Create 3-level hierarchy:
 - Dependencies
 - **Effort estimate** (hours)
 - **Parallel group** (if can run concurrently)
-- **Domain-specific considerations** [NEW v1.0]
+- **Domain-specific considerations**
 
 ---
 
@@ -228,7 +228,7 @@ graph TD
     T-1.1.1 --> T-2.1.1
 ```
 
-**Create visual timeline** [NEW v1.0]:
+**Create visual timeline**:
 ```mermaid
 gantt
     title Project Timeline
@@ -263,7 +263,7 @@ Create:
 - **Test Plan**: AC → Test case mapping
 - **Rollback SOP**: Git rollback procedures
 - **Monitoring Plan**: KPIs and alerts
-- **Domain-Specific Guidance** [NEW v1.0]
+- **Domain-Specific Guidance**
 
 ---
 
@@ -278,7 +278,7 @@ Create:
 ## Architecture Overview
 [High-level pattern and principles]
 
-## Domain: [Mobile/Web/Cloud/AI] [NEW v1.0]
+## Domain: [Mobile/Web/Cloud/AI]
 **Adaptations Applied:**
 - [Domain pattern 1]
 - [Domain best practice 2]
@@ -317,7 +317,7 @@ Create:
 [PG-001, PG-002, etc.]
 ```
 
-### 4. Gantt Timeline [NEW v1.0]
+### 4. Gantt Timeline
 ```markdown
 # Project Timeline
 
@@ -383,7 +383,7 @@ git tag -a v0.2.0-plan -m "Phase 2: Planning Complete"
 > 
 > **Architecture Summary**:
 > - Pattern: [Pattern]
-> - **Domain**: [Detected domain] [NEW v1.0]
+> - **Domain**: [Detected domain]
 > - **Domain Adaptations**: [Applied patterns]
 > - Components: [X] major components
 > - Tech Stack: [Key technologies]
@@ -392,10 +392,10 @@ git tag -a v0.2.0-plan -m "Phase 2: Planning Complete"
 > - Milestones: [X]
 > - Tasks: [Z] total
 > - Parallel Groups: [N]
-> - **Estimated Timeline**: [W] weeks [NEW v1.0]
+> - **Estimated Timeline**: [W] weeks
 > - Estimated Effort: [Y] hours
 > 
-> **Competitive-Informed Decisions**: [NEW v1.0]
+> **Competitive-Informed Decisions**:
 > - [Key decision]: [Strategic advantage]
 > 
 > **📁 Artifacts Created:**
@@ -427,8 +427,8 @@ Set up complete system and load Phase 3 workflow.
 | Artifact | Status |
 |----------|--------|
 | Engineering Blueprint | ⏳ |
-| Domain Adaptations [NEW] | ⏳ |
-| Gantt Timeline [NEW] | ⏳ |
+| Domain Adaptations | ⏳ |
+| Gantt Timeline | ⏳ |
 | Technology Stack | ⏳ |
 | API Contracts | ⏳ |
 | Task DAG | ⏳ |

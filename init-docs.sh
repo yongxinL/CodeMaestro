@@ -91,7 +91,7 @@ enabled: false
 -->
 EOF
 
-# Knowledge Base files (NEW in v1.0)
+# Knowledge Base files
 cat > docs/knowledge-base/README.md << 'EOF'
 # Knowledge Base
 
@@ -278,7 +278,7 @@ Cross-reference index of all architectural and technical decisions made during t
 | [Decision] | [Date] | [Description] | [Result] |
 EOF
 
-# Portfolio files (NEW in v1.0)
+# Portfolio files
 cat > docs/portfolio/README.md << 'EOF'
 # Portfolio Generation
 
@@ -1620,21 +1620,21 @@ echo "├── prompts/              (copy prompt files here)"
 echo "├── specifications/"
 echo "├── analysis/"
 echo "├── architecture/"
-echo "│   ├── domain-adaptations.md [NEW]"
+echo "│   ├── domain-adaptations.md"
 echo "│   └── tasks/"
 echo "│       ├── _index.md"
 echo "│       ├── _task-template.md"
 echo "│       └── _parallel-groups.md"
 echo "├── implementation/"
 echo "│   ├── context-packages/"
-echo "│   │   ├── module-context-template.md [NEW]"
-echo "│   │   └── state-flow-diagrams/ [NEW]"
+echo "│   │   ├── module-context-template.md"
+echo "│   │   └── state-flow-diagrams/"
 echo "│   ├── decision-log.md"
 echo "│   ├── task-checklist.md"
 echo "│   ├── estimation-tracking.md"
 echo "│   └── .recovery-checkpoint.md"
 echo "├── verification/"
-echo "│   ├── ethics-checklist.md [NEW]"
+echo "│   ├── ethics-checklist.md"
 echo "│   ├── evidence-packages/"
 echo "│   ├── performance-baselines/"
 echo "│   └── test-plan.md"
@@ -1642,12 +1642,12 @@ echo "├── release/"
 echo "│   ├── runbooks/"
 echo "│   ├── rollback-sop.md"
 echo "│   └── monitoring-plan.md"
-echo "├── knowledge-base/ [NEW]"
+echo "├── knowledge-base/"
 echo "│   ├── README.md"
 echo "│   ├── failures/"
 echo "│   ├── patterns/"
 echo "│   └── decisions/"
-echo "├── portfolio/ [NEW]"
+echo "├── portfolio/"
 echo "│   ├── README.md"
 echo "│   └── [templates]"
 echo "├── team/"

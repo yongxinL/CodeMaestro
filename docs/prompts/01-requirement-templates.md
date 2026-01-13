@@ -199,7 +199,7 @@ Legend: ✅ Full | ⚠️ Partial | ❌ None
 - **Load Test**: Performance testing
 - **Security Scan**: SAST/DAST
 - **Manual Review**: Human verification
-- **Ethics Validation**: Bias/compliance check [NEW v1.0]
+- **Ethics Validation**: Bias/compliance check
 
 ---
 

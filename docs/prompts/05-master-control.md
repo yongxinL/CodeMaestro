@@ -2,7 +2,7 @@
 
 > **Prerequisite**: Load `./docs/prompts/00-core.md` first.
 > **Primary Role**: Release Manager
-> **Supporting Roles**: Project Manager, DevOps Engineer, Data Interpreter [NEW v1.0]
+> **Supporting Roles**: Project Manager, DevOps Engineer, Data Interpreter
 > **Objective**: Orchestrate release, persist knowledge, monitor production, and control iteration loops.
 
 ---
@@ -31,8 +31,8 @@ Load full role definition: `view /mnt/project/config/roles/release-manager.md`
 - Prioritize **safety** over speed
 - Ensure **documentation** completeness
 - Control **version management** meticulously
-- **Persist organizational knowledge** [NEW v1.0]
-- **Initiate monitoring** [NEW v1.0]
+- **Persist organizational knowledge**
+- **Initiate monitoring**
 
 ---
 
@@ -48,13 +48,13 @@ From Phase 4:
 
 **Success Path:**
 - Release completed and tagged
-- **Monitoring initiated** [NEW v1.0]
-- **Knowledge Base updated** [NEW v1.0]
+- **Monitoring initiated**
+- **Knowledge Base updated**
 - Documentation finalized
 - CHANGELOG published
 
 **Failure/Replan Path:**
-- **Context preserved in KB** [NEW v1.0]
+- **Context preserved in KB**
 - Replan artifacts created
 - Iteration loop initiated
 
@@ -151,7 +151,7 @@ git tag -a v[X.Y.Z] -m "Release v[X.Y.Z]
 
 ---
 
-### 5.A.5: Knowledge Persistence [NEW v1.0]
+### 5.A.5: Knowledge Persistence
 
 **Consult Project Manager**:
 ```
@@ -174,7 +174,7 @@ view /mnt/project/05-master-control-templates.md#lessons-learned
 
 ---
 
-### 5.A.6: Knowledge Base Integration [NEW v1.0]
+### 5.A.6: Knowledge Base Integration
 
 **Capture project learnings:**
 
@@ -201,7 +201,7 @@ Create searchable index of all patterns discovered.
 
 ---
 
-### 5.A.7: Initiate Post-Deployment Monitoring [NEW v1.0]
+### 5.A.7: Initiate Post-Deployment Monitoring
 
 **After successful release:**
 
@@ -234,7 +234,7 @@ Create searchable index of all patterns discovered.
 
 ---
 
-### 5.A.8: Portfolio Generation (On-Demand) [NEW v1.0]
+### 5.A.8: Portfolio Generation (On-Demand)
 
 **When user requests** `/portfolio generate`:
 
@@ -269,7 +269,7 @@ view /mnt/project/portfolio/performance-report-template.md
 > **Branch**: main
 > **Tag**: v[X.Y.Z]
 > 
-> **Enhancements Deployed**: [NEW v1.0]
+> **Enhancements Deployed**:
 > - ✅ Monitoring dashboards active
 > - ✅ KPI collection configured
 > - ✅ Knowledge Base updated ([N] patterns, [M] decisions)
@@ -355,7 +355,7 @@ view /mnt/project/05-master-control-templates.md#replan-context
 
 **Create**: `implementation/context-packages/replan-v[X.Y.Z].md`
 
-**Log to Knowledge Base** [NEW v1.0]:
+**Log to Knowledge Base**:
 ```
 /kb add failure
 ```
@@ -437,16 +437,16 @@ git tag -a v0.5.[N]-iter -m "Iteration [N] start
 | Release tag | ⏳ |
 | CHANGELOG | ⏳ |
 | Lessons Learned | ⏳ |
-| Knowledge Base [NEW] | ⏳ |
-| Monitoring Active [NEW] | ⏳ |
-| Portfolio (on-demand) [NEW] | ⏳ |
+| Knowledge Base | ⏳ |
+| Monitoring Active | ⏳ |
+| Portfolio (on-demand) | ⏳ |
 
 ### Failure Path
 | Artifact | Status |
 |----------|--------|
 | Failure tag | ⏳ |
 | Context package | ⏳ |
-| KB Failure Entry [NEW] | ⏳ |
+| KB Failure Entry | ⏳ |
 
 ---
 

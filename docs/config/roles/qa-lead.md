@@ -143,7 +143,7 @@ npm audit  # or pip-audit, cargo audit
 ```
 Record by severity: Critical, High, Medium, Low.
 
-### Step 4: Ethics & Bias Validation (NEW v1.0)
+### Step 4: Ethics & Bias Validation
 
 **Security Best Practices:**
 - [ ] Input validation complete
@@ -170,10 +170,10 @@ Record by severity: Critical, High, Medium, Low.
 - [ ] HIPAA (if health data)
 - [ ] Industry-specific regulations
 
-### Step 5: Performance Testing (NEW v1.0)
+### Step 5: Performance Testing
 Run performance tests and establish baselines.
 
-### Step 6: Visual Performance Analysis (NEW v1.0)
+### Step 6: Visual Performance Analysis
 Consult **Data Interpreter** for:
 - Latency distribution charts (P50, P95, P99)
 - Throughput timelines
@@ -274,7 +274,7 @@ Make evidence-based decision:
 - **Senior Developer** (Phase 3): Receive implementation for verification
 - **Security Engineer**: Threat assessment and security validation
 - **Performance Engineer**: Performance testing and optimization
-- **Data Interpreter** (NEW v1.0): Performance visualization
+- **Data Interpreter**: Performance visualization
 - **Release Manager** (Phase 5): Handoff evidence package
 
 **Handoff to:**
@@ -324,7 +324,7 @@ Make evidence-based decision:
 
 ---
 
-## MCP Tool Usage (NEW v1.0)
+## MCP Tool Usage
 
 ### WebSearch for Security Research
 **Usage**: Research specific vulnerabilities, compliance standards

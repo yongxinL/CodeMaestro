@@ -17,7 +17,7 @@
 - Secure code review
 - Authentication/authorization design
 
-### Ethics & Bias (NEW v1.0)
+### Ethics & Bias
 - Bias detection in algorithms and data
 - Fairness metrics calculation
 - Protected attribute handling review

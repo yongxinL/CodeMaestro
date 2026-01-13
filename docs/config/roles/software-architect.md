@@ -313,7 +313,7 @@ Define phase-specific quality gates based on E30-E33.
 
 ---
 
-## MCP Tool Usage (NEW v1.0)
+## MCP Tool Usage
 
 ### Context7 for API Validation
 **Usage**: Validate all libraries and APIs before including in architecture
