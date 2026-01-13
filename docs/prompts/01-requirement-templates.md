@@ -7,9 +7,8 @@
 
 ---
 
-## Competitive Analysis Template
+## Template 1: Competitive Analysis {#competitive-analysis}
 
-**ID**: `#competitive-analysis`
 **File**: `./docs/analysis/competitive-analysis.md`
 
 ```markdown
@@ -82,9 +81,8 @@ Legend: ✅ Full | ⚠️ Partial | ❌ None
 
 ---
 
-## Locked Specification Template
+## Template 2: Locked Specification {#locked-specification}
 
-**ID**: `#locked-specification`
 **File**: `./docs/specifications/locked-specification-v[X.Y].md`
 
 ```markdown
@@ -105,6 +103,52 @@ Legend: ✅ Full | ⚠️ Partial | ❌ None
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | [Date] | Initial specification |
+
+---
+
+## Summary (OPT-3: Load This During Phase Transitions)
+
+**Quick Reference (~500 tokens for context efficiency)**
+
+**One-Line:** [The one-line requirement statement]
+
+**Domain:** [Mobile / Web / Cloud / AI / Desktop]
+**Skill Tier:** [Beginner / Advanced / Ninja]
+
+### Requirements Overview
+- **Functional Requirements:** [N] total ([X] High, [Y] Medium, [Z] Low priority)
+- **Non-Functional Requirements:** [N] total (Performance, Security, Scalability, etc.)
+- **Acceptance Criteria:** [N] total ([X] High priority, must verify 100%)
+
+### Key Functional Areas
+1. **[Area 1]:** [Brief description] - [FR-XXX to FR-YYY]
+2. **[Area 2]:** [Brief description] - [FR-XXX to FR-YYY]
+3. **[Area 3]:** [Brief description] - [FR-XXX to FR-YYY]
+
+### Critical NFRs
+- **Performance:** [Key metric target, e.g., "API response <200ms P95"]
+- **Scalability:** [Key target, e.g., "Support 10K concurrent users"]
+- **Security:** [Key requirement, e.g., "Zero critical vulnerabilities"]
+- **[Other]:** [Key target]
+
+### Key Constraints
+- **Technical:** [Primary technical constraint, e.g., "Must use TypeScript, Node.js v18+"]
+- **Business:** [Primary business constraint, e.g., "Launch by Q2 2026"]
+- **Regulatory:** [Primary regulation, e.g., "GDPR compliant"]
+
+### Dependencies
+- **Critical:** [List critical external dependencies]
+- **Risk:** [Highest risk dependency with mitigation]
+
+### Success Metrics
+- **Primary:** [Key success metric]
+- **Secondary:** [Additional metrics]
+
+### Out of Scope (Key Exclusions)
+- [Major exclusion 1]
+- [Major exclusion 2]
+
+**📋 Full Details:** See complete sections below for detailed requirements, ACs, and verification methods.
 
 ---
 
@@ -227,9 +271,8 @@ Legend: ✅ Full | ⚠️ Partial | ❌ None
 
 ---
 
-## One-Line Requirements Template
+## Template 3: One-Line Requirements {#one-line-requirements}
 
-**ID**: `#one-line-requirements`
 **File**: `./docs/specifications/one-line-requirements.md`
 
 ```markdown
@@ -254,9 +297,7 @@ Legend: ✅ Full | ⚠️ Partial | ❌ None
 
 ---
 
-## Recovery Checkpoint Template (Phase 1)
-
-**ID**: `#recovery-checkpoint-phase1`
+## Template 4: Recovery Checkpoint (Phase 1) {#recovery-checkpoint-phase1}
 
 ```markdown
 # Recovery Checkpoint / Phase Handoff
