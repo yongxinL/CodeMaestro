@@ -37,6 +37,33 @@ Interactive phase initialization wizard (v1.1)
 ### `/tree`
 Show task DAG with status indicators
 
+**Syntax:**
+```bash
+/tree                           # Display text DAG (default)
+/tree --visual                  # Generate interactive HTML visualization
+/tree --visual --open           # Generate and open in browser
+/tree --visual --export         # Save HTML to docs/architecture/
+/tree --visual --layout [type]  # Specify layout (hierarchical|force|radial|tree)
+/tree --visual --highlight critical  # Highlight critical path
+/tree --visual --filter pending # Filter by status
+```
+
+**Visual Features:**
+- Interactive nodes (click, drag, hover)
+- Critical path highlighting (blue nodes)
+- Parallel execution groups
+- Progress tracking (color-coded: 🟢 complete, 🟡 in-progress, ⚪ pending)
+- Export formats: HTML, PNG, SVG, JSON
+- Real-time updates with --watch flag
+
+**Layout Algorithms:**
+- **Hierarchical** (default): Top-to-bottom flow, clear dependency levels
+- **Force-directed**: Physics simulation, optimal for complex networks
+- **Radial**: Central root with tasks radiating outward
+- **Tree**: Left-to-right tree structure, presentation-friendly
+
+**See:** [docs/config/visual-task-dag.md](docs/config/visual-task-dag.md)
+
 ---
 
 ## Role Commands
@@ -108,10 +135,69 @@ Show decision log tail
 
 ---
 
-## Knowledge Base Commands (v1.0)
+## Knowledge Base Commands (v1.0+)
 
 ### `/kb search [query]`
-Search knowledge base
+Search knowledge base (project-specific or global)
+
+**Syntax:**
+```bash
+/kb search [query]              # Search local project KB (default)
+/kb search --global [query]     # Search global KB (all projects)
+/kb search --all [query]        # Search both local and global
+/kb search --global --type pattern  # Filter by type
+/kb search --global --domain mobile  # Filter by domain
+/kb search --global --confidence high  # Filter by confidence
+/kb search --global --semantic "query"  # AI-powered semantic search
+```
+
+### `/kb export`
+Export project KB entries to global KB (v1.1)
+
+**Syntax:**
+```bash
+/kb export                      # Export all project entries
+/kb export [entry-id]           # Export specific entry (e.g., P001, F003)
+/kb export --filter pattern     # Export only patterns
+/kb export --auto               # Enable auto-export on Phase 5
+```
+
+**Features:**
+- Duplicate detection
+- Conflict resolution
+- Privacy filtering (auto-redact sensitive data)
+- Attribution tracking
+
+### `/kb import [entry-id]`
+Import entry from global KB to project (v1.1)
+
+**Syntax:**
+```bash
+/kb import [entry-id]           # Import specific entry from global KB
+/kb import --pattern [id]       # Import pattern (alias)
+/kb import --recommend          # AI recommends relevant entries
+/kb import --merge              # Merge with existing local entry
+```
+
+### `/kb sync`
+Synchronize project KB with global KB (v1.1)
+
+**Syntax:**
+```bash
+/kb sync                        # Two-way sync (export new, import updates)
+/kb sync --push                 # One-way push (export to global)
+/kb sync --pull                 # One-way pull (import from global)
+/kb sync --dry-run              # Preview changes without applying
+```
+
+### `/kb stats`
+View knowledge base statistics
+
+**Syntax:**
+```bash
+/kb stats                       # Project KB stats
+/kb stats --global              # Global KB stats across all projects
+```
 
 ### `/kb add failure`
 Document failure pattern
@@ -121,6 +207,8 @@ Document success pattern
 
 ### `/kb list`
 List all KB entries
+
+**See:** [docs/config/multi-project-kb.md](docs/config/multi-project-kb.md)
 
 ---
 
@@ -217,6 +305,60 @@ Check acceptance criteria pass rate only
 ---
 
 ## Generation & Automation Commands (v1.1)
+
+### `/scaffold [domain]`
+Generate domain-specific project structure (Phase 2)
+
+**Syntax:**
+```bash
+/scaffold mobile                # React Native mobile app structure
+/scaffold web                   # Next.js/React web app structure
+/scaffold cloud                 # Node.js/Express backend structure
+/scaffold ai                    # Python ML/Data Science structure
+/scaffold --auto                # Auto-detect from locked specification
+/scaffold mobile --framework flutter  # Override default framework
+/scaffold web --language typescript   # Override default language
+/scaffold --dry-run             # Preview structure without creating files
+```
+
+**Supported Domains:**
+- **Mobile**: React Native, Flutter (iOS/Android)
+- **Web**: Next.js, React, Vue, Angular, Svelte
+- **Cloud**: Express, FastAPI, Spring Boot, serverless
+- **AI/ML**: Jupyter, TensorFlow, PyTorch, MLOps
+
+**Generated Content:**
+- Complete directory structure
+- Configuration files (linting, testing, build)
+- Boilerplate code (routing, authentication, API setup)
+- Development dependencies
+- Docker containerization
+- README and documentation templates
+
+**Features:**
+- Best practices by default
+- Framework flexibility
+- Safety checks (warns if files exist)
+- Post-scaffold validation
+- Integration with Phase 2 architecture blueprint
+
+**Example Output:**
+```
+✅ Scaffolded 47 files
+✅ Installed 23 dependencies
+✅ Configured linting and formatting
+✅ Generated example tests
+
+Next steps:
+1. Review generated files
+2. Update .env with configuration
+3. Run: npm start
+4. Begin implementation (Phase 3)
+```
+
+**See:** [docs/config/domain-scaffolding.md](docs/config/domain-scaffolding.md)
+
+---
 
 ### `/generate test [AC-ID]`
 Generate test stubs from acceptance criteria (Phase 3)
