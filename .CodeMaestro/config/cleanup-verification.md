@@ -44,7 +44,6 @@ The CodeMaestro cleanup system ensures framework files are removed from final de
 │   ├── COMMANDS-CORE.md
 │   ├── COMMANDS-ADVANCED.md
 │   └── README.md
-├── knowledge-base/       # KB system files
 └── init-docs.sh          # Initialization script
 ```
 
@@ -520,7 +519,6 @@ It's important to understand that cleanup does NOT remove user-generated work:
 - System configuration (`.CodeMaestro/config/`)
 - Templates (`.CodeMaestro/config/templates/`)
 - Framework documentation (`.CodeMaestro/docs/`)
-- Framework KB system (`.CodeMaestro/knowledge-base/`)
 - init-docs.sh script
 - CLAUDE.md guide
 
