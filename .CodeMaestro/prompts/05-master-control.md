@@ -107,6 +107,50 @@ From Phase 4:
 - [ ] CHANGELOG updated
 - [ ] Documentation complete
 - [ ] Rollback plan documented
+- [ ] Framework cleanup verified
+
+#### Framework Cleanup Verification
+
+Before final release, verify and remove CodeMaestro framework files:
+
+1. **Verify what would be removed**:
+   ```bash
+   ./cleanup.sh --verify
+   ```
+
+   Expected output:
+   - `.CodeMaestro/` directory
+   - `CLAUDE.md` file
+
+2. **Review removal list**:
+   - Ensure only framework files are listed
+   - Verify user documentation (`docs/`) is NOT listed
+   - Verify project code is NOT listed
+
+3. **If release approved, apply cleanup**:
+   ```bash
+   ./cleanup.sh --apply
+   # Type "yes" when prompted
+   ```
+
+4. **Validate clean deliverable**:
+   ```bash
+   ./cleanup.sh --validate-build
+   ```
+
+   This checks build artifacts (Docker images, dist/ directories, etc.) for framework files.
+
+**What Gets Excluded:**
+- `.CodeMaestro/` (entire framework directory with prompts, config, templates)
+- `CLAUDE.md` (framework developer guide)
+
+**What Gets Kept:**
+- `docs/` (ALL user documentation: specifications, architecture, handoffs, knowledge base, etc.)
+- All project source code and tests
+- Token tracking data (embedded in task files)
+- Recovery checkpoints
+
+**Note**: If you need to preserve `.CodeMaestro/` or `CLAUDE.md` for any reason, skip the cleanup step and document the rationale in the release notes.
 
 ---
 
