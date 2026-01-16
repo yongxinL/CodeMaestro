@@ -26,31 +26,30 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | Directory/File | Purpose |
 |----------------|---------|
-| `docs/prompts/` | Core system prompts (00-core, phase prompts, templates) |
-| `docs/config/` | Configuration files (git-commands, constraints, roles, etc.) |
-| `docs/config/CONFIG-QUICK-REFERENCE.md` | **Quick index of all config files** (start here!) |
-| `docs/standalone-prompts/` | **For Claude Desktop users only** (not used by Claude Code) |
+| `.CodeMaestro/` | **All framework files** (easy to exclude) |
+| `.CodeMaestro/prompts/` | Core system prompts (00-core, phase prompts, templates) |
+| `.CodeMaestro/config/` | Configuration files (git-commands, constraints, roles, etc.) |
+| `.CodeMaestro/init-docs.sh` | Project initialization script |
 | `CLAUDE.md` | This file (developer guide for Claude Code) |
-| `README.md` | User-facing installation guide (not for Claude Code) |
-| `COMMANDS-CORE.md` | Essential commands (Phases 1-5) |
-| `COMMANDS-ADVANCED.md` | Phase F commands (load in Phase 4-5 only) |
-| `init-docs.sh` | Project initialization script |
+| `README.md` | User-facing installation guide |
+| `.CodeMaestro/docs/COMMANDS-CORE.md` | Essential commands (Phases 1-5) |
+| `.CodeMaestro/docs/COMMANDS-ADVANCED.md` | Phase F commands (load in Phase 4-5 only) |
 
-**Note:** `docs/standalone-prompts/` contains complete phase prompts for Claude Desktop/claude.ai users. **Claude Code should use the modular `docs/prompts/` files** for token efficiency.
+**Note:** All CodeMaestro framework files are in `.CodeMaestro/` directory for easy exclusion from project deliverables. User projects will have their own `.CodeMaestro/` directory (created by init-docs.sh) and `docs/` for project-specific documentation.
 
 ### Key Files to Understand
 
 | File | Purpose | Load When |
 |------|---------|-----------|
-| **[docs/config/CONFIG-QUICK-REFERENCE.md](docs/config/CONFIG-QUICK-REFERENCE.md)** | **START HERE** - Quick index of all configs with loading guidance | Always reference first |
-| **[docs/prompts/00-core.md](docs/prompts/00-core.md)** | System configuration: roles, constraints (A1-E33), thresholds, skill tiers | Every session |
-| **[COMMANDS-CORE.md](COMMANDS-CORE.md)** | Essential commands (daily workflow, Phases 1-5) | Phases 1-5 |
-| **[COMMANDS-ADVANCED.md](COMMANDS-ADVANCED.md)** | Phase F commands (estimation, benchmarking, ethics/compliance) | Phases 4-5 only |
-| **[docs/config/git-commands.md](docs/config/git-commands.md)** | Git workflow templates (reference by section ID) | All phases |
-| **[docs/config/constraints-reference.md](docs/config/constraints-reference.md)** | Complete constraint list (reference by ID: A1-E33) | Reference only |
-| **[docs/config/mcp-tools.md](docs/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) | Phase 1-4 (research) |
-| **[init-docs.sh](init-docs.sh)** | Creates directory structure for user projects | Project setup |
-| **[README.md](README.md)** | User-facing installation guide (not for Claude Code) | User reference only |
+| **[.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md](.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md)** | **START HERE** - Quick index of all configs with loading guidance | Always reference first |
+| **[.CodeMaestro/prompts/00-core.md](.CodeMaestro/prompts/00-core.md)** | System configuration: roles, constraints (A1-E33), thresholds, skill tiers | Every session |
+| **[.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md)** | Essential commands (daily workflow, Phases 1-5) | Phases 1-5 |
+| **[.CodeMaestro/docs/COMMANDS-ADVANCED.md](.CodeMaestro/docs/COMMANDS-ADVANCED.md)** | Phase F commands (estimation, benchmarking, ethics/compliance) | Phases 4-5 only |
+| **[.CodeMaestro/config/git-commands.md](.CodeMaestro/config/git-commands.md)** | Git workflow templates (reference by section ID) | All phases |
+| **[.CodeMaestro/config/constraints-reference.md](.CodeMaestro/config/constraints-reference.md)** | Complete constraint list (reference by ID: A1-E33) | Reference only |
+| **[.CodeMaestro/config/mcp-tools.md](.CodeMaestro/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) | Phase 1-4 (research) |
+| **[.CodeMaestro/init-docs.sh](.CodeMaestro/init-docs.sh)** | Creates directory structure for user projects | Project setup |
+| **[README.md](.CodeMaestro/docs/README.md)** | User-facing installation guide (not for Claude Code) | User reference only |
 
 ---
 
@@ -131,7 +130,7 @@ CodeMaestro integrates with Model Context Protocol (MCP) tools:
 - All sources must be cited in decision log
 - Validate information from multiple sources
 
-**Configuration:** See [docs/config/mcp-tools.md](docs/config/mcp-tools.md) for complete integration guide.
+**Configuration:** See [.CodeMaestro/config/mcp-tools.md](.CodeMaestro/config/mcp-tools.md) for complete integration guide.
 
 ---
 
@@ -168,7 +167,7 @@ git commit -m "Initial CodeMaestro setup"
 
 #### Updating Phase Workflows
 
-**Files:** `docs/prompts/0[1-5]-phase-name.md`
+**Files:** `.CodeMaestro/prompts/0[1-5]-phase-name.md`
 
 - Each phase prompt is self-contained
 - Must reference `00-core.md` for roles/constraints
@@ -187,16 +186,16 @@ See templates in `02-planning-templates.md` for detailed task structures.
 
 #### Adding/Modifying Roles
 
-**Files:** `docs/config/roles/*.md` and `docs/prompts/00-core.md`
+**Files:** `.CodeMaestro/config/roles/*.md` and `.CodeMaestro/prompts/00-core.md`
 
 1. Define role in `00-core.md` with template format
-2. Create detailed file in `docs/config/roles/new-role.md`
+2. Create detailed file in `.CodeMaestro/config/roles/new-role.md`
 3. Reference in phase prompts where role is active
 4. Update COMMANDS.md if adding role-specific commands
 
 #### Updating Constraints
 
-**File:** `docs/config/constraints-reference.md`
+**File:** `.CodeMaestro/config/constraints-reference.md`
 
 - Constraints use ID format: `A#` (Architecture), `B#` (Best Practice), `C#` (Code Quality), `D#` (Documentation), `E#` (Evidence)
 - In prompts, reference by ID only (e.g., "See constraint A1")
@@ -205,7 +204,7 @@ See templates in `02-planning-templates.md` for detailed task structures.
 
 #### Modifying Git Workflow
 
-**File:** `docs/config/git-commands.md`
+**File:** `.CodeMaestro/config/git-commands.md`
 
 - Contains templates for common git operations
 - Reference templates in phase prompts
@@ -264,7 +263,7 @@ Non-negotiable minimums:
 - **Security Issues:** 0 critical/high (blocking)
 - **Acceptance Criteria Pass Rate:** 100% (blocking)
 
-Override in `docs/config/thresholds.md` if needed for specific projects.
+Override in `.CodeMaestro/config/thresholds.md` if needed for specific projects.
 
 ---
 
@@ -289,7 +288,7 @@ Override in `docs/config/thresholds.md` if needed for specific projects.
 4. Test command flow in test project
 
 #### Modify a role's responsibilities
-1. Update role definition in `docs/config/roles/*.md`
+1. Update role definition in `.CodeMaestro/config/roles/*.md`
 2. Update role entry in `00-core.md`
 3. Adjust phase prompts that reference the role
 4. Test role transitions in test project
@@ -324,13 +323,13 @@ Override in `docs/config/thresholds.md` if needed for specific projects.
 
 ## Common References
 
-- **Quick config index:** See [docs/config/CONFIG-QUICK-REFERENCE.md](docs/config/CONFIG-QUICK-REFERENCE.md) ⭐ **START HERE**
-- **Core commands:** See [COMMANDS-CORE.md](COMMANDS-CORE.md) (Phases 1-5)
-- **Advanced commands:** See [COMMANDS-ADVANCED.md](COMMANDS-ADVANCED.md) (Phase F, Phases 4-5 only)
-- **System configuration:** See [docs/prompts/00-core.md](docs/prompts/00-core.md)
-- **Constraints:** See [docs/config/constraints-reference.md](docs/config/constraints-reference.md)
-- **Git workflows:** See [docs/config/git-commands.md](docs/config/git-commands.md)
-- **Installation (users):** See [README.md](README.md)
+- **Quick config index:** See [.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md](.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md) ⭐ **START HERE**
+- **Core commands:** See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) (Phases 1-5)
+- **Advanced commands:** See [.CodeMaestro/docs/COMMANDS-ADVANCED.md](.CodeMaestro/docs/COMMANDS-ADVANCED.md) (Phase F, Phases 4-5 only)
+- **System configuration:** See [.CodeMaestro/prompts/00-core.md](.CodeMaestro/prompts/00-core.md)
+- **Constraints:** See [.CodeMaestro/config/constraints-reference.md](.CodeMaestro/config/constraints-reference.md)
+- **Git workflows:** See [.CodeMaestro/config/git-commands.md](.CodeMaestro/config/git-commands.md)
+- **Installation (users):** See [README.md](.CodeMaestro/docs/README.md)
 - **Help command:** Run `/help` in Claude Code once initialized
 
 ---
