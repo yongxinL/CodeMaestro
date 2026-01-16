@@ -477,11 +477,55 @@ Consolidate decision log.
 > 
 > **🔄 SESSION RECOMMENDATION:**
 > **Start new session for Phase 4**.
-> 
+>
 > **Model:** Claude Sonnet 4.5 (verification complexity)
-> 
-> **Handoff:** `cat docs/implementation/.recovery-checkpoint.md`
-> 
+>
+> **📋 SESSION HANDOFF: Implementation → Verification**
+>
+> **What Was Accomplished (Phase 3):**
+> - ✅ Implemented [X]/[Y] tasks ([Z]%)
+> - ✅ Test coverage: [W]%
+> - ✅ Token efficiency: [Variance]% ([Excellent/Good/Needs Improvement])
+> - ✅ Module contexts: [N] modules documented
+> - ✅ Knowledge base: [F] failures, [P] patterns logged
+> - ✅ Estimation tracking: Complete with variance analysis
+> - ✅ All commits and tag: `v0.3.0-impl`
+>
+> **Next Phase: Verification (Phase 4)**
+>
+> **Entry Point:**
+> 1. Load `./.CodeMaestro/prompts/04-verification.md`
+> 2. Activate **QA Lead** role
+> 3. Start with Step 4.1: Input Validation
+> 4. Execute comprehensive verification workflow
+>
+> **Critical Context for Verification:**
+> - **Implementation Decisions:** [Key decisions impacting testing]
+> - **State Management:** [Pattern] - [Source of truth]
+> - **Known Issues:** [Issues to verify in Phase 4]
+> - **Quality Targets:** Coverage ≥70%, Security 0 C/H, AC 100%
+>
+> **Files to Load First:**
+> - `docs/specifications/locked-specification.md` - AC verification source
+> - `docs/verification/test-plan.md` - Test execution guide
+> - `docs/architecture/api-contracts/openapi.yaml` - Contract validation
+> - `implementation/estimation-tracking.md` - Token variance data
+>
+> **Token Metrics Summary:**
+> - Phase 3 Total: [X]K tokens ([N] sessions)
+> - Estimated: [Y]K tokens
+> - Variance: [±Z]% ([Insights])
+> - Phase 4 Estimate: 40K-80K tokens (1 session)
+>
+> **Git State:**
+> - Branch: `develop`
+> - Tag: `v0.3.0-impl`
+> - Status: Clean
+>
+> **Recovery Checkpoint:** `docs/implementation/.recovery-checkpoint.md`
+>
+> **Full Handoff Guide:** See `.CodeMaestro/config/handoff-messages.md#phase-3-to-4`
+>
 > Reply **APPROVED**."
 
 ---

@@ -371,11 +371,59 @@ NO-GO if ANY blocking criterion fails
 > 
 > **🔄 SESSION RECOMMENDATION:**
 > **Start new session for Phase 5**.
-> 
+>
 > **Model:** Claude Sonnet 4.5 (release orchestration)
-> 
-> **Handoff:** `cat docs/implementation/.recovery-checkpoint.md`
-> 
+>
+> **📋 SESSION HANDOFF: Verification → Release**
+>
+> **What Was Accomplished (Phase 4):**
+> - ✅ All tests executed (unit, integration, E2E)
+> - ✅ Security scans complete (SAST, dependency, secrets)
+> - ✅ Ethics validation passed
+> - ✅ Performance baselines established (v[X.Y.Z])
+> - ✅ API contracts validated
+> - ✅ Evidence package created with token metrics
+> - ✅ **GO decision** - All quality gates passed
+> - ✅ Git commit and tag: `v0.4.0-verify`
+>
+> **Next Phase: Master Control & Release (Phase 5)**
+>
+> **Entry Point:**
+> 1. Load `./.CodeMaestro/prompts/05-master-control.md`
+> 2. Activate **Release Manager** role
+> 3. Follow Step 5.A: Success Workflow (GO decision)
+> 4. Start with Step 5.A.1: Pre-Release Verification
+>
+> **Critical Context for Release:**
+> - **Decision:** GO ✅ (all blocking gates passed)
+> - **Blocking Issues:** 0
+> - **Non-Blocking Warnings:** [N] items
+> - **Performance Baseline:** v[X.Y.Z] established
+> - **Token Efficiency:** [Score]/10 ([Excellent/Good/Needs Improvement])
+>
+> **Files to Load First:**
+> - `verification/evidence-packages/v[X.Y.Z]-evidence.md` - Complete evidence
+> - `docs/release/monitoring-plan.md` - Post-release monitoring
+> - `docs/release/rollback-sop.md` - Rollback procedures
+> - `CHANGELOG.md` - Update with release notes
+>
+> **Token Metrics for Retrospective:**
+> - Project Total: [Y]K tokens (all phases)
+> - Estimated: [Z]K tokens
+> - Variance: [±W]% ([Analysis])
+> - Phase 5 Estimate: 15K-35K tokens (1 session)
+> - Lessons to capture in Phase 5 retrospective
+>
+> **Git State:**
+> - Branch: `develop`
+> - Tag: `v0.4.0-verify`
+> - Status: Clean
+> - Next: Merge to `main`, create release tag `v[X.Y.Z]`
+>
+> **Recovery Checkpoint:** `docs/implementation/.recovery-checkpoint.md`
+>
+> **Full Handoff Guide:** See `.CodeMaestro/config/handoff-messages.md#phase-4-to-5`
+>
 > Reply **APPROVED**."
 
 ### NO-GO Decision

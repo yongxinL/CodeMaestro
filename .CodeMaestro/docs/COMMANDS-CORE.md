@@ -139,6 +139,64 @@ Force save recovery checkpoint
 ### `/history`
 Show decision log tail
 
+### `/handoff` (v1.0+)
+Generate handoff message for session transitions
+
+**Syntax:**
+```bash
+/handoff                         # Generate handoff for current phase
+/handoff --next                  # Include next phase preparation
+/handoff --tokens                # Include detailed token analysis
+/handoff --recovery              # Include recovery instructions
+/handoff --export                # Export handoff to file
+```
+
+**Output:**
+```markdown
+## Session Handoff: [Current Phase] → [Next Phase]
+
+**What Was Accomplished:**
+- ✅ [Completed work 1]
+- ✅ [Completed work 2]
+
+**Next Phase Entry:**
+1. Load [phase prompt file]
+2. Activate [role] role
+3. Start with [step]
+
+**Critical Context:**
+- [Key decision 1]
+- [Key decision 2]
+
+**Files to Load First:**
+- [file 1] - [why important]
+
+**Token Metrics:**
+- Current session: [X]K tokens
+- Next phase estimate: [Y]K tokens
+
+**Git State:**
+- Branch: [branch]
+- Tag: [tag]
+
+**Recovery:** [checkpoint file path]
+```
+
+**Features:**
+- Automatic context capture
+- Phase-specific templates
+- Token budget tracking
+- Git state snapshot
+- Quick resume commands
+
+**When to Use:**
+- End of every phase (automatic in checkpoints)
+- Before long breaks (>24 hours)
+- Session utilization >85%
+- Before context-heavy operations
+
+**See:** [.CodeMaestro/config/handoff-messages.md](.CodeMaestro/config/handoff-messages.md)
+
 ---
 
 ## Token Management Commands (v1.0+)

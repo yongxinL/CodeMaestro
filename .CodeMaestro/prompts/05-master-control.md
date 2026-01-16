@@ -341,11 +341,58 @@ view /mnt/project/portfolio/performance-report-template.md
 > **📊 On-Demand Available:**
 > - Portfolio generation: `/portfolio generate`
 > - Performance dashboards: Link to monitoring
-> 
-> **Next Options**:
-> 1. **NEW ITERATION** - Start Phase 1 for new features
-> 2. **PROJECT COMPLETE** - Archive and close
-> 
+>
+> **📋 SESSION HANDOFF: Release Complete**
+>
+> **What Was Accomplished (Phase 5):**
+> - ✅ Release v[X.Y.Z] deployed to production
+> - ✅ Monitoring dashboards activated
+> - ✅ Knowledge Base updated ([N] patterns, [M] decisions)
+> - ✅ Token lessons learned documented
+> - ✅ Performance baselines established (v[X.Y.Z])
+> - ✅ Lessons learned retrospective complete
+> - ✅ All branches synchronized (main + develop)
+>
+> **Project Metrics Summary:**
+> - **Duration:** [Start Date] → [End Date] ([N] weeks)
+> - **Tasks:** [X] completed
+> - **Quality:** Coverage [Y]%, Security 0 C/H, AC 100%
+> - **Token Efficiency:** [Z]% variance ([Score]/10)
+> - **Cost:** $[Amount] ([Total]K tokens)
+>
+> **Knowledge Base Additions:**
+> - Patterns: [N] successful patterns documented
+> - Failures: [M] failure patterns logged
+> - Decisions: [K] ADRs in index
+> - Token History: Complete variance data for future estimation
+>
+> **Next Options:**
+>
+> **1. NEW ITERATION (Add Features)**
+> - **Entry Point:** Start Phase 1 with new requirements
+> - **Context to Preserve:**
+>   - Current architecture (blueprint v[X.Y])
+>   - Established patterns (knowledge base)
+>   - Token estimation baselines (this project's data)
+>   - Performance baselines (v[X.Y.Z])
+> - **Git:** Create new feature branch from `develop`
+> - **Recommended:** Review lessons learned before starting
+>
+> **2. PROJECT COMPLETE (Archive)**
+> - **Final Steps:**
+>   1. Generate portfolio: `/portfolio generate`
+>   2. Archive knowledge base (copy to global KB if desired)
+>   3. Document project retrospective
+>   4. Tag final state: `v[X.Y.Z]-archived`
+> - **Preserve:**
+>   - Token estimation data for future projects
+>   - Successful patterns in global knowledge base
+>   - Architecture decisions for similar projects
+>
+> **Recovery Checkpoint:** `docs/implementation/.recovery-checkpoint.md`
+>
+> **Full Handoff Guide:** See `.CodeMaestro/config/handoff-messages.md`
+>
 > Congratulations! 🎉"
 
 ---

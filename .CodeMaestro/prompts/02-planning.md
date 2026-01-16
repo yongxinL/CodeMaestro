@@ -508,11 +508,56 @@ Generate:
 > 
 > **🔄 SESSION RECOMMENDATION:**
 > For optimal performance, **start new session for Phase 3**.
-> 
+>
 > **Model Suggestion:** Claude Sonnet 4.5 or Claude Haiku 4.5 (implementation tasks)
-> 
-> **Handoff File:** `cat docs/implementation/.recovery-checkpoint.md`
-> 
+>
+> **📋 SESSION HANDOFF: Planning → Implementation**
+>
+> **What Was Accomplished (Phase 2):**
+> - ✅ Architecture blueprint created (v1.0)
+> - ✅ Technology stack selected with lock files
+> - ✅ API contracts defined ([N] endpoints)
+> - ✅ Task DAG generated ([Z] tasks, [N] parallel groups)
+> - ✅ Gantt timeline created
+> - ✅ Token estimates complete ([T]K tokens total)
+> - ✅ Threat model and test plan established
+> - ✅ All tasks estimated (effort + tokens)
+>
+> **Next Phase: Implementation (Phase 3)**
+>
+> **Entry Point:**
+> 1. Load `./.CodeMaestro/prompts/03-implementation.md`
+> 2. Activate **Senior Developer** role
+> 3. Start with Step 3.1: Environment Verification
+> 4. Load first task: T-[M].[Mod].[Task]
+>
+> **Critical Context for Implementation:**
+> - **Architecture Pattern:** [Pattern]
+> - **Key ADRs:** [List 2-3 critical architectural decisions]
+> - **State Management:** [Pattern/Strategy]
+> - **Quality Thresholds:** Coverage ≥70%, Security 0 C/H, AC 100%
+>
+> **Files to Load First:**
+> - `docs/architecture/blueprint.md` - Architectural reference
+> - `docs/architecture/task-dag.mermaid` - Task dependencies
+> - `docs/architecture/tasks/` - Task files with token estimates
+> - `docs/architecture/api-contracts/openapi.yaml` - API contracts
+>
+> **Token Budget for Phase 3:**
+> - Estimated: [T]K tokens ([Z] tasks)
+> - By Milestone: M1 ([A]K), M2 ([B]K), M3 ([C]K)
+> - Sessions Needed: [N]-[N+1] (based on 800K usable per session)
+> - **Remember:** Use `/budget` before each task (Step 3.3.1c)
+>
+> **Git State:**
+> - Branch: `develop`
+> - Tag: `v0.2.0-plan`
+> - Status: Clean
+>
+> **Recovery Checkpoint:** `docs/implementation/.recovery-checkpoint.md`
+>
+> **Full Handoff Guide:** See `.CodeMaestro/config/handoff-messages.md#phase-2-to-3`
+>
 > Reply **APPROVED** to proceed."
 
 ---
