@@ -106,6 +106,51 @@ This provides **harmonic resonance** - understanding the architectural vision fo
 
 **Start timer**.
 
+#### 3.3.1c: Session Budget Check [NEW v1.0]
+
+**Action**: Verify sufficient token budget before starting task execution.
+
+**Load token estimation:**
+```
+view /mnt/project/config/token-estimation.md#session-budget-check
+```
+
+**Check current session status:**
+
+```markdown
+### Session Budget Check
+
+**Session Model:** [Claude Sonnet 4.5 / Opus 4.5 / Haiku 4.5]
+**Session Budget:** [1,000,000 / 200,000] tokens
+- Usable (80%): [800,000 / 160,000] tokens
+- Current usage: [X] tokens ([Y]% of budget)
+- Remaining: [Z] tokens
+
+**Task Token Budget:** [T] tokens (from task file)
+
+**Status:** [✅ Sufficient / ⚠️ Low / ❌ Insufficient]
+
+**Action:**
+- ✅ Sufficient (remaining > task budget × 1.5): Proceed with task
+- ⚠️ Low (remaining > task budget × 1.0 but < 1.5): Proceed with caution, monitor closely
+- ❌ Insufficient (remaining < task budget): Create checkpoint, start new session
+```
+
+**If insufficient budget:**
+1. Create recovery checkpoint immediately
+2. Document current progress in task file
+3. Recommend new session with handoff context
+4. Update checkpoint with:
+   - Current token usage
+   - Remaining tasks and estimates
+   - Recommended model for continuation
+
+**Reference Commands:**
+```bash
+/budget                         # Check current session status
+/budget --forecast              # Forecast remaining tasks
+```
+
 #### 3.3.1b: Generate Test Stubs (Optional) [NEW v1.1]
 
 **For tasks involving acceptance criteria validation:**
@@ -198,9 +243,64 @@ Add implementation log entry with:
 - **State management approach**
 - Challenges and resolutions
 
-#### 3.3.7: Update Effort Tracking
+#### 3.3.7: Update Effort and Token Tracking
 
-Record actual vs estimated effort.
+**Action**: Record actual vs estimated effort and token usage.
+
+**Load reference:**
+```
+view /mnt/project/config/token-estimation.md#actual-token-recording
+```
+
+**Add to task file:**
+
+```markdown
+## Effort Tracking
+
+**Estimated Effort:** [X] hours
+**Actual Effort:** [Y] hours
+**Variance:** [+/-Z] hours ([+/-W]%)
+
+## Token Usage
+
+**Estimated Tokens:** [A] tokens
+**Actual Tokens:** [B] tokens
+**Variance:** [+/-C] tokens ([+/-D]%)
+
+**Breakdown:**
+- Code generation: [E] tokens (est. [F])
+- Testing: [G] tokens (est. [H])
+- Documentation: [I] tokens (est. [J])
+- Debugging: [K] tokens (est. [L])
+
+**Variance Analysis:**
+- [Reason 1 for variance]
+- [Reason 2 for variance]
+
+**Lessons Learned:**
+- [Insight 1 for future estimations]
+- [Insight 2 for improving accuracy]
+```
+
+**Update estimation tracking file:**
+
+File: `implementation/estimation-tracking.md`
+
+Add row:
+```markdown
+| T-[ID] | [Task Name] | [Est. Hours] | [Act. Hours] | [Var %] | [Est. Tokens] | [Act. Tokens] | [Var %] | [Notes] |
+```
+
+**Log to Knowledge Base** (if significant variance >±25%):
+```
+/kb add token-variance
+```
+
+Store:
+- Task characteristics
+- Actual token usage breakdown
+- Root cause of variance
+- Recommendations for future estimations
 
 #### 3.3.8: Mark Complete
 
@@ -352,10 +452,17 @@ Consolidate decision log.
 > **Summary**:
 > - ✅ Completed: [X]/[Y] tasks
 > - Effort: [Est]h → [Act]h ([Var]%)
+> - **Tokens**: [Est]K → [Act]K ([Var]%)
 > - Coverage: [X]%
 > - **State Optimization**: [Patterns applied]
 > - **Module Contexts**: [N] modules documented
 > - **Knowledge Base**: [F] failures, [P] patterns logged
+>
+> **Token Efficiency**:
+> - Session Model: [Model]
+> - Total Sessions: [N]
+> - Avg Tokens/Task: [X]K
+> - Budget Utilization: [Y]% (efficient/moderate/high)
 > 
 > **📁 Artifacts:**
 > ```

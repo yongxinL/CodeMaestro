@@ -390,6 +390,7 @@ erDiagram
 **Total Tasks:** [N]
 **Parallel Groups:** [M]
 **Estimated Effort:** [X] hours
+**Estimated Tokens:** [Y]K tokens
 
 ---
 
@@ -398,15 +399,16 @@ erDiagram
 ### Milestone 1: [Name]
 
 **Duration:** [X] hours
+**Token Budget:** [Y]K tokens
 **Priority:** High
 
 #### Module 1.1: [Module Name]
 
-| Task ID | Description | Est. Hours | Dependencies | Parallel Group | AC Mapping |
-|---------|-------------|-----------|--------------|----------------|------------|
-| T-1.1.1 | [Task description] | 4 | None | PG-001 | AC-1.1 |
-| T-1.1.2 | [Task description] | 6 | None | PG-001 | AC-1.2 |
-| T-1.1.3 | [Task description] | 8 | T-1.1.1, T-1.1.2 | - | AC-1.3 |
+| Task ID | Description | Est. Hours | Est. Tokens | Dependencies | Parallel Group | AC Mapping |
+|---------|-------------|-----------|-------------|--------------|----------------|------------|
+| T-1.1.1 | [Task description] | 4 | 10K | None | PG-001 | AC-1.1 |
+| T-1.1.2 | [Task description] | 6 | 15K | None | PG-001 | AC-1.2 |
+| T-1.1.3 | [Task description] | 8 | 35K | T-1.1.1, T-1.1.2 | - | AC-1.3 |
 
 #### Module 1.2: [Module Name]
 [Repeat structure]
@@ -470,6 +472,7 @@ graph TD
 **Milestone:** [M] - [Milestone Name]
 **Module:** [Mod] - [Module Name]
 **Estimated Effort:** [X] hours
+**Estimated Tokens:** [Y]K tokens
 
 **Description:**
 [Detailed description of what needs to be implemented]
@@ -480,6 +483,24 @@ graph TD
 **Dependencies:**
 - T-[ID]: [Dependency description]
 - T-[ID]: [Dependency description]
+
+**Token Estimation:**
+**Estimated Tokens:** [Y],000 tokens
+
+**Rationale:**
+- **Base Estimate:** [Z],000 tokens (Phase 3, [complexity level])
+- **Complexity:** [Simple/Moderate/Complex/Very Complex] ([N] files, ~[LOC] LOC) → [X.X]x
+- **Multipliers:**
+  - [Multiplier name]: +[X.X]x
+- **Calculation:** [Z],000 × [multipliers] = [initial] → Adjusted to [Y],000 (refined based on [rationale])
+
+**Breakdown:**
+- Code generation: [A],000 tokens
+- Testing: [B],000 tokens
+- Documentation: [C],000 tokens
+- Debugging buffer: [D],000 tokens
+
+**Reference:** See `.CodeMaestro/config/token-estimation.md` for estimation methodology
 
 **Implementation Notes:**
 - [Note 1: Key consideration or approach]
@@ -511,6 +532,7 @@ graph TD
 **Start Date:** [YYYY-MM-DD]
 **Estimated End Date:** [YYYY-MM-DD]
 **Total Duration:** [X] weeks
+**Estimated Tokens:** [Y]K tokens
 
 ---
 
@@ -540,11 +562,11 @@ gantt
 
 ## Milestone Schedule
 
-| Milestone | Start Date | End Date | Duration | Tasks | Status |
-|-----------|------------|----------|----------|-------|--------|
-| M1: Foundation | [YYYY-MM-DD] | [YYYY-MM-DD] | [X] days | [N] | ⏳ Pending |
-| M2: Core Features | [YYYY-MM-DD] | [YYYY-MM-DD] | [Y] days | [M] | ⏳ Pending |
-| M3: Advanced | [YYYY-MM-DD] | [YYYY-MM-DD] | [Z] days | [K] | ⏳ Pending |
+| Milestone | Start Date | End Date | Duration | Tasks | Token Budget | Status |
+|-----------|------------|----------|----------|-------|--------------|--------|
+| M1: Foundation | [YYYY-MM-DD] | [YYYY-MM-DD] | [X] days | [N] | [A]K tokens | ⏳ Pending |
+| M2: Core Features | [YYYY-MM-DD] | [YYYY-MM-DD] | [Y] days | [M] | [B]K tokens | ⏳ Pending |
+| M3: Advanced | [YYYY-MM-DD] | [YYYY-MM-DD] | [Z] days | [K] | [C]K tokens | ⏳ Pending |
 
 ---
 

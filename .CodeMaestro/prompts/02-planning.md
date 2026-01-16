@@ -304,13 +304,14 @@ gantt
 
 ---
 
-### Step 2.8: Task File Generation with Estimation
+### Step 2.8: Task File Generation with Token Estimation
 
-**Action**: Create individual task files.
+**Action**: Create individual task files with effort and token estimates.
 
-**Before generating, load template:**
+**Before generating, load templates:**
 ```
 view /mnt/project/02-planning-templates.md#task-template
+view /mnt/project/config/token-estimation.md
 ```
 
 **For each task**, include:
@@ -318,8 +319,67 @@ view /mnt/project/02-planning-templates.md#task-template
 - AC mapping
 - Dependencies
 - Parallelization info
-- Effort estimate with rationale
+- Effort estimate with rationale (hours)
+- **Token estimate with rationale** (see methodology below)
 - Technical notes
+
+**Token Estimation Methodology:**
+
+1. **Determine Complexity:**
+   - Simple (1.0x): 1 file, <100 LOC
+   - Moderate (2.0x): 2-3 files, 100-300 LOC
+   - Complex (3.5x): 4+ files, 300-700 LOC
+   - Very Complex (5.0x): 5+ files, 700+ LOC, architectural changes
+
+2. **Select Phase 3 Base:**
+   - Setup/Config: 5K - 15K tokens
+   - CRUD Operations: 15K - 30K tokens
+   - Business Logic: 25K - 60K tokens
+   - API Integration: 30K - 70K tokens
+   - UI Components: 20K - 50K tokens
+   - Testing: 10K - 35K tokens
+   - Refactoring: 20K - 80K tokens
+   - Bug Fixes: 8K - 40K tokens
+
+3. **Apply Multipliers:**
+   - New Technology: +1.7x
+   - Legacy Code: +1.3x
+   - High Security: +1.2x
+   - Performance Critical: +1.3x
+
+4. **Calculate:**
+   ```
+   Tokens = Base × Complexity × (1 + Σ Multiplier%)
+   ```
+
+5. **Document Rationale** in task file with breakdown:
+   - Code generation: X tokens
+   - Testing: Y tokens
+   - Documentation: Z tokens
+   - Debugging buffer: W tokens
+
+**Example Task Token Estimation:**
+```markdown
+**Estimated Tokens:** 35,000 tokens
+
+**Rationale:**
+- **Base Estimate:** 25,000 tokens (Business Logic)
+- **Complexity:** Moderate (3 files, ~200 LOC) → 2.0x
+- **Multipliers:** New library (Context7) → +1.7x
+- **Calculation:** 25,000 × 2.0 × 1.7 = 85,000 → Adjusted to 35,000 (based on similar tasks)
+
+**Breakdown:**
+- Code generation: 20,000 tokens
+- Testing: 8,000 tokens
+- Documentation: 5,000 tokens
+- Debugging buffer: 2,000 tokens
+```
+
+**Aggregate Token Budgets:**
+- Add token column to Task DAG table (see template)
+- Sum task tokens per milestone + 15% buffer
+- Include in Gantt timeline metadata
+- Verify total project tokens fit within session budgets (800K usable per Sonnet session)
 
 ---
 
@@ -417,7 +477,9 @@ Generate:
 > - Tasks: [Z] total
 > - Parallel Groups: [N]
 > - Estimated Effort: [H] hours
+> - **Estimated Tokens**: [T]K tokens
 > - **Visual Timeline**: Gantt chart created
+> - **Session Recommendation**: [Model] ([T]K tokens fits within [X]K usable budget)
 > 
 > **Competitive-Informed Decisions**:
 > - [Key decision 1] - Differentiator: [X]

@@ -341,6 +341,107 @@ psql database_name < backup_v[X.Y.Z-1].sql
 
 ---
 
+## Token Management Lessons
+
+### Estimation Accuracy
+
+**Overall Performance:**
+- **Estimated Tokens:** [X],000 tokens
+- **Actual Tokens:** [Y],000 tokens
+- **Variance:** [±Z]% ([Excellent <±10% / Good ±10-20% / Needs Improvement >±20%])
+
+**By Milestone:**
+| Milestone | Est. Tokens | Actual Tokens | Variance | Status |
+|-----------|-------------|---------------|----------|--------|
+| M1: Foundation | [A]K | [B]K | [±C]% | [✅ / ⚠️ / ❌] |
+| M2: Core Features | [D]K | [E]K | [±F]% | [✅ / ⚠️ / ❌] |
+| M3: Advanced | [G]K | [H]K | [±I]% | [✅ / ⚠️ / ❌] |
+
+### What Went Well ✅
+
+1. **Estimation Accuracy:**
+   - [Specific insight: e.g., "Final variance was within ±1%, preventing budget overruns"]
+   - **Outcome:** Accurate cost forecasting, confident ROI planning
+
+2. **Session Management:**
+   - [Insight: e.g., "Never exceeded session budget, max utilization was 42%"]
+   - **Outcome:** No context thrashing, smooth task transitions
+
+3. **Cost Predictability:**
+   - **Estimated Cost:** $[X] ([Total]K tokens @ $[rate]/MTok)
+   - **Actual Cost:** $[Y]
+   - **Savings:** $[Z]
+   - **Outcome:** Budget predictability enabled confident planning
+
+### What Could Improve ⚠️
+
+1. **Early Task Estimates:**
+   - **Issue:** M1 tasks were [+X]% over budget
+   - **Root Cause:** Learning curve not adequately accounted for
+   - **Impact:** Required budget adjustments early in project
+   - **Action:** Add "project startup" multiplier (1.2x) for first 3-5 tasks
+
+2. **New Library Integration:**
+   - **Issue:** 1.5x multiplier was insufficient, actual required 1.7x-1.8x
+   - **Root Cause:** Underestimated API exploration and debugging time
+   - **Impact:** Consistent over-budget on new technology tasks
+   - **Action:** Update multiplier to 1.7x in token-estimation.md
+
+3. **Documentation Token Estimates:**
+   - **Issue:** Consistently under-estimated by ~[X]%
+   - **Root Cause:** Complex projects require more thorough docs than anticipated
+   - **Impact:** Documentation tasks took longer than planned
+   - **Action:** Increase documentation baseline by [X]%
+
+### Process Improvements
+
+1. **Add Token Checkpoints:**
+   - ✅ Check budget before starting each task (Step 3.3.1c)
+   - **New:** Alert at 80% budget utilization
+   - **New:** Recommend session break at 85%
+
+2. **Historical Data Collection:**
+   - **Current:** Manual logging to estimation-tracking.md
+   - **Improvement:** Log all task-level actuals to knowledge base automatically
+   - **Benefit:** Build project-specific baselines for ML-based estimation
+
+3. **Real-Time Tracking:**
+   - ✅ Display token usage in recovery checkpoint
+   - **Improvement:** Show variance trends during implementation
+   - **Improvement:** Provide session-end token summary in lessons learned
+
+### Recommendations for Future Projects
+
+| Recommendation | Rationale | Impact | Priority |
+|----------------|-----------|--------|----------|
+| Apply 1.7x multiplier for new libs | 1.5x was insufficient | Higher estimation accuracy | High |
+| Add 1.2x "startup" multiplier for M1 | Learning curve effect | Better early-phase estimates | High |
+| Increase doc baseline by [X]% | Consistent under-estimation | Accurate doc token budgets | Medium |
+| Build project-type baselines | Domain-specific patterns | Faster, more accurate estimates | Medium |
+| Automate KB logging of actuals | Enable ML-based estimation | Continuous improvement | Low |
+
+### Token Efficiency Score
+
+**Overall Score:** [X.X]/10
+
+**Breakdown:**
+- **Estimation Accuracy (30%):** [Score]/10 ([Variance]% within target)
+- **Budget Management (25%):** [Score]/10 (Never exceeded: [Yes/No], Minimal waste: [Yes/No])
+- **Cost Predictability (20%):** [Score]/10 (Forecast accuracy: [±X]%)
+- **Session Optimization (15%):** [Score]/10 (Avg utilization: [Y]%, Target: 60-75%)
+- **Learning Adaptation (10%):** [Score]/10 (Improvement over milestones: [Yes/No])
+
+**Interpretation:**
+- **Excellent (9-10):** [List areas of excellence]
+- **Good (7-8):** [List areas performing well]
+- **Needs Work (<7):** [List areas needing improvement]
+
+**Target for Next Project:** [X.X]/10
+
+**Reference:** Full token metrics in `verification/evidence-packages/v[X.Y.Z]-evidence.md#token-efficiency-metrics`
+
+---
+
 ## Key Decisions
 
 ### Architecture Decisions

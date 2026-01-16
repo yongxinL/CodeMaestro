@@ -328,7 +328,49 @@ Result: [✅ No breaking changes / ❌ Breaking changes detected]
 
 ---
 
-## 8. GO/NO-GO Decision
+## 8. Token Efficiency Metrics
+
+**Session Summary:**
+- **Model Used:** [Claude Sonnet 4.5 / Opus 4.5 / Haiku 4.5]
+- **Total Sessions:** [N]
+- **Total Tokens:** [X],000 tokens
+- **Session Budget Utilization:** [Y]% (efficient: <50%, moderate: 50-75%, high: >75%)
+
+**Task-Level Performance:**
+| Milestone | Tasks | Est. Tokens | Actual Tokens | Variance | Status |
+|-----------|-------|-------------|---------------|----------|--------|
+| M1: Foundation | [N] | [A]K | [B]K | [+/-C]% | [✅ / ⚠️ / ❌] |
+| M2: Core Features | [M] | [D]K | [E]K | [+/-F]% | [✅ / ⚠️ / ❌] |
+| M3: Advanced | [K] | [G]K | [H]K | [+/-I]% | [✅ / ⚠️ / ❌] |
+| **Total** | **[T]** | **[J]K** | **[L]K** | **[+/-M]%** | **[Status]** |
+
+**Analysis:**
+- **Overall Accuracy:** [Excellent (<±10%) / Good (±10-20%) / Needs Improvement (>±20%)]
+- **Early Tasks:** [Variance description and learning curve analysis]
+- **Later Tasks:** [Efficiency improvements due to pattern reuse]
+
+**Key Insights:**
+- **Estimation Accuracy:** [Assessment of estimation methodology effectiveness]
+- **Complexity Multipliers:** [Were multipliers accurate? Recommendations]
+- **Technology Multipliers:** [New library/legacy code multipliers accurate?]
+- **Testing Estimates:** [Were testing token estimates accurate?]
+- **Documentation Estimates:** [Were documentation token estimates accurate?]
+
+**Cost Efficiency:**
+- **Estimated Cost:** $[X] ([J]K tokens @ $[rate]/MTok)
+- **Actual Cost:** $[Y] ([L]K tokens @ $[rate]/MTok)
+- **Savings/Overage:** $[Z] ([accurate estimation prevented over-provisioning / required budget adjustment])
+
+**Recommendations for Next Project:**
+1. [Recommendation 1: e.g., Apply 1.7x multiplier for new libraries]
+2. [Recommendation 2: e.g., Increase documentation estimates by 10%]
+3. [Recommendation 3: e.g., Maintain current complexity multipliers]
+
+**Reference:** See `.CodeMaestro/config/token-estimation.md` for detailed methodology
+
+---
+
+## 9. GO/NO-GO Decision
 
 **Decision:** [✅ GO / ❌ NO-GO / ⚠️ CONDITIONAL GO]
 
@@ -352,7 +394,7 @@ Result: [✅ No breaking changes / ❌ Breaking changes detected]
 
 ---
 
-## 9. Evidence Artifacts
+## 10. Evidence Artifacts
 
 **Test Reports:**
 - `test-reports/unit-test-report-[date].html`
@@ -384,7 +426,7 @@ Result: [✅ No breaking changes / ❌ Breaking changes detected]
 
 ---
 
-## 10. Recommendations
+## 11. Recommendations
 
 **For Immediate Action:**
 - [Action 1: High priority fix]

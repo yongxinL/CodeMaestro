@@ -141,6 +141,162 @@ Show decision log tail
 
 ---
 
+## Token Management Commands (v1.0+)
+
+### `/estimate`
+Estimate token usage for tasks or milestones
+
+**Syntax:**
+```bash
+/estimate task T-1.2.3          # Estimate specific task
+/estimate milestone M2          # Estimate entire milestone
+/estimate session               # Check current session budget status
+/estimate project               # Show project-wide token estimate summary
+```
+
+**Output:**
+```
+Task T-1.2.3: Implement Authentication Module
+
+Estimated Tokens: 35,000 tokens
+
+Breakdown:
+- Code generation: 20,000 tokens
+- Testing: 8,000 tokens
+- Documentation: 5,000 tokens
+- Debugging buffer: 2,000 tokens
+
+Complexity: Complex (3.5x)
+Multipliers: High Security (+1.2x)
+Base: 25,000 tokens (Business Logic)
+
+Session Impact:
+- Current usage: 142,000 tokens
+- After task: ~177,000 tokens (17.7% of budget)
+- Status: ✅ Sufficient budget
+```
+
+**Features:**
+- Estimates based on task complexity and multipliers
+- Shows breakdown by activity type
+- Validates against current session budget
+- Recommends session breaks if needed
+
+**See:** [.CodeMaestro/config/token-estimation.md](.CodeMaestro/config/token-estimation.md)
+
+### `/budget`
+Check current session token budget and utilization
+
+**Syntax:**
+```bash
+/budget                         # Show current session status
+/budget --detailed              # Include task-level breakdown
+/budget --forecast              # Forecast remaining tasks
+/budget --history               # Show historical usage
+```
+
+**Output:**
+```
+Session Budget Status
+
+Model: Claude Sonnet 4.5 (1M context)
+Duration: 2h 15m
+
+Token Usage:
+- Used: 142,000 tokens (14.2%)
+- Reserved: 200,000 tokens (20%)
+- Available: 658,000 tokens (65.8%)
+
+Remaining Tasks: 3
+- T-2.1.1: 25,000 tokens (est.)
+- T-2.1.2: 30,000 tokens (est.)
+- T-2.1.3: 40,000 tokens (est.)
+- Total: 95,000 tokens
+
+Forecast:
+- After completion: 237,000 tokens used (23.7%)
+- Status: ✅ All tasks fit within budget
+- Recommendation: Continue in current session
+```
+
+**Alert Thresholds:**
+- **<60%:** Efficient (green)
+- **60-80%:** Moderate (yellow)
+- **>80%:** High utilization (orange) - consider session break
+- **>90%:** Critical (red) - create checkpoint immediately
+
+**Features:**
+- Real-time budget tracking
+- Task forecasting
+- Session break recommendations
+- Budget exhaustion warnings
+
+### `/variance`
+Analyze token estimation variance
+
+**Syntax:**
+```bash
+/variance                       # Overall variance analysis
+/variance milestone M2          # Milestone-specific analysis
+/variance task T-1.2.3          # Task-specific analysis
+/variance --trends              # Show variance trends over time
+/variance --export              # Export variance data to CSV
+```
+
+**Output:**
+```
+Token Variance Analysis
+
+Overall:
+- Estimated: 390,000 tokens
+- Actual: 387,000 tokens
+- Variance: -3,000 tokens (-0.8%)
+- Accuracy: Excellent ✅
+
+By Milestone:
+M1: +18.3% (over-budget, learning curve)
+M2: -8.3% (under-budget, pattern reuse)
+M3: -11.1% (under-budget, optimization)
+
+By Phase:
+Phase 2 (Planning): +5.2%
+Phase 3 (Implementation): -2.1%
+Phase 4 (Verification): -4.5%
+
+Trends:
+- Improving accuracy over time ✅
+- Early estimates too conservative
+- Testing estimates accurate
+- Documentation under-estimated by ~10%
+
+Recommendations:
+1. Apply 1.7x multiplier for new libraries
+2. Add 10% to documentation baselines
+3. Use historical data for future projects
+```
+
+**Features:**
+- Overall and granular variance analysis
+- Trend identification
+- Actionable recommendations
+- Export for reporting
+
+### `/tokens`
+Quick token status summary (alias for `/budget`)
+
+**Syntax:**
+```bash
+/tokens                         # Same as /budget
+/tokens --quick                 # One-line summary
+```
+
+**Quick Output:**
+```
+Tokens: 142K used / 800K available (17.8%) | Remaining tasks: 95K est. | Status: ✅
+```
+
+---
+
 ## Knowledge Base Commands (v1.0+)
 
 ### `/kb search [query]`
