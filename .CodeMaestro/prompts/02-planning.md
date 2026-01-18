@@ -267,11 +267,23 @@ view /mnt/project/config/roles/ethics-security-engineer.md
 - Dependencies
 - Blocks
 - Parallel group (if applicable)
-- Effort estimate
+- Effort estimate (hours)
+- Token estimate
+- Model recommendation (Haiku/Sonnet/Opus)
+
+**Aggregate by Milestone:**
+- Total hours
+- Total tokens
+- Task breakdown by model (e.g., "5 Haiku, 8 Sonnet, 2 Opus")
+- Estimated cost by model
 
 **Create**: `./docs/architecture/tasks/_parallel-groups.md`
 
 **Task DAG**: `./docs/architecture/task-dag.mermaid`
+
+**Include in Task DAG table:**
+- Model column showing recommended model per task
+- Milestone summary with token/cost breakdown by model
 
 ---
 
@@ -321,6 +333,7 @@ view /mnt/project/config/token-estimation.md
 - Parallelization info
 - Effort estimate with rationale (hours)
 - **Token estimate with rationale** (see methodology below)
+- **Model recommendation** (Haiku/Sonnet/Opus - see selection guide below)
 - Technical notes
 
 **Token Estimation Methodology:**
@@ -352,7 +365,12 @@ view /mnt/project/config/token-estimation.md
    Tokens = Base × Complexity × (1 + Σ Multiplier%)
    ```
 
-5. **Document Rationale** in task file with breakdown:
+5. **Select Recommended Model:**
+   - **Haiku 4.5:** <20K tokens, simple/repetitive tasks (setup, config, CRUD, simple tests)
+   - **Sonnet 4.5:** 20-80K tokens, moderate-complex tasks (business logic, integrations, most implementation)
+   - **Opus 4.5:** >80K tokens, very complex/critical tasks (novel algorithms, architectural decisions, complex debugging)
+
+6. **Document Rationale** in task file with breakdown:
    - Code generation: X tokens
    - Testing: Y tokens
    - Documentation: Z tokens
@@ -509,7 +527,12 @@ Generate:
 > **🔄 SESSION RECOMMENDATION:**
 > For optimal performance, **start new session for Phase 3**.
 >
-> **Model Suggestion:** Claude Sonnet 4.5 or Claude Haiku 4.5 (implementation tasks)
+> **Model Strategy:**
+> - **Primary:** Claude Sonnet 4.5 (recommended for mixed complexity)
+> - **Cost-Optimized:** Haiku for simple tasks ([N] tasks: [IDs]), Sonnet for complex
+> - **Critical Tasks:** Opus for [list any critical task IDs if present]
+>
+> **See Task DAG for per-task model recommendations**
 >
 > **📋 SESSION HANDOFF: Planning → Implementation**
 >
@@ -543,11 +566,17 @@ Generate:
 > - `docs/architecture/tasks/` - Task files with token estimates
 > - `docs/architecture/api-contracts/openapi.yaml` - API contracts
 >
-> **Token Budget for Phase 3:**
-> - Estimated: [T]K tokens ([Z] tasks)
-> - By Milestone: M1 ([A]K), M2 ([B]K), M3 ([C]K)
-> - Sessions Needed: [N]-[N+1] (based on 800K usable per session)
-> - **Remember:** Use `/budget` before each task (Step 3.3.1c)
+> **Token Budget & Model Strategy for Phase 3:**
+> - **Estimated Total:** [T]K tokens ([Z] tasks)
+> - **By Milestone:** M1 ([A]K), M2 ([B]K), M3 ([C]K)
+> - **By Model:**
+>   - Haiku tasks ([H]): [H_tokens]K → ~$[H_cost]
+>   - Sonnet tasks ([S]): [S_tokens]K → ~$[S_cost]
+>   - Opus tasks ([O]): [O_tokens]K → ~$[O_cost]
+>   - **Total Cost:** ~$[total_cost]
+> - **Sessions Needed:** [N]-[N+1] (based on 800K usable per session with Sonnet)
+> - **Cost Optimization:** Consider batching Haiku tasks to save ~[savings]%
+> - **Remember:** Use `/budget` before each task (Step 3.3.1c) + check model match
 >
 > **Git State:**
 > - Branch: `develop`

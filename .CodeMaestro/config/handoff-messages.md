@@ -104,22 +104,48 @@ Example:
 
 ---
 
-### Token Metrics (v1.0+)
+### Token Metrics & Model Recommendations (v1.0+)
 
 **Previous Session:**
-- Model: [Claude Sonnet 4.5 / Opus 4.5]
+- Model: [Claude Sonnet 4.5 / Opus 4.5 / Haiku 4.5]
 - Tokens Used: [X]K tokens ([Y]% of budget)
 - Tasks Completed: [N]
 - Avg Tokens/Task: [Z]K
+- Actual Cost: ~$[amount]
 
-**Current Session Budget:**
-- Recommended Model: [Model name]
-- Estimated Remaining Work: [X]K tokens
-- Remaining Tasks: [N] tasks ([Y]K tokens estimated)
-- Fits in Single Session: [✅ Yes / ⚠️ Tight / ❌ No - split recommended]
+**Upcoming Tasks Analysis:**
+
+| Task ID | Description | Est. Tokens | Recommended Model | Rationale |
+|---------|-------------|-------------|-------------------|-----------|
+| T-[X.X.X] | [Task name] | [Y]K | [Haiku/Sonnet/Opus] | [Why this model] |
+| T-[X.X.X] | [Task name] | [Y]K | [Haiku/Sonnet/Opus] | [Why this model] |
+| T-[X.X.X] | [Task name] | [Y]K | [Haiku/Sonnet/Opus] | [Why this model] |
+
+**Session Strategy Recommendation:**
+
+**Option A: Single Model (Simplest)**
+- Use: Claude Sonnet 4.5 for all tasks
+- Total Budget: [Y]K tokens
+- Fits in Session: [✅ Yes / ❌ No]
+- Estimated Cost: ~$[amount]
+
+**Option B: Model Switching (Cost-Optimized)**
+- Haiku tasks ([N]): [A]K tokens → ~$[cost]
+- Sonnet tasks ([M]): [B]K tokens → ~$[cost]
+- Opus tasks ([K]): [C]K tokens → ~$[cost]
+- Total Cost: ~$[amount] (Save ~[X]% vs Option A)
+- **Recommended if:** Cost-sensitive project, clear task separation
+
+**Option C: Hybrid Approach (Balanced)**
+- Start with Sonnet (primary session)
+- Switch to Haiku for simple tasks batch ([list IDs])
+- Use Opus for critical task: [T-X.X.X]
+- Estimated Cost: ~$[amount]
+- **Recommended if:** Mixed complexity, quality-cost balance
 
 **Variance Notes:**
 - [Any significant token variance observations]
+- [Model performance notes: "Haiku handled CRUD efficiently" or "Complex task needed Sonnet upgrade"]
 - [Recommendations for upcoming tasks]
 
 ---
@@ -266,7 +292,8 @@ This will load the full recovery checkpoint with complete context.
 **Session Type:** Phase Transition
 **From Phase:** 2 (Planning)
 **To Phase:** 3 (Implementation)
-**Model Recommendation:** Claude Sonnet 4.5 or Haiku 4.5 (for simple tasks)
+**Primary Model:** Claude Sonnet 4.5
+**Alternative Models:** Haiku 4.5 (simple tasks), Opus 4.5 (critical/novel tasks)
 
 ### Context Summary
 
@@ -333,24 +360,51 @@ This will load the full recovery checkpoint with complete context.
 **Module Context Packages:**
 - Create as you work: `implementation/context-packages/module-M[X]-MOD[Y]-context.md`
 
-### Token Metrics
+### Token Metrics & Model Strategy
 
 **Phase 2 Session:**
+- Model: Opus 4.5 (architecture design)
 - Tokens Used: [X]K tokens
 - Actual vs Estimated: [Variance]%
 
 **Phase 3 Estimate:**
 - Total Project: [Z]K tokens (from task DAG)
 - By Milestone:
-  - M1: [A]K tokens ([N] tasks)
-  - M2: [B]K tokens ([M] tasks)
-  - M3: [C]K tokens ([K] tasks)
-- Sessions Needed: [N]-[N+1] (Sonnet 4.5)
+  - M1: [A]K tokens ([N] tasks) - [H] Haiku, [S] Sonnet, [O] Opus
+  - M2: [B]K tokens ([M] tasks) - [H] Haiku, [S] Sonnet, [O] Opus
+  - M3: [C]K tokens ([K] tasks) - [H] Haiku, [S] Sonnet, [O] Opus
+
+**Recommended Model Strategy:**
+
+**Approach 1: Sonnet-Primary (Recommended for Mixed Complexity)**
+- Use Sonnet 4.5 as primary session model
+- Sessions Needed: [N]-[N+1]
+- Estimated Cost: ~$[amount]
+- **When to use:** Standard development, mixed task complexity
+
+**Approach 2: Model-per-Task (Cost-Optimized)**
+- Batch simple tasks: Haiku sessions for M1 setup ([list task IDs])
+- Core logic: Sonnet for M2 features
+- Critical tasks: Opus for [specific task ID]
+- Estimated Cost: ~$[amount] (save ~[X]% vs Approach 1)
+- **When to use:** Budget-conscious, clear task separation
+
+**Approach 3: Milestone-Based (Balanced)**
+- M1 (Setup): Haiku 4.5 ([A]K tokens)
+- M2 (Features): Sonnet 4.5 ([B]K tokens)
+- M3 (Complex): Sonnet/Opus mix ([C]K tokens)
+- Estimated Cost: ~$[amount]
+- **When to use:** Clear milestone complexity progression
+
+**Task-Level Model Recommendations:**
+See `docs/architecture/tasks/` for per-task model assignments
 
 **Budget Management:**
 - Use `/budget` before each task (Step 3.3.1c)
+- Check model match: Task model vs Session model
 - Record actuals after each task (Step 3.3.7)
 - Alert at 85%+ session utilization
+- Consider model switch if batch of simple tasks ahead
 
 ### Git State
 
@@ -594,7 +648,8 @@ For resuming work mid-phase after an interruption:
 **Session Type:** Mid-Phase Resume
 **Phase:** [N] ([Phase Name])
 **Status:** In Progress
-**Model Recommendation:** [Same as previous session]
+**Current Model:** [Model from previous session]
+**Continue With:** [Same / Different model - see recommendation below]
 
 ### Context Summary
 
@@ -618,16 +673,34 @@ For resuming work mid-phase after an interruption:
 **Where You Left Off:**
 [Detailed description of exact stopping point]
 
-### Token Budget Status
+### Token Budget & Model Status
 
 **Current Session:**
+- Model: [Sonnet/Opus/Haiku]
 - Used: [X]K tokens ([Y]%)
 - Remaining: [Z]K tokens
 - This task estimate: [W]K tokens
 - Status: [✅ Sufficient / ⚠️ Low / ❌ Insufficient]
 
+**Current Task Model Requirement:**
+- Task Recommended Model: [Haiku/Sonnet/Opus]
+- Session Model: [Current model]
+- Match: [✅ Optimal / ⚠️ Over-powered / ❌ Under-powered]
+
 **Recommendation:**
-[Continue / Consider checkpoint / Start new session]
+
+**Continue Current Session if:**
+- ✅ Model matches task requirements OR model is more capable
+- ✅ Sufficient token budget ([Z]K > [W]K + 20% buffer)
+- ✅ No upcoming batch of differently-sized tasks
+
+**Start New Session if:**
+- ⚠️ Low budget (<20% remaining or <[W]K for current task)
+- 💡 Model mismatch opportunity: Current model is over-powered (Sonnet/Opus for simple Haiku task)
+- 💡 Upcoming batch: Next 3+ tasks all require different model (e.g., all Haiku)
+
+**Model Switch Recommendation:**
+[Continue with [Model] / Switch to [Model] for cost savings / Upgrade to [Model] for task complexity]
 
 ### Files in Progress
 
@@ -718,6 +791,36 @@ git status           # Check current state
 3. **Optional:** Mid-phase when taking break >24 hours
 4. **Required:** Before context-heavy operations (refactoring, migrations)
 5. **Critical:** After failures or when recovery needed
+6. **Model Switching:** When changing models (Haiku↔Sonnet↔Opus)
+
+### Model Selection in Handoffs
+
+**Include Model Recommendations when:**
+- Transitioning between phases
+- Starting new implementation session
+- Resuming after interruption
+- Budget running low (consider downgrade)
+- Upcoming batch of similar complexity tasks
+
+**Model Recommendation Format:**
+```markdown
+**Recommended Model:** Claude [Sonnet/Opus/Haiku] 4.5
+
+**Rationale:**
+- Upcoming tasks: [complexity profile]
+- Token budget: [fits/exceeds model limits]
+- Cost consideration: [savings opportunity / justified premium]
+- Task characteristics: [simple/moderate/complex/critical]
+
+**Alternative Strategy:**
+[Describe if model switching mid-session could save costs]
+```
+
+**Cost-Performance Guidelines:**
+- **Default to Sonnet** unless specific reason for Haiku or Opus
+- **Batch Haiku tasks** to minimize context switching overhead
+- **Use Opus sparingly** only for truly complex/critical work
+- **Document model choices** in handoff for future learning
 
 ### What Makes a Good Handoff
 
@@ -746,12 +849,15 @@ Before creating handoff, verify:
 
 - [ ] All recent work committed
 - [ ] Recovery checkpoint updated
-- [ ] Token metrics recorded
+- [ ] Token metrics recorded (usage, variance, efficiency)
 - [ ] Git state documented
 - [ ] Next steps clearly defined
 - [ ] Critical context captured
 - [ ] Files and artifacts listed
-- [ ] Model recommendation provided
+- [ ] **Model recommendation provided with rationale**
+- [ ] **Upcoming tasks analyzed for model requirements**
+- [ ] **Cost-optimization opportunities identified**
+- [ ] **Model switching strategy documented (if applicable)**
 
 ---
 
