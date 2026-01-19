@@ -243,11 +243,69 @@ ln -sf locked-specification-v1.0.md locked-specification.md
 
 ---
 
+### Step 1.8.5: Knowledge Base Integration
+
+**Action**: Review Phase 1 work and add valuable insights to knowledge base.
+
+**Check for KB-worthy content:**
+
+**1. Domain-Specific Requirements Patterns**
+```bash
+# If domain patterns emerged (e.g., e-commerce checkout flow, healthcare HIPAA requirements)
+/kb add pattern
+
+# Example entry
+Pattern: E-commerce NFR-001 - PCI DSS compliance requirements
+Category: Domain Knowledge
+Phase: Requirements
+Content: Standard security requirements for payment processing
+```
+
+**2. Competitive Insights**
+```bash
+# If competitor analysis revealed reusable insights
+/kb add pattern
+
+# Example entry
+Pattern: COMP-001 - SaaS pricing model patterns
+Category: Competitive Analysis
+Content: Freemium, usage-based, tiered pricing strategies observed
+```
+
+**3. Requirement Clarification Patterns**
+```bash
+# If specific requirement ambiguities and resolutions can help future projects
+/kb add decision
+
+# Example entry
+Decision: REQ-001 - "Real-time" definition clarified
+Category: Requirements
+Resolution: "Real-time" = <100ms latency vs "Near real-time" = <1s vs "Periodic" = minutes
+```
+
+**When to add to KB:**
+- Domain-specific requirement patterns that could recur
+- Common NFR templates for specific industries
+- Competitive positioning insights
+- Requirement clarification patterns
+- Scope boundary definitions that worked well
+
+**When NOT to add:**
+- Project-specific functional requirements (too specific)
+- Trivial clarifications
+- One-off edge cases
+
+**Deliverable:** Updated knowledge base index with Phase 1 learnings
+
+---
+
 ### Step 1.9: Update Recovery Checkpoint with Handoff
 
-**Action**: Save recovery state with session transition info.
+**Action**: Save recovery state with session transition info and update KB with Phase 1 learnings.
 
-**Update** `./docs/implementation/.recovery-checkpoint.md`:
+**First: Review and add to Knowledge Base** (see Step 1.8.5)
+
+**Then: Update** `./docs/implementation/.recovery-checkpoint.md`:
 
 ```markdown
 # Recovery Checkpoint / Phase Handoff

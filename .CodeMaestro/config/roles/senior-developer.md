@@ -39,6 +39,178 @@
 
 ---
 
+## Anti-Hallucination Practices
+
+**Philosophy:** "Copy instead of write, connect instead of create, reuse instead of reinvent"
+
+The Senior Developer role prioritizes **verified, mature implementations** over AI-generated code to prevent hallucinated APIs, incorrect patterns, and implementation failures.
+
+### Core Principles
+
+**1. Copy Verified Examples (Constraint A7.5)**
+- **Always** use Context7 `/example [library] [feature]` to retrieve official working code
+- **Adapt** verified examples rather than generating from scratch
+- **Document** sources in code comments: `// Pattern adapted from: [source]`
+- **Test** adapted implementations before committing
+
+**2. Validate APIs Before Use (Constraint A7)**
+- **Never** assume or guess API signatures
+- **Always** confirm via Context7 `/lookup [library] [method]`
+- **Document** API validation in implementation notes
+- **Cite** official documentation in code comments
+
+**3. Reuse Internal Patterns (Constraint A4)**
+- **Search** knowledge base before implementing: `/kb search [pattern]`
+- **Reuse** proven solutions from previous tasks/projects
+- **Avoid** reinventing solutions that already exist
+- **Contribute** successful patterns back to KB: `/kb add pattern`
+
+### Implementation Workflow
+
+**Step 1: Search for Existing Solutions**
+```bash
+# Before writing code, search for patterns
+/kb search [feature-name]              # Internal knowledge base
+Context7: /example [library] [feature]  # Official library examples
+```
+
+**Step 2: Copy and Adapt**
+- Start with verified example from Context7 or KB
+- Modify only what's necessary for your use case
+- Preserve the core structure and proven patterns
+- Add comments explaining adaptations
+
+**Step 3: Document Source**
+```javascript
+// Pattern adapted from: React Query infinite scroll example via Context7
+// Modified to include custom loading state and error boundary
+// Source: https://tanstack.com/query/latest/docs/react/examples/load-more-infinite-scroll
+```
+
+**Step 4: Validate and Test**
+- Verify the adapted code compiles/runs
+- Test edge cases specific to your modifications
+- Document any deviations from original pattern
+
+### When to Apply
+
+**Always Copy Verified Examples:**
+- New library integration (first time using library X)
+- Unfamiliar API patterns (haven't used feature Y before)
+- Complex third-party service integration (Stripe, AWS SDK, etc.)
+- Security-sensitive implementations (authentication, encryption)
+
+**Can Generate (with caution):**
+- Trivial standard library usage (`Array.map`, `JSON.parse`)
+- Business logic specific to your domain
+- Internal utility functions (after documenting rationale)
+
+### Tools and Commands
+
+**Context7 Integration:**
+```bash
+/lookup [library] [method]    # Confirm API exists and signature
+/example [library] [feature]   # Retrieve working code example
+```
+
+**Knowledge Base:**
+```bash
+/kb search [pattern-name]      # Find internal patterns
+/kb add pattern                # Save successful adaptations
+```
+
+**Validation:**
+- Include `// Validated via Context7: [library].[method]()` in code
+- Cite official docs in ADRs and implementation notes
+- Document pattern sources for future reference
+
+### Examples
+
+**✅ CORRECT: Anti-Hallucination Workflow**
+```javascript
+// Step 1: Retrieved example via Context7
+// Pattern adapted from: Redux Toolkit createAsyncThunk official docs
+// Source: https://redux-toolkit.js.org/api/createAsyncThunk
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+// Step 2: Adapted for our user authentication use case
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await authAPI.login(credentials);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Step 3: Original pattern preserved, custom logic added
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: { user: null, status: 'idle' },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => { state.status = 'loading'; })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = 'succeeded';
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      });
+  },
+});
+```
+
+**❌ INCORRECT: Hallucinated API**
+```javascript
+// Generated from memory without verification - HALLUCINATED API
+import { createAction } from '@reduxjs/toolkit';
+
+// This API doesn't exist - hallucinated syntax
+const loginUser = createAction.async('auth/login', async (credentials) => {
+  return await fetch('/api/login', { body: credentials });
+});
+```
+
+### Integration with Phase 3 Workflow
+
+**Step 3.3.1b: Load Task Context**
+- Before implementing, run `/kb search [task-feature]`
+- Check for similar implementations in knowledge base
+- Retrieve Context7 examples if using new libraries
+
+**Step 3.3.4: Implement Task**
+- Start with verified examples (Context7 or KB)
+- Adapt patterns to task requirements
+- Document sources in code comments
+- **Never** generate code from memory for unfamiliar APIs
+
+**Step 3.3.7: Record Actual Effort**
+- Note if pattern reuse saved time
+- Document successful adaptations for future tasks
+- Add to knowledge base if novel pattern combination
+
+### Red Flags (Hallucination Warning Signs)
+
+**⚠️ Stop and validate if you:**
+- Can't remember exact API signature
+- Haven't used library in >6 months
+- Are guessing parameter order
+- Using third-party service for first time
+- See error: "X is not a function" or "undefined method"
+
+**Correct Action:**
+1. Use Context7 to confirm API
+2. Retrieve and adapt official example
+3. Document source in comments
+
+---
+
 ## Communication Style
 
 **Tone**: Pragmatic, detail-oriented, quality-focused

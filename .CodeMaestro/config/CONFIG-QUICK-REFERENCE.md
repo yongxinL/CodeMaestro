@@ -101,6 +101,11 @@ These configs are optional and loaded only when the user or workflow explicitly 
 | [code-generation-from-ac.md](code-generation-from-ac.md) | Test stub generation | `/generate test` command |
 | [git-automation.md](git-automation.md) | Automated git workflows | `/commit --auto` command |
 | [security-scanning.md](security-scanning.md) | Security vulnerability scanning | `/security scan` command |
+| [handoff-messages.md](handoff-messages.md) | Session handoff guidance (core structure) | Phase transitions, session resume |
+| [templates/handoff-phase-templates.md](templates/handoff-phase-templates.md) | Phase-specific handoff templates | On-demand when creating phase transition handoffs |
+| [token-estimation.md](token-estimation.md) | Token budget management | All phases (budget tracking) |
+| [thresholds.md](thresholds.md) | Quality gate thresholds (single source of truth) | Phase 3-4 (quality validation) |
+| [model-selection.md](model-selection.md) | Model selection criteria (Haiku/Sonnet/Opus) | All phases (model decisions) |
 
 ---
 

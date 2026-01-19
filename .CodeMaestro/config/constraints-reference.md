@@ -185,7 +185,106 @@ Prevents implementation failures due to non-existent or incorrectly assumed APIs
 ✅ Good: Used Context7 to confirm React.useEffect cleanup signature before implementation
 ❌ Bad: Assumed Express has `.asyncHandler()` method (doesn't exist)
 
-**Related Constraints:** A1 (production-ready only), B17 (no placeholders)
+**Related Constraints:** A1 (production-ready only), B17 (no placeholders), A7.5 (copy verified examples)
+
+---
+
+### Constraint A7.5: Copy Verified Examples
+
+**Category:** Architecture & Dependency
+**Phase:** 3 (Implementation)
+**Blocking:** No (Warning - should comply)
+**Priority:** High
+
+**Description:**
+When implementing with unfamiliar libraries/APIs, retrieve and adapt working examples rather than generating from memory. Copy verified, production-tested code patterns instead of writing from scratch.
+
+**Philosophy:** "Copy instead of write" - Mature, tested implementations are superior to AI-generated code that may hallucinate APIs or patterns.
+
+**Rationale:**
+- Prevents hallucinated APIs and incorrect usage patterns
+- Reduces bugs from misremembering library syntax
+- Leverages official examples that follow best practices
+- Faster implementation with verified starting points
+
+**Workflow:**
+1. Use Context7 `/example [library] [feature]` to retrieve official examples
+2. Adapt the verified example to your specific use case
+3. Document source in code comment with format: `// Pattern adapted from: [source]`
+4. Test the adapted implementation
+
+**Enforcement:**
+- Code review checks for documented sources on complex integrations
+- `/kb add pattern` after successfully adapting examples
+- ADRs document sources of architectural patterns
+- Implementation notes cite example origins
+
+**Examples:**
+
+✅ **Good: Copied and adapted verified example**
+```javascript
+// Pattern adapted from: React Hook Form official docs via Context7
+// Source: https://react-hook-form.com/get-started#applyvalidation
+const { register, handleSubmit, formState: { errors } } = useForm();
+
+const onSubmit = (data) => {
+  // Custom logic here
+  console.log(data);
+};
+
+return (
+  <form onSubmit={handleSubmit(onSubmit)}>
+    <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} />
+    {errors.email && <span>Valid email required</span>}
+  </form>
+);
+```
+
+❌ **Bad: Generated from memory without verification**
+```javascript
+// No source documentation, potentially hallucinated API
+const form = new FormValidator(); // Hallucinated API - doesn't exist in library
+form.addRule('email', 'required|email'); // Incorrect API signature
+```
+
+✅ **Good: Database query adapted from official examples**
+```python
+# Pattern adapted from: SQLAlchemy ORM tutorial via Context7
+# Modified for our User model with additional filters
+from sqlalchemy import select
+
+stmt = select(User).where(User.email == email).where(User.active == True)
+result = session.execute(stmt).scalars().first()
+```
+
+❌ **Bad: Assumed API without verification**
+```python
+# Generated from memory - incorrect API
+user = User.find_by_email_and_active(email, True)  # Hallucinated method
+```
+
+**When to Apply:**
+- **Always:** New library/framework integration
+- **Always:** Unfamiliar API patterns
+- **Recommended:** Complex third-party service integration
+- **Optional:** Well-known standard library usage (e.g., `JSON.parse()`)
+
+**When NOT to Apply:**
+- Trivial standard library usage (e.g., `console.log`, `Math.max`)
+- Code you've written many times before
+- Internal utility functions (documented in project KB)
+
+**Complementary Practices:**
+- Keep a "verified patterns" directory in knowledge base
+- Share adapted examples across team
+- Cite official documentation in code comments
+- Update knowledge base when adapting patterns successfully
+
+**Related Constraints:**
+- A7 (Confirmed APIs - validates API exists)
+- A7.5 (this constraint - emphasizes copying verified implementations)
+- A4 (Reuse patterns from knowledge base)
+- B17 (No placeholder implementations)
 
 ---
 

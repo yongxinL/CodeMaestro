@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ---
 
 ## Project Overview
@@ -12,6 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Documentation-driven architecture
 - Progressive disclosure for token efficiency (50-55% reduction)
 - Role-based state machine orchestrating 5 development phases
+- Anti-hallucination philosophy: "Copy instead of write, connect instead of create, reuse instead of reinvent"
 - Skill tier adaptation (Beginner/Advanced/Ninja)
 - Knowledge base for project-specific learning
 - Session management with recovery checkpoints
@@ -22,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Core Directory Layout
 
-**Key locations** (full structure available via filesystem navigation):
+**Key locations:**
 
 | Directory/File | Purpose |
 |----------------|---------|
@@ -57,19 +56,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### 5-Phase Lifecycle
 
-```
-Phase 1: Requirements          Phase 2: Planning           Phase 3: Implementation
-Product Manager role    →      Software Architect role    →      Senior Developer role
-Lock specification             Create blueprint, task DAG,         Build production code
-Competitive analysis           Gantt chart, architectural vision   Track effort vs estimates
+CodeMaestro orchestrates development through five sequential phases:
 
-                                    ↓
+**Phase 1: Requirements** (Product Manager) - Lock specification through competitive analysis and requirements deconstruction. Outputs: Locked Specification, Competitive Analysis.
 
-Phase 4: Verification          Phase 5: Release
-QA Lead role            →       Release Manager role
-Evidence package, GO/NO-GO       Release coordination, lessons learned
-Security scan, performance test  Organizational learning
-```
+**Phase 2: Planning** (Software Architect) - Create technical blueprint, task DAG, Gantt chart, and architectural vision with token estimates. Outputs: Blueprint, Task Dependencies, Token Budgets.
+
+**Phase 3: Implementation** (Senior Developer) - Build production code following blueprint patterns. Track actual effort vs estimates. Outputs: Production Code, Module Contexts, Token Tracking.
+
+**Phase 4: Verification** (QA Lead) - Collect evidence package, perform security scan, and make GO/NO-GO decision. Outputs: Evidence Package, Test Results, Performance Metrics, Token Efficiency Analysis.
+
+**Phase 5: Release** (Release Manager) - Coordinate release, capture lessons learned, and document organizational learning. Outputs: Release Package, Token Retrospective, Knowledge Base Updates.
 
 ### Progressive Disclosure (Token Optimization)
 
@@ -135,33 +132,6 @@ CodeMaestro integrates with Model Context Protocol (MCP) tools:
 ---
 
 ## Working with the CodeMaestro System
-
-### Testing Changes to the System
-
-To verify modifications work correctly:
-
-```bash
-# 1. Create test project directory
-mkdir /tmp/codemaestro-test && cd /tmp/codemaestro-test
-
-# 2. Copy system files
-cp /path/to/CodeMaestro/init-docs.sh .
-cp /path/to/CodeMaestro/CLAUDE.md .
-cp -r /path/to/CodeMaestro/docs .
-
-# 3. Initialize
-chmod +x init-docs.sh
-./init-docs.sh
-
-# 4. Setup git
-git init
-git checkout -b develop
-git add .
-git commit -m "Initial CodeMaestro setup"
-
-# 5. Test in Claude Code
-# Open this directory in Claude Code and test the system
-```
 
 ### Modifying Core System Components
 
@@ -258,12 +228,14 @@ When modifying the system:
 
 ### Quality Gates
 
-Non-negotiable minimums:
-- **Test Coverage:** ≥70% (blocking)
-- **Security Issues:** 0 critical/high (blocking)
-- **Acceptance Criteria Pass Rate:** 100% (blocking)
+CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 
-Override in `.CodeMaestro/config/thresholds.md` if needed for specific projects.
+**Default Thresholds:**
+- Test Coverage: ≥70%
+- Security Issues: 0 critical/high
+- Acceptance Criteria Pass Rate: 100%
+
+**See:** [.CodeMaestro/config/thresholds.md](.CodeMaestro/config/thresholds.md) for complete threshold definitions, rationale, and project-specific override instructions.
 
 ---
 
@@ -310,20 +282,22 @@ Override in `.CodeMaestro/config/thresholds.md` if needed for specific projects.
 
 ## Key Principles
 
-1. **Self-Documenting:** The prompt files explain themselves; avoid duplication
-2. **Progressive Disclosure:** Load only what's needed; templates on-demand
-3. **Token Efficiency:** Target 50-55% reduction; reference, don't inline
-4. **Role Clarity:** Each role has clear responsibilities; no overlaps
-5. **Evidence-Based:** All decisions backed by constraints (A1-E33)
-6. **Quality First:** Meet quality gates before considering feature-complete
-7. **Backward Compatibility:** Changes should not break existing workflows
-8. **Documentation Driven:** If it's not documented, it doesn't exist
+1. **Anti-Hallucination First:** Copy verified examples, connect to existing solutions, reuse proven patterns
+2. **Self-Documenting:** The prompt files explain themselves; avoid duplication
+3. **Progressive Disclosure:** Load only what's needed; templates on-demand
+4. **Token Efficiency:** Target 50-55% reduction; reference, don't inline
+5. **Role Clarity:** Each role has clear responsibilities; no overlaps
+6. **Evidence-Based:** All decisions backed by constraints (A1-E33)
+7. **Quality First:** Meet quality gates before considering feature-complete
+8. **Backward Compatibility:** Changes should not break existing workflows
+9. **Documentation Driven:** If it's not documented, it doesn't exist
 
 ---
 
 ## Common References
 
 - **Quick config index:** See [.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md](.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md) ⭐ **START HERE**
+- **Anti-hallucination guide:** See [.CodeMaestro/config/anti-hallucination-guide.md](.CodeMaestro/config/anti-hallucination-guide.md) ⭐ **CORE PHILOSOPHY**
 - **Core commands:** See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) (Phases 1-5)
 - **Advanced commands:** See [.CodeMaestro/docs/COMMANDS-ADVANCED.md](.CodeMaestro/docs/COMMANDS-ADVANCED.md) (Phase F, Phases 4-5 only)
 - **System configuration:** See [.CodeMaestro/prompts/00-core.md](.CodeMaestro/prompts/00-core.md)

@@ -36,7 +36,24 @@ The maximum token limit per conversation session:
 - **Claude Opus 4.5:** 1,000,000 tokens
 - **Claude Haiku 4.5:** 200,000 tokens
 
-**Best Practice:** Reserve 20% buffer for overhead → Usable budget: 800K tokens (Sonnet/Opus)
+**Best Practice:** Reserve 20% buffer for overhead → Usable budget: 800K tokens (Sonnet/Opus), 160K tokens (Haiku)
+
+### Model Selection Guidelines
+
+**Quick Reference:**
+
+| Model | Context Window | Usable Budget | Best For | Cost (Relative) |
+|-------|---------------|---------------|----------|-----------------|
+| **Haiku 4.5** | 200K tokens | 160K tokens | Simple, repetitive tasks | 1x (baseline) |
+| **Sonnet 4.5** | 1M tokens | 800K tokens | Most tasks, good balance | ~5x |
+| **Opus 4.5** | 1M tokens | 800K tokens | Complex, critical tasks | ~15x |
+
+**Decision Rules:**
+- **<20K tokens** → Haiku
+- **20-80K tokens** → Sonnet
+- **>80K tokens** → Opus
+
+**See:** [model-selection.md](model-selection.md) for complete decision criteria, task-type mapping, cost-performance trade-offs, and phase-specific recommendations.
 
 ---
 
@@ -149,6 +166,7 @@ Include in each task file:
 ## Token Estimation
 
 **Estimated Tokens:** 35,000 tokens
+**Recommended Model:** Claude Sonnet 4.5
 
 **Rationale:**
 - **Base Estimate:** 25,000 tokens (Phase 3, moderate complexity)
@@ -162,45 +180,78 @@ Include in each task file:
 - Testing: 8,000 tokens
 - Documentation: 5,000 tokens
 - Debugging buffer: 2,000 tokens
+
+**Model Selection Rationale:**
+- **35K tokens** falls in Sonnet range (20-80K)
+- Moderate complexity requires balanced reasoning
+- New library integration benefits from Sonnet's superior understanding
+- Cost-effective for this complexity level
 ```
 
 ### Aggregation in Task DAG
 
-Add token column to task tables:
+Add token and model columns to task tables:
 
-| Task ID | Description | Est. Hours | Est. Tokens | Dependencies | AC Mapping |
-|---------|-------------|-----------|-------------|--------------|------------|
-| T-1.1.1 | Setup project | 4 | 10,000 | None | AC-1.1 |
-| T-1.1.2 | Config DB | 6 | 15,000 | T-1.1.1 | AC-1.2 |
-| T-1.1.3 | Auth module | 8 | 35,000 | T-1.1.2 | AC-1.3 |
+| Task ID | Description | Est. Hours | Est. Tokens | Model | Dependencies | AC Mapping |
+|---------|-------------|-----------|-------------|-------|--------------|------------|
+| T-1.1.1 | Setup project | 4 | 10K | Haiku | None | AC-1.1 |
+| T-1.1.2 | Config DB | 6 | 15K | Haiku | T-1.1.1 | AC-1.2 |
+| T-1.1.3 | Auth module | 8 | 35K | Sonnet | T-1.1.2 | AC-1.3 |
 
 **Milestone Summary:**
 ```markdown
 **Total Estimated Tokens:** 60,000 tokens
-**Recommended Session Model:** Claude Sonnet 4.5 (fits within 800K usable budget)
+
+**Task Breakdown by Model:**
+- Haiku tasks (2): 25K tokens → Cost: ~$0.01 (estimated)
+- Sonnet tasks (1): 35K tokens → Cost: ~$0.04 (estimated)
+- **Total Cost:** ~$0.05 (vs ~$0.18 if all Sonnet)
+- **Savings:** ~72% by using Haiku for simple tasks
+
+**Recommended Session Model:** Claude Sonnet 4.5 (primary session)
+**Cost Optimization:** Switch to Haiku for T-1.1.1 and T-1.1.2
+**Fits Within Budget:** ✅ Yes (60K < 800K Sonnet budget)
 ```
 
 ---
 
 ## Token Tracking in Phase 3 (Implementation)
 
-### Step 3.3.1c: Session Budget Check
+### Step 3.3.1c: Session Budget and Model Check
 
 **Before starting task execution:**
 
 ```markdown
-### Session Budget Check
+### Session Budget & Model Check
 
+**Session Model:** Claude Sonnet 4.5
 **Session Budget:** 1,000,000 tokens (Sonnet 4.5)
 - Usable: 800,000 tokens
 - Current usage: 142,000 tokens (14.2%)
 - Remaining: 658,000 tokens
 
+**Current Task:** T-1.1.3 (Auth module)
 **Task Token Budget:** 35,000 tokens
+**Task Recommended Model:** Sonnet
 
 **Status:** ✅ Sufficient budget (35K < 658K remaining)
+**Model Match:** ✅ Task requires Sonnet, session is Sonnet
 
 **Action:** Proceed with task execution
+```
+
+**If model mismatch (cost optimization opportunity):**
+```markdown
+**Current Task:** T-1.1.1 (Setup project)
+**Task Token Budget:** 10,000 tokens
+**Task Recommended Model:** Haiku
+**Session Model:** Sonnet
+
+**Recommendation:**
+- ✅ Continue in Sonnet (already started, switching adds overhead)
+- OR
+- 💡 For next session: Start with Haiku for simple tasks, switch to Sonnet for complex ones
+- Potential savings: ~60% cost reduction on simple tasks
 ```
 
 **If insufficient budget:**
@@ -212,6 +263,7 @@ Add token column to task tables:
 2. Create recovery checkpoint
 3. Start new session with handoff
 4. Continue from checkpoint
+5. Consider model switch: If remaining tasks are simple, use Haiku for next session
 ```
 
 ### Step 3.3.7: Actual Token Recording
@@ -401,6 +453,128 @@ Add token column to task tables:
 - **Good (7-8):** Session optimization, learning adaptation
 - **Target for Next Project:** 9.0/10 overall
 ```
+
+---
+
+## Model Selection Decision Matrix
+
+### Task Type to Model Mapping
+
+| Task Type | Token Range | Complexity | Recommended Model | Rationale |
+|-----------|-------------|------------|-------------------|-----------|
+| **Setup/Config** | 5K-15K | Simple | Haiku | Repetitive, well-defined patterns |
+| **CRUD Operations** | 15K-30K | Simple-Moderate | Haiku/Sonnet* | Haiku for standard, Sonnet if custom logic |
+| **Business Logic** | 25K-60K | Complex | Sonnet | Requires reasoning, edge cases |
+| **API Integration** | 30K-70K | Complex | Sonnet | External docs, error handling |
+| **UI Components** | 20K-50K | Moderate-Complex | Sonnet | Interactivity, accessibility, styling |
+| **Testing** | 10K-35K | Moderate | Haiku/Sonnet* | Haiku for unit, Sonnet for integration |
+| **Refactoring** | 20K-80K | Very Complex | Sonnet/Opus* | Sonnet for module, Opus for architectural |
+| **Bug Fixes** | 8K-40K | Varies | Haiku/Sonnet* | Haiku for simple, Sonnet for complex |
+| **Architecture Design** | 50K-100K+ | Very Complex | Opus | Phase 2 decisions, critical design |
+| **Security Implementation** | 30K-80K | Complex-Critical | Sonnet/Opus* | Sonnet for standard, Opus for novel threats |
+| **Performance Optimization** | 40K-100K+ | Very Complex | Opus | Deep analysis, profiling, novel solutions |
+| **Documentation** | 5K-20K | Simple-Moderate | Haiku | Well-structured, template-based |
+
+*Choose based on specific characteristics described in the Rationale column
+
+### Phase-Specific Model Recommendations
+
+| Phase | Primary Model | Alternative | When to Use Alternative |
+|-------|---------------|-------------|------------------------|
+| **Phase 1: Requirements** | Sonnet | Opus | Highly complex domain, novel product category |
+| **Phase 2: Planning** | Opus | Sonnet | Standard patterns (Sonnet), Novel architecture (Opus) |
+| **Phase 3: Implementation** | Sonnet | Haiku/Opus | Simple tasks (Haiku), Critical/novel code (Opus) |
+| **Phase 4: Verification** | Sonnet | Opus | Standard verification (Sonnet), Complex debugging (Opus) |
+| **Phase 5: Release** | Sonnet | - | Lessons learned, documentation |
+
+### Cost-Performance Trade-offs
+
+**Scenario 1: Simple CRUD Application**
+```
+Total Tasks: 20
+- Setup/Config (5 tasks): Haiku → 50K tokens @ $0.02 = $0.02
+- CRUD Operations (12 tasks): Haiku → 300K tokens @ $0.02/10K = $0.60
+- Business Logic (3 tasks): Sonnet → 120K tokens @ $0.10/10K = $1.20
+**Total Cost:** $1.82 (vs $4.50 if all Sonnet) → 60% savings
+```
+
+**Scenario 2: Complex AI/ML Platform**
+```
+Total Tasks: 30
+- Infrastructure (8 tasks): Haiku → 100K tokens @ $0.02/10K = $0.20
+- Model Integration (15 tasks): Sonnet → 600K tokens @ $0.10/10K = $6.00
+- Novel Algorithms (5 tasks): Opus → 400K tokens @ $0.40/10K = $16.00
+- Verification (2 tasks): Opus → 150K tokens @ $0.40/10K = $6.00
+**Total Cost:** $28.20 (justified for complex domain)
+```
+
+**Cost Optimization Strategies:**
+
+1. **Batch Simple Tasks:** Use Haiku session for multiple setup/config tasks
+2. **Session Planning:** Start Haiku → Switch to Sonnet → Use Opus sparingly
+3. **Model Switching:** Create checkpoints when changing models
+4. **Parallel Work:** Use Haiku for docs while Sonnet handles logic
+5. **Learn from Past:** If Haiku struggles, upgrade to Sonnet for similar future tasks
+
+### Model Selection Examples
+
+#### Example 1: Authentication Module (T-2.1.3)
+
+**Task:** Implement JWT authentication with refresh tokens
+
+**Analysis:**
+- **Files:** 3 (controller, service, middleware)
+- **LOC:** ~250 lines
+- **Complexity:** Complex (security-critical, edge cases)
+- **Token Estimate:** 35,000 tokens
+- **New Technology:** NestJS (team learning)
+
+**Model Decision:** **Sonnet**
+
+**Rationale:**
+- 35K tokens fits Sonnet range (20-80K)
+- Security-critical (but not novel threat → not Opus)
+- New technology benefits from Sonnet's understanding
+- Cost-effective balance ($0.35 vs $1.40 for Opus)
+
+#### Example 2: Database Setup Script (T-1.1.2)
+
+**Task:** Create PostgreSQL initialization script with seed data
+
+**Analysis:**
+- **Files:** 1 (init.sql)
+- **LOC:** ~80 lines
+- **Complexity:** Simple (standard patterns)
+- **Token Estimate:** 12,000 tokens
+- **Pattern:** Well-defined SQL schema
+
+**Model Decision:** **Haiku**
+
+**Rationale:**
+- 12K tokens fits Haiku range (<20K)
+- Repetitive SQL patterns (CREATE TABLE, INSERT)
+- No novel logic required
+- Cost savings: $0.02 vs $0.12 (Sonnet) → 83% reduction
+
+#### Example 3: Real-time Sync Algorithm (T-3.2.5)
+
+**Task:** Design and implement real-time data synchronization algorithm for offline-first mobile app
+
+**Analysis:**
+- **Files:** 4-5 (sync engine, conflict resolution, queue manager)
+- **LOC:** ~600 lines
+- **Complexity:** Very Complex (novel algorithm, edge cases)
+- **Token Estimate:** 95,000 tokens
+- **Innovation:** Custom conflict resolution strategy
+
+**Model Decision:** **Opus**
+
+**Rationale:**
+- 95K tokens exceeds Sonnet comfort zone (>80K)
+- Novel algorithm design (not standard patterns)
+- Critical to app functionality (offline-first core)
+- Complex edge cases (network partitions, conflicts)
+- Opus reasoning depth justifies 3x cost
 
 ---
 

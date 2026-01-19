@@ -104,22 +104,48 @@ Example:
 
 ---
 
-### Token Metrics (v1.0+)
+### Token Metrics & Model Recommendations (v1.0+)
 
 **Previous Session:**
-- Model: [Claude Sonnet 4.5 / Opus 4.5]
+- Model: [Claude Sonnet 4.5 / Opus 4.5 / Haiku 4.5]
 - Tokens Used: [X]K tokens ([Y]% of budget)
 - Tasks Completed: [N]
 - Avg Tokens/Task: [Z]K
+- Actual Cost: ~$[amount]
 
-**Current Session Budget:**
-- Recommended Model: [Model name]
-- Estimated Remaining Work: [X]K tokens
-- Remaining Tasks: [N] tasks ([Y]K tokens estimated)
-- Fits in Single Session: [✅ Yes / ⚠️ Tight / ❌ No - split recommended]
+**Upcoming Tasks Analysis:**
+
+| Task ID | Description | Est. Tokens | Recommended Model | Rationale |
+|---------|-------------|-------------|-------------------|-----------|
+| T-[X.X.X] | [Task name] | [Y]K | [Haiku/Sonnet/Opus] | [Why this model] |
+| T-[X.X.X] | [Task name] | [Y]K | [Haiku/Sonnet/Opus] | [Why this model] |
+| T-[X.X.X] | [Task name] | [Y]K | [Haiku/Sonnet/Opus] | [Why this model] |
+
+**Session Strategy Recommendation:**
+
+**Option A: Single Model (Simplest)**
+- Use: Claude Sonnet 4.5 for all tasks
+- Total Budget: [Y]K tokens
+- Fits in Session: [✅ Yes / ❌ No]
+- Estimated Cost: ~$[amount]
+
+**Option B: Model Switching (Cost-Optimized)**
+- Haiku tasks ([N]): [A]K tokens → ~$[cost]
+- Sonnet tasks ([M]): [B]K tokens → ~$[cost]
+- Opus tasks ([K]): [C]K tokens → ~$[cost]
+- Total Cost: ~$[amount] (Save ~[X]% vs Option A)
+- **Recommended if:** Cost-sensitive project, clear task separation
+
+**Option C: Hybrid Approach (Balanced)**
+- Start with Sonnet (primary session)
+- Switch to Haiku for simple tasks batch ([list IDs])
+- Use Opus for critical task: [T-X.X.X]
+- Estimated Cost: ~$[amount]
+- **Recommended if:** Mixed complexity, quality-cost balance
 
 **Variance Notes:**
 - [Any significant token variance observations]
+- [Model performance notes: "Haiku handled CRUD efficiently" or "Complex task needed Sonnet upgrade"]
 - [Recommendations for upcoming tasks]
 
 ---
@@ -168,419 +194,24 @@ This will load the full recovery checkpoint with complete context.
 
 ## Phase-Specific Handoff Templates
 
-### Phase 1 → Phase 2 Handoff
+**Phase transition templates** provide detailed guidance for handoff messages at phase boundaries (1→2, 2→3, 3→4, 4→5).
 
-```markdown
-## Session Handoff: Requirements → Planning
+**Progressive Disclosure:** Load templates on-demand to reduce token usage.
 
-**Session Type:** Phase Transition
-**From Phase:** 1 (Requirements)
-**To Phase:** 2 (Planning)
-**Model Recommendation:** Claude Sonnet 4.5
+### Template Loading
 
-### Context Summary
+**When Creating Phase Transition Handoffs:**
+1. Use Core Handoff Structure (above) as base
+2. Load phase-specific template from [templates/handoff-phase-templates.md](templates/handoff-phase-templates.md)
+3. Customize with project-specific details
 
-**Locked Specification:**
-- Functional Requirements: [N]
-- Non-Functional Requirements: [M]
-- Acceptance Criteria: [K]
-- Domain: [Mobile/Web/Cloud/AI]
+**Available Templates:**
+- Phase 1→2: Requirements → Planning
+- Phase 2→3: Planning → Implementation (includes model strategy recommendations)
+- Phase 3→4: Implementation → Verification
+- Phase 4→5: Verification → Release
 
-**Competitive Analysis:**
-- Competitors Analyzed: [N]
-- Key Differentiators: [List 2-3]
-- Strategic Positioning: [Summary]
-
-### What Was Accomplished
-
-- ✅ One-line requirement clarified
-- ✅ Functional requirements decomposed ([N] FRs)
-- ✅ Non-functional requirements specified ([M] NFRs)
-- ✅ Acceptance criteria mapped ([K] ACs)
-- ✅ Competitive analysis complete
-- ✅ Specification locked and tagged (v0.1.x-spec)
-
-### Current Focus
-
-**Next Step:** Begin Phase 2 (Planning and Orchestration)
-
-**What needs to happen next:**
-1. Load `./CodeMaestro/prompts/02-planning.md`
-2. Activate Software Architect role
-3. Start with Step 2.1: Specification Resolution
-4. Create architecture blueprint from locked specification
-
-### Critical Context
-
-**Key Decisions:**
-- Domain detected: [Web/Mobile/Cloud/AI]
-- Skill tier: [Beginner/Advanced/Ninja]
-- Competitive positioning: [Strategic focus]
-
-**Requirements to Remember:**
-- [Critical NFR 1]: [Detail]
-- [Critical NFR 2]: [Detail]
-
-### Artifacts & Files
-
-**Key Files for Phase 2:**
-- `docs/specifications/locked-specification.md` - **START HERE**
-- `docs/requirements/competitive-analysis.md` - Reference for ADRs
-- `docs/requirements/domain-requirements.md` - Domain-specific patterns
-
-### Token Metrics
-
-**Phase 1 Session:**
-- Tokens Used: [X]K tokens
-- Phase 1 Average: 5K-15K per session
-
-**Phase 2 Estimate:**
-- Expected: 10K-30K tokens per session
-- Tasks: ~8-12 architectural tasks
-- Total Estimate: 120K-240K tokens
-- Sessions Needed: 1-2 (Sonnet 4.5)
-
-### Git State
-
-**Branch:** `develop`
-**Last Tag:** `v0.1.0-spec`
-**Status:** Clean (all changes committed)
-
-### Next Phase Preparation
-
-**Phase 2 Entry Conditions (All Met):**
-- [x] Locked specification exists
-- [x] Git tag `v0.1.x-spec` created
-- [x] Competitive analysis complete
-
-**Expected Duration:** 6-10 hours
-**Primary Role:** Software Architect
-**Supporting Roles:** Tech Lead, Security Engineer, DevOps Engineer
-```
-
-### Phase 2 → Phase 3 Handoff
-
-```markdown
-## Session Handoff: Planning → Implementation
-
-**Session Type:** Phase Transition
-**From Phase:** 2 (Planning)
-**To Phase:** 3 (Implementation)
-**Model Recommendation:** Claude Sonnet 4.5 or Haiku 4.5 (for simple tasks)
-
-### Context Summary
-
-**Architecture Blueprint:** v1.0
-**Technology Stack:** [List key technologies]
-**Domain:** [Web/Mobile/Cloud/AI] with [specific adaptations]
-
-**Task Summary:**
-- Milestones: [X]
-- Modules: [Y]
-- Tasks: [Z] total
-- Parallel Groups: [N]
-- Estimated Effort: [H] hours
-- **Estimated Tokens:** [T]K tokens
-
-### What Was Accomplished
-
-- ✅ Architecture blueprint created (v1.0)
-- ✅ Technology stack selected with lock files
-- ✅ API contracts defined ([N] endpoints)
-- ✅ Task DAG generated ([Z] tasks)
-- ✅ Gantt timeline created
-- ✅ Threat model completed
-- ✅ Test plan established
-- ✅ All tasks estimated (effort + tokens)
-- ✅ Git commit and tag created (v0.2.0-plan)
-
-### Current Focus
-
-**Next Step:** Begin Phase 3 (Implementation)
-
-**What needs to happen next:**
-1. Load `./.CodeMaestro/prompts/03-implementation.md`
-2. Activate Senior Developer role
-3. Start with Step 3.1: Environment Verification
-4. Load first task from task queue
-
-**First Task:** T-[M].[Mod].[Task] - [Task Name]
-
-### Critical Context
-
-**Architecture Patterns:**
-- Primary: [Pattern name]
-- State Management: [Pattern]
-- Data Flow: [Unidirectional/Bidirectional]
-
-**Key ADRs:**
-- ADR-001: [Decision] - [Why important for implementation]
-- ADR-002: [Decision] - [Why important]
-
-**Quality Thresholds:**
-- Test Coverage: ≥70% (blocking)
-- Security: 0 critical/high (blocking)
-- AC Pass Rate: 100% (blocking)
-
-### Artifacts & Files
-
-**Critical Files for Phase 3:**
-- `docs/architecture/blueprint.md` - **Architectural reference**
-- `docs/architecture/task-dag.mermaid` - **Task dependencies**
-- `docs/architecture/tasks/` - **All task files with estimates**
-- `docs/architecture/api-contracts/openapi.yaml` - **API contracts**
-
-**Module Context Packages:**
-- Create as you work: `implementation/context-packages/module-M[X]-MOD[Y]-context.md`
-
-### Token Metrics
-
-**Phase 2 Session:**
-- Tokens Used: [X]K tokens
-- Actual vs Estimated: [Variance]%
-
-**Phase 3 Estimate:**
-- Total Project: [Z]K tokens (from task DAG)
-- By Milestone:
-  - M1: [A]K tokens ([N] tasks)
-  - M2: [B]K tokens ([M] tasks)
-  - M3: [C]K tokens ([K] tasks)
-- Sessions Needed: [N]-[N+1] (Sonnet 4.5)
-
-**Budget Management:**
-- Use `/budget` before each task (Step 3.3.1c)
-- Record actuals after each task (Step 3.3.7)
-- Alert at 85%+ session utilization
-
-### Git State
-
-**Branch:** `develop`
-**Last Tag:** `v0.2.0-plan`
-**Status:** Clean (all changes committed)
-
-**Next Commits:**
-- Per task completion (or by tier: per task/module/milestone)
-
-### Next Phase Preparation
-
-**Phase 3 Entry Conditions (All Met):**
-- [x] Blueprint exists
-- [x] Task DAG and task files created
-- [x] Git tag `v0.2.0-plan` exists
-- [x] Token estimates complete
-
-**Expected Duration:** [H] hours (from task DAG)
-**Primary Role:** Senior Developer
-**Supporting Roles:** Code Reviewer, Technical Writer
-```
-
-### Phase 3 → Phase 4 Handoff
-
-```markdown
-## Session Handoff: Implementation → Verification
-
-**Session Type:** Phase Transition
-**From Phase:** 3 (Implementation)
-**To Phase:** 4 (Verification)
-**Model Recommendation:** Claude Sonnet 4.5
-
-### Context Summary
-
-**Implementation Status:**
-- Tasks Completed: [X]/[Y] ([Z]%)
-- Test Coverage: [W]%
-- Milestones: [N] complete
-
-### What Was Accomplished
-
-- ✅ Implemented [X] tasks across [N] milestones
-- ✅ Test coverage: [W]%
-- ✅ Module contexts created: [N] modules
-- ✅ Knowledge base updated: [F] failures, [P] patterns
-- ✅ Estimation tracking complete
-- ✅ All commits and tag created (v0.3.0-impl)
-
-### Current Focus
-
-**Next Step:** Begin Phase 4 (Verification)
-
-**What needs to happen next:**
-1. Load `./.CodeMaestro/prompts/04-verification.md`
-2. Activate QA Lead role
-3. Start with Step 4.1: Input Validation
-4. Execute comprehensive verification workflow
-
-### Critical Context
-
-**Implementation Decisions:**
-- [Key decision 1]: [Impact on testing]
-- [Key decision 2]: [Verification consideration]
-
-**State Management:**
-- Pattern Used: [Pattern]
-- Source of Truth: [Location]
-- Critical State Flows: [List]
-
-**Known Issues:**
-- [Issue 1]: [Mitigation]
-- [Issue 2]: [To verify in Phase 4]
-
-### Artifacts & Files
-
-**Critical Files for Phase 4:**
-- `docs/specifications/locked-specification.md` - **AC verification source**
-- `docs/verification/test-plan.md` - **Test execution guide**
-- `docs/architecture/api-contracts/openapi.yaml` - **Contract validation**
-- `implementation/estimation-tracking.md` - **Token variance data**
-
-**Testing Assets:**
-- `tests/` - All test files
-- `test-reports/` - Will be generated during verification
-
-### Token Metrics
-
-**Phase 3 Sessions:**
-- Total Tokens: [X]K tokens
-- Estimated: [Y]K tokens
-- Variance: [±Z]%
-- Efficiency: [Excellent/Good/Needs Improvement]
-
-**Variance Insights:**
-- [Key insight 1]
-- [Key insight 2]
-
-**Phase 4 Estimate:**
-- Expected: 8K-20K tokens per session
-- Verification tasks: ~5-8 tasks
-- Total Estimate: 40K-80K tokens
-- Sessions Needed: 1 (Sonnet 4.5)
-
-### Git State
-
-**Branch:** `develop`
-**Last Tag:** `v0.3.0-impl`
-**Status:** Clean (all changes committed)
-
-### Next Phase Preparation
-
-**Phase 4 Entry Conditions (All Met):**
-- [x] All tasks ✅ or explicitly ❌
-- [x] Git tag `v0.3.0-impl` exists
-- [x] Test coverage ≥[threshold]%
-
-**Expected Duration:** 3-6 hours
-**Primary Role:** QA Lead
-**Supporting Roles:** Security Engineer, Performance Engineer, Data Interpreter
-```
-
-### Phase 4 → Phase 5 Handoff
-
-```markdown
-## Session Handoff: Verification → Release
-
-**Session Type:** Phase Transition
-**From Phase:** 4 (Verification)
-**To Phase:** 5 (Master Control & Release)
-**Model Recommendation:** Claude Sonnet 4.5
-
-### Context Summary
-
-**GO/NO-GO Decision:** [✅ GO / ❌ NO-GO]
-
-**Quality Summary:**
-- Test Coverage: [X]% (✅/❌)
-- Security: [N] critical, [M] high (✅/❌)
-- AC Pass Rate: [K]/[Total] (✅/❌)
-- Performance: [✅ No regressions / ❌ Regressions detected]
-- Token Efficiency: [Score]/10
-
-### What Was Accomplished
-
-- ✅ All tests executed (unit, integration, E2E)
-- ✅ Security scans complete (SAST, dependency, secrets)
-- ✅ Ethics validation passed
-- ✅ Performance baselines established
-- ✅ API contracts validated
-- ✅ Evidence package created
-- ✅ GO/NO-GO decision made
-- ✅ Git commit and tag created (v0.4.0-verify)
-
-### Current Focus
-
-**Next Step:** Begin Phase 5 (Release)
-
-**Decision Path:**
-- **If GO:** Proceed to Step 5.A (Success Workflow)
-- **If NO-GO:** Proceed to Step 5.B (Failure Workflow)
-
-**What needs to happen next:**
-1. Load `./.CodeMaestro/prompts/05-master-control.md`
-2. Activate Release Manager role
-3. Execute appropriate workflow based on GO/NO-GO decision
-
-### Critical Context
-
-**Verification Results:**
-- Blocking Issues: [N] (must be 0 for GO)
-- Non-Blocking Warnings: [M]
-- Performance Baseline: v[X.Y.Z] established
-
-**Token Efficiency Analysis:**
-- Overall Variance: [±X]%
-- Best Practices: [List 2-3]
-- Improvements Needed: [List 2-3]
-
-### Artifacts & Files
-
-**Critical Files for Phase 5:**
-- `verification/evidence-packages/v[X.Y.Z]-evidence.md` - **Evidence**
-- `docs/release/monitoring-plan.md` - **Post-release monitoring**
-- `docs/release/rollback-sop.md` - **Rollback procedures**
-- `CHANGELOG.md` - Update with release notes
-
-**Token Metrics for Retrospective:**
-- `implementation/estimation-tracking.md` - Full variance data
-- Evidence package Section 8 - Token efficiency summary
-
-### Token Metrics
-
-**Phase 4 Session:**
-- Tokens Used: [X]K tokens
-- Phase 4 Average: 8K-20K
-
-**Project Total:**
-- All Phases: [Y]K tokens
-- Estimated: [Z]K tokens
-- Variance: [±W]%
-
-**Phase 5 Estimate:**
-- Expected: 5K-12K tokens
-- Release tasks: ~3-5 tasks
-- Total Estimate: 15K-35K tokens
-- Sessions Needed: 1 (Sonnet 4.5)
-
-### Git State
-
-**Branch:** `develop`
-**Last Tag:** `v0.4.0-verify`
-**Status:** Clean (all changes committed)
-
-**Next Actions:**
-- Merge to `main` (if GO)
-- Create release tag `v[X.Y.Z]`
-- Update CHANGELOG.md
-
-### Next Phase Preparation
-
-**Phase 5 Entry Conditions:**
-- [x] GO/NO-GO decision made
-- [x] Evidence package complete
-- [x] Git tag `v0.4.0-verify` exists
-
-**Expected Duration:** 2-4 hours
-**Primary Role:** Release Manager
-**Supporting Roles:** Project Manager, DevOps Engineer, Data Interpreter
-```
+**See:** [templates/handoff-phase-templates.md](templates/handoff-phase-templates.md) for complete phase-specific templates.
 
 ---
 
@@ -594,7 +225,8 @@ For resuming work mid-phase after an interruption:
 **Session Type:** Mid-Phase Resume
 **Phase:** [N] ([Phase Name])
 **Status:** In Progress
-**Model Recommendation:** [Same as previous session]
+**Current Model:** [Model from previous session]
+**Continue With:** [Same / Different model - see recommendation below]
 
 ### Context Summary
 
@@ -618,16 +250,34 @@ For resuming work mid-phase after an interruption:
 **Where You Left Off:**
 [Detailed description of exact stopping point]
 
-### Token Budget Status
+### Token Budget & Model Status
 
 **Current Session:**
+- Model: [Sonnet/Opus/Haiku]
 - Used: [X]K tokens ([Y]%)
 - Remaining: [Z]K tokens
 - This task estimate: [W]K tokens
 - Status: [✅ Sufficient / ⚠️ Low / ❌ Insufficient]
 
+**Current Task Model Requirement:**
+- Task Recommended Model: [Haiku/Sonnet/Opus]
+- Session Model: [Current model]
+- Match: [✅ Optimal / ⚠️ Over-powered / ❌ Under-powered]
+
 **Recommendation:**
-[Continue / Consider checkpoint / Start new session]
+
+**Continue Current Session if:**
+- ✅ Model matches task requirements OR model is more capable
+- ✅ Sufficient token budget ([Z]K > [W]K + 20% buffer)
+- ✅ No upcoming batch of differently-sized tasks
+
+**Start New Session if:**
+- ⚠️ Low budget (<20% remaining or <[W]K for current task)
+- 💡 Model mismatch opportunity: Current model is over-powered (Sonnet/Opus for simple Haiku task)
+- 💡 Upcoming batch: Next 3+ tasks all require different model (e.g., all Haiku)
+
+**Model Switch Recommendation:**
+[Continue with [Model] / Switch to [Model] for cost savings / Upgrade to [Model] for task complexity]
 
 ### Files in Progress
 
@@ -718,6 +368,36 @@ git status           # Check current state
 3. **Optional:** Mid-phase when taking break >24 hours
 4. **Required:** Before context-heavy operations (refactoring, migrations)
 5. **Critical:** After failures or when recovery needed
+6. **Model Switching:** When changing models (Haiku↔Sonnet↔Opus)
+
+### Model Selection in Handoffs
+
+**Include Model Recommendations when:**
+- Transitioning between phases
+- Starting new implementation session
+- Resuming after interruption
+- Budget running low (consider downgrade)
+- Upcoming batch of similar complexity tasks
+
+**Model Recommendation Format:**
+```markdown
+**Recommended Model:** Claude [Sonnet/Opus/Haiku] 4.5
+
+**Rationale:**
+- Upcoming tasks: [complexity profile]
+- Token budget: [fits/exceeds model limits]
+- Cost consideration: [savings opportunity / justified premium]
+- Task characteristics: [simple/moderate/complex/critical]
+
+**Alternative Strategy:**
+[Describe if model switching mid-session could save costs]
+```
+
+**Cost-Performance Guidelines:**
+- **Default to Sonnet** unless specific reason for Haiku or Opus
+- **Batch Haiku tasks** to minimize context switching overhead
+- **Use Opus sparingly** only for truly complex/critical work
+- **Document model choices** in handoff for future learning
 
 ### What Makes a Good Handoff
 
@@ -746,12 +426,15 @@ Before creating handoff, verify:
 
 - [ ] All recent work committed
 - [ ] Recovery checkpoint updated
-- [ ] Token metrics recorded
+- [ ] Token metrics recorded (usage, variance, efficiency)
 - [ ] Git state documented
 - [ ] Next steps clearly defined
 - [ ] Critical context captured
 - [ ] Files and artifacts listed
-- [ ] Model recommendation provided
+- [ ] **Model recommendation provided with rationale**
+- [ ] **Upcoming tasks analyzed for model requirements**
+- [ ] **Cost-optimization opportunities identified**
+- [ ] **Model switching strategy documented (if applicable)**
 
 ---
 

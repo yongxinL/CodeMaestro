@@ -122,12 +122,14 @@ Skill tier is selected in Phase 1 and persists throughout the project via the re
 
 ### Mandatory Thresholds (Blocking)
 
-| Metric | Minimum | Enforcement Point |
-|--------|---------|-------------------|
-| Test Coverage | 70% | Phase 4 |
-| Critical Security Issues | 0 | Phase 4 |
-| High Security Issues | 0 | Phase 4 |
-| Acceptance Criteria Pass Rate | 100% | Phase 4 |
+**Default quality gate thresholds:**
+- Test Coverage: ≥70%
+- Security Issues: 0 critical/high
+- Acceptance Criteria Pass Rate: 100%
+
+**Enforcement:** Phase 3 (incremental), Phase 4 (final)
+
+**See:** [../config/thresholds.md](../config/thresholds.md) for complete definitions, rationale, and project-specific override instructions.
 
 ### Target Thresholds (Non-Blocking)
 
@@ -201,9 +203,10 @@ Role: [Active role]
 
 ### Core Constraints (Always Apply)
 
-**A. Dependency Usage**
+**A. Dependency Usage & Anti-Hallucination**
 - **A1:** Use production-ready, well-maintained dependencies as black boxes
 - **A7:** Never invent or assume existence of APIs not confirmed in documentation
+- **A7.5:** Copy verified examples from official docs rather than generating from memory ⭐ NEW
 - **A14:** Document rationale for each dependency
 
 **B. Implementation**
@@ -402,11 +405,45 @@ Location: `./docs/implementation/.recovery-checkpoint.md`
 ### Phase Boundary Protocol
 
 At each phase completion:
-1. Update recovery checkpoint with handoff info
-2. Suggest new session start
-3. Recommend model for next phase
-4. Provide lazy load map
-5. Give user action plan
+1. **Review for KB additions** (patterns, failures, decisions)
+2. **Update recovery checkpoint** with handoff info
+3. **Suggest new session start** (recommended)
+4. **Recommend model** for next phase
+5. **Provide lazy load map** for quick resume
+6. **Give user action plan**
+
+**Critical:** Checkpoint must be updated at phase boundaries to ensure new sessions can resume without context loss.
+
+---
+
+## Recovery Checkpoint Strategy
+
+### Update Frequency
+
+**MUST update checkpoint at:**
+- ✅ **Every phase boundary** (Phase 1→2, 2→3, 3→4, 4→5)
+- ✅ **Every task completion** (Phase 3)
+- ✅ **Session budget >80%** (before running out of tokens)
+- ✅ **Before long breaks** (>24 hours between sessions)
+- ✅ **After critical decisions** (ADRs, architecture changes)
+
+**File Location:** `docs/implementation/.recovery-checkpoint.md`
+
+**Purpose:** Enable new sessions to resume work immediately without asking user "where were we?"
+
+### Checkpoint Contents
+
+**Always include:**
+1. Last updated timestamp
+2. Current phase and role
+3. Current/next task
+4. Git state (branch, tag, commit)
+5. Session token usage
+6. Progress summary
+7. Quick resume commands
+8. Lazy load map for key files
+
+**See phase-specific examples in each phase prompt (Step X.Y.5: Update Recovery Checkpoint)**
 
 ---
 
@@ -421,11 +458,15 @@ At each phase completion:
 └── decisions/    # Searchable decision index
 ```
 
-### Integration Points
+### Integration Points (ALL PHASES)
 
-- **Phase 3:** Log implementation decisions and failures
-- **Phase 5:** Capture lessons learned, update knowledge base
-- **All Phases:** Reference patterns when making decisions
+- **Phase 1:** Domain requirements patterns, competitive insights, requirement clarification patterns
+- **Phase 2:** Architectural decisions, tech stack learnings, build vs integrate decisions, domain patterns
+- **Phase 3:** Implementation patterns, failure resolutions, library usage patterns, optimization techniques
+- **Phase 4:** Test failure patterns, security vulnerabilities, performance optimizations, quality gate insights
+- **Phase 5:** Lessons learned, retrospective insights, organizational patterns
+
+**Philosophy:** Every phase contributes to organizational learning through KB
 
 ### Commands
 

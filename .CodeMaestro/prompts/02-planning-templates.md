@@ -404,11 +404,11 @@ erDiagram
 
 #### Module 1.1: [Module Name]
 
-| Task ID | Description | Est. Hours | Est. Tokens | Dependencies | Parallel Group | AC Mapping |
-|---------|-------------|-----------|-------------|--------------|----------------|------------|
-| T-1.1.1 | [Task description] | 4 | 10K | None | PG-001 | AC-1.1 |
-| T-1.1.2 | [Task description] | 6 | 15K | None | PG-001 | AC-1.2 |
-| T-1.1.3 | [Task description] | 8 | 35K | T-1.1.1, T-1.1.2 | - | AC-1.3 |
+| Task ID | Description | Est. Hours | Est. Tokens | Model | Dependencies | Parallel Group | AC Mapping |
+|---------|-------------|-----------|-------------|-------|--------------|----------------|------------|
+| T-1.1.1 | [Task description] | 4 | 10K | Haiku | None | PG-001 | AC-1.1 |
+| T-1.1.2 | [Task description] | 6 | 15K | Haiku | None | PG-001 | AC-1.2 |
+| T-1.1.3 | [Task description] | 8 | 35K | Sonnet | T-1.1.1, T-1.1.2 | - | AC-1.3 |
 
 #### Module 1.2: [Module Name]
 [Repeat structure]
@@ -486,6 +486,7 @@ graph TD
 
 **Token Estimation:**
 **Estimated Tokens:** [Y],000 tokens
+**Recommended Model:** [Haiku / Sonnet / Opus]
 
 **Rationale:**
 - **Base Estimate:** [Z],000 tokens (Phase 3, [complexity level])
@@ -499,6 +500,11 @@ graph TD
 - Testing: [B],000 tokens
 - Documentation: [C],000 tokens
 - Debugging buffer: [D],000 tokens
+
+**Model Selection:**
+- **Haiku:** Simple tasks (<20K tokens, repetitive patterns, CRUD, config)
+- **Sonnet:** Moderate to complex tasks (20-80K tokens, business logic, integration)
+- **Opus:** Very complex tasks (>80K tokens, architectural decisions, novel algorithms)
 
 **Reference:** See `.CodeMaestro/config/token-estimation.md` for estimation methodology
 

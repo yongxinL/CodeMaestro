@@ -323,6 +323,85 @@ view /mnt/project/04-verification-templates.md#evidence-package
 
 ---
 
+### Step 4.8.5: Knowledge Base Integration
+
+**Action**: Review Phase 4 verification results and add learnings to knowledge base.
+
+**Check for KB-worthy content:**
+
+**1. Test Failure Patterns**
+```bash
+# If recurring test failures or difficult-to-find bugs discovered
+/kb add failure
+
+# Example entry
+Failure: F-TEST-015 - Race condition in async state updates
+Category: Testing
+Phase: Verification
+Root Cause: useEffect cleanup not properly handling unmounted component
+Solution: Add cleanup flag and conditional setState
+Prevention: Always check component mounted state before async setState
+```
+
+**2. Security Vulnerability Patterns**
+```bash
+# If security issues found that could recur in future projects
+/kb add failure
+
+# Example entry
+Failure: F-SEC-008 - SQL injection in dynamic query builder
+Category: Security
+Phase: Verification
+Root Cause: User input concatenated into SQL without sanitization
+Solution: Migrated to parameterized queries with prepared statements
+Prevention: Use ORM or parameterized queries (A7 constraint)
+```
+
+**3. Performance Optimization Discoveries**
+```bash
+# If performance issues identified and resolved
+/kb add pattern
+
+# Example entry
+Pattern: P-PERF-012 - Database N+1 query optimization
+Category: Performance
+Phase: Verification
+Problem: Loading 100 users triggered 100 additional queries for roles
+Solution: Added .include('roles') to eager load relationships
+Impact: Response time improved from 800ms → 45ms (94% reduction)
+```
+
+**4. Quality Gate Insights**
+```bash
+# If systematic quality issues found
+/kb add pattern
+
+# Example entry
+Pattern: P-QA-003 - Missing test coverage in error handling paths
+Category: Quality Assurance
+Phase: Verification
+Observation: Happy path well-tested (92%), error paths undertested (35%)
+Solution: Added dedicated error scenario test suite
+Recommendation: Include error path coverage in Phase 3 validation
+```
+
+**When to add to KB:**
+- Recurring bugs or failure patterns
+- Security vulnerabilities with general applicability
+- Performance optimization techniques
+- Quality gate failure patterns
+- Test strategy insights
+- Verification workflow improvements
+
+**When NOT to add:**
+- Project-specific edge cases
+- One-time configuration issues
+- Environmental problems
+
+**Deliverable:** Updated knowledge base with Phase 4 verification learnings
+
+---
+
 ### Step 4.9: GO/NO-GO Decision
 
 **Decision Rules**:
@@ -339,6 +418,54 @@ NO-GO if ANY blocking criterion fails
 ```
 
 **Make evidence-based decision**.
+
+---
+
+### Step 4.9.5: Update Recovery Checkpoint for Phase 5
+
+**Action**: Update checkpoint after GO/NO-GO decision to enable seamless Phase 5 start.
+
+**Update** `docs/implementation/.recovery-checkpoint.md`:
+
+```markdown
+# Recovery Checkpoint
+
+| Field | Value |
+|-------|-------|
+| Last Updated | [Current timestamp] |
+| Phase | 4 |
+| Active Role | QA Lead |
+| Status | Phase 4 Complete - GO/NO-GO: [✅ GO / ❌ NO-GO] |
+| Git Branch | develop |
+| Git Tag | v0.4.0-verify |
+| Session Model | [Sonnet] |
+| Tokens Used | [X]K |
+
+## Phase 4 Summary
+- GO/NO-GO: [✅ GO / ❌ NO-GO]
+- Test Coverage: [X]%
+- Security: [N] critical/high (must be 0)
+- AC Pass Rate: [K]/[Total]
+- Evidence Package: v[X.Y.Z]-evidence.md
+
+## Next Phase Entry
+Load: `.CodeMaestro/prompts/05-master-control.md`
+Workflow: [5.A Success / 5.B Failure] based on GO/NO-GO
+
+## Lazy Load Map
+evidence-package → verification/evidence-packages/v[X.Y.Z]-evidence.md
+monitoring-plan → docs/release/monitoring-plan.md
+rollback-sop → docs/release/rollback-sop.md
+
+## KB Additions (Phase 4)
+- [N] failure patterns documented
+- [M] performance optimizations captured
+- [K] quality gate insights recorded
+```
+
+**KB Integration:** Already completed in Step 4.8.5
+
+**Deliverable:** Updated checkpoint ready for Phase 5 handoff
 
 ---
 
