@@ -40,7 +40,7 @@ The maximum token limit per conversation session:
 
 ### Model Selection Guidelines
 
-Choose the right model based on task complexity and token requirements:
+**Quick Reference:**
 
 | Model | Context Window | Usable Budget | Best For | Cost (Relative) |
 |-------|---------------|---------------|----------|-----------------|
@@ -48,31 +48,12 @@ Choose the right model based on task complexity and token requirements:
 | **Sonnet 4.5** | 1M tokens | 800K tokens | Most tasks, good balance | ~5x |
 | **Opus 4.5** | 1M tokens | 800K tokens | Complex, critical tasks | ~15x |
 
-**Decision Criteria:**
+**Decision Rules:**
+- **<20K tokens** → Haiku
+- **20-80K tokens** → Sonnet
+- **>80K tokens** → Opus
 
-**Use Haiku when:**
-- Token budget <20K per task
-- Simple CRUD operations
-- Configuration and setup tasks
-- Repetitive patterns (following established templates)
-- Testing simple scenarios
-- Documentation updates (non-architectural)
-
-**Use Sonnet when:**
-- Token budget 20-80K per task
-- Business logic implementation
-- API integration (moderate complexity)
-- Database queries and optimization
-- UI components with interactivity
-- Most implementation tasks (default choice)
-
-**Use Opus when:**
-- Token budget >80K per task
-- Novel algorithms or complex logic
-- Architectural decisions (Phase 2)
-- Critical security implementations
-- Performance optimization requiring deep analysis
-- Debugging complex, multi-layer issues
+**See:** [model-selection.md](model-selection.md) for complete decision criteria, task-type mapping, cost-performance trade-offs, and phase-specific recommendations.
 
 ---
 

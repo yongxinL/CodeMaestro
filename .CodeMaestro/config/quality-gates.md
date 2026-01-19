@@ -21,6 +21,8 @@ CodeMaestro enforces three non-negotiable quality gates:
 | **Security Issues** | E31 | 0 critical/high | Yes | 3, 4 |
 | **Acceptance Criteria** | E33 | 100% pass rate | Yes | 4 |
 
+**Threshold Details:** See [thresholds.md](thresholds.md) for complete definitions, rationale, and project-specific override instructions.
+
 ---
 
 ## Command: `/validate quality`

@@ -110,6 +110,151 @@ Load full role definition: `view /mnt/project/config/roles/software-architect.md
 
 ---
 
+### Step 2.2.5: Solution Discovery
+
+**Philosophy:** "Connect instead of create, reuse instead of reinvent"
+
+**Action**: Before designing custom solutions, search for existing libraries, frameworks, services, or patterns that solve the requirements.
+
+**Workflow:**
+
+**1. Search for Existing Solutions**
+```bash
+# Search for mature libraries/frameworks
+/websearch "[requirement] library 2026 comparison"
+/websearch "[framework] vs [alternative] 2026"
+
+# Search for SaaS/managed services
+/websearch "[requirement] managed service 2026"
+
+# Check internal knowledge base
+/kb search [requirement-keyword]
+```
+
+**2. Evaluate Build vs. Integrate Decision**
+
+For each major requirement, create a comparison table:
+
+| Requirement | Custom Build | Library/Service Option | Decision | Rationale |
+|-------------|-------------|----------------------|----------|-----------|
+| User Authentication | 200 hours dev | Auth0 (SaaS) $200/mo | **Auth0** | Mature, tested, compliance included |
+| File Storage | 80 hours dev | AWS S3 $20/mo | **AWS S3** | Proven, scalable, zero maintenance |
+| Email Sending | 40 hours dev | SendGrid $15/mo | **SendGrid** | Deliverability expertise |
+| Payment Processing | 300 hours dev | Stripe SDK | **Stripe SDK** | PCI compliance, fraud prevention |
+| Custom Business Logic | N/A | None available | **Custom** | Domain-specific, no alternatives |
+
+**3. Decision Criteria**
+
+**Prefer Integration when:**
+- ✅ Mature solution exists (>10K stars, active maintenance)
+- ✅ Meets ≥80% of requirements out-of-box
+- ✅ Cost-effective (build time > 6 months of service cost)
+- ✅ Compliance/security included (GDPR, PCI DSS, SOC 2)
+- ✅ Well-documented with official examples
+
+**Prefer Custom Build when:**
+- Core differentiator for competitive advantage
+- No suitable solution exists
+- Requirements too specific for generic solutions
+- Security/compliance requires full control
+- Long-term cost of service > build cost
+
+**4. Document Decision in ADR**
+
+Create ADR for each build vs. integrate decision:
+
+```markdown
+<!-- docs/architecture/adrs/ADR-003-use-stripe-for-payments.md -->
+
+# ADR-003: Use Stripe SDK for Payment Processing
+
+**Status:** Accepted
+**Decision Date:** 2026-01-19
+**Category:** Integration vs. Implementation
+
+## Context
+
+Requirement: Process credit card payments securely and reliably.
+
+## Options Considered
+
+### Option 1: Custom Payment Processing
+- **Effort:** ~300 hours
+- **Pros:** Full control, no recurring cost
+- **Cons:** PCI DSS compliance ($50K+ annual audit), fraud detection complexity, maintenance burden
+- **Risk:** HIGH - regulatory and security complexity
+
+### Option 2: Stripe SDK Integration
+- **Effort:** ~40 hours (integration + testing)
+- **Cost:** 2.9% + $0.30 per transaction
+- **Pros:** PCI compliant, fraud detection included, well-documented, proven at scale
+- **Cons:** Transaction fees, vendor lock-in
+- **Risk:** LOW - mature, tested solution
+
+### Option 3: Braintree SDK
+- **Effort:** ~45 hours
+- **Cost:** Similar to Stripe
+- **Pros:** PayPal integration, good docs
+- **Cons:** Slightly less modern API
+- **Risk:** LOW
+
+## Decision
+
+**Selected:** Stripe SDK (Option 2)
+
+**Rationale:**
+- **Connect instead of create:** Stripe is the industry standard
+- **260 hour savings** (300 custom - 40 integration)
+- PCI compliance included (saves $50K+ annual audit)
+- Superior fraud detection vs custom implementation
+- Proven at scale (millions of businesses)
+- Excellent documentation and Context7 examples available
+
+**Implementation:**
+- Use Stripe Elements for frontend (PCI-compliant card collection)
+- Stripe SDK for backend payment intents
+- Webhooks for async payment confirmations
+- Pattern: Adapt official Stripe examples via Context7
+
+**Cost Projection:**
+- Development: 40 hours vs 300 hours (260 hour savings)
+- Ongoing: 2.9% transaction fee (acceptable for MVP)
+- Compliance: $0 vs $50K+ annual PCI audit
+
+**Related Patterns:**
+- Context7: /example stripe payment-intent
+- Knowledge Base: P-INT-012 (third-party service integration)
+```
+
+**5. Update Blueprint with Integration Strategy**
+
+In blueprint.md, document:
+- External services/libraries selected
+- Integration points and dependencies
+- Build vs. integrate decisions (reference ADRs)
+
+**Example:**
+```markdown
+## Technology Stack
+
+### Third-Party Integrations (Connect Instead of Create)
+- **Authentication:** Auth0 (replaces custom auth system)
+- **Payments:** Stripe SDK (PCI-compliant, fraud detection)
+- **Email:** SendGrid (deliverability, templates)
+- **Storage:** AWS S3 (scalable, managed)
+
+### Custom Components (Build - No Suitable Alternatives)
+- Business rule engine (domain-specific)
+- Report generation (unique format requirements)
+- Custom dashboard (specialized visualizations)
+
+**Total Estimated Savings:** 520 hours via integration vs custom build
+```
+
+**Deliverable**: `docs/architecture/build-vs-integrate-decisions.md` with comparison tables and ADRs
+
+---
+
 ### Step 2.3: Architecture Design
 
 **Action**: Create the engineering blueprint.
@@ -472,6 +617,113 @@ Generate:
 - CODEOWNERS: `team/CODEOWNERS`
 - PR Template: `team/pr-template.md`
 - Review Checklist: `team/review-checklist.md`
+
+---
+
+### Step 2.13.5: Knowledge Base Integration & Checkpoint Update
+
+**Action**: Review Phase 2 work for KB additions and update recovery checkpoint.
+
+**Check for KB-worthy Architectural Patterns:**
+
+**1. Architectural Decision Patterns**
+```bash
+# If architectural decision applicable to future projects
+/kb add pattern
+
+# Example entry
+Pattern: P-ARCH-024 - Microservices with API Gateway pattern
+Category: Architecture
+Phase: Planning
+Context: E-commerce platform with 3 backend services
+Decision: API Gateway (Kong) + service mesh for inter-service communication
+Rationale: Centralized auth, rate limiting, observability
+```
+
+**2. Technology Stack Learnings**
+```bash
+# If tech stack evaluation revealed important insights
+/kb add decision
+
+# Example entry
+Decision: TECH-009 - React vs Vue for admin dashboard
+Category: Technology Selection
+Options: React (mature ecosystem), Vue (simpler learning), Angular (enterprise)
+Selected: React
+Rationale: Team familiarity, rich ecosystem, Context7 examples available
+Considerations: Vue would be faster to learn but smaller ecosystem
+```
+
+**3. Build vs Integrate Decisions** (from Step 2.2.5)
+```bash
+# If integration decisions worth documenting
+/kb add pattern
+
+# Example entry
+Pattern: P-INT-015 - Stripe integration over custom payment
+Category: Integration Strategy
+Saved: 260 hours development + $50K PCI audit
+Trade-off: 2.9% transaction fee vs full control
+Recommendation: Always prefer Stripe/Braintree for payments
+```
+
+**4. Domain-Specific Patterns**
+```bash
+# If domain adaptations revealed reusable patterns
+/kb add pattern
+
+# Example entry
+Pattern: P-DOMAIN-WEB-004 - Progressive Web App (PWA) strategy
+Category: Web Domain
+Features: Service worker, offline mode, installable
+Implementation: Workbox library + manifest.json
+Performance: 60% reduction in repeat visit load time
+```
+
+**KB Review Questions:**
+- Did we make architectural decisions applicable to future projects?
+- Did tech stack evaluation reveal important trade-offs?
+- Did build vs integrate decisions demonstrate clear patterns?
+- Are there domain-specific patterns worth documenting?
+- Did we discover optimization or design techniques?
+
+**If YES to any:** Add to knowledge base before checkpoint
+
+**Update Recovery Checkpoint:**
+
+Update `docs/implementation/.recovery-checkpoint.md`:
+
+```markdown
+# Recovery Checkpoint
+
+| Field | Value |
+|-------|-------|
+| Last Updated | [Current timestamp] |
+| Phase | 2 |
+| Active Role | Software Architect |
+| Status | Phase 2 Complete - Ready for Phase 3 |
+| Git Branch | develop |
+| Git Tag | v0.2.0-plan |
+| Session Model | [Opus/Sonnet] |
+| Tokens Used | [X]K |
+
+## Phase 2 Summary
+- Blueprint: v1.0 created
+- Tasks: [Z] tasks across [X] milestones
+- Token Estimates: [T]K total
+- Build vs Integrate: [N] integrations selected
+
+## Next Phase Entry
+Load: `.CodeMaestro/prompts/03-implementation.md`
+First Task: T-[M].[Mod].[Task]
+
+## Lazy Load Map
+blueprint → docs/architecture/blueprint.md
+task-dag → docs/architecture/task-dag.mermaid
+tasks → docs/architecture/tasks/
+```
+
+**Deliverable:** Updated checkpoint + KB entries (if applicable)
 
 ---
 

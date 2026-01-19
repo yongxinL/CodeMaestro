@@ -196,6 +196,42 @@ For complex tasks:
 
 #### 3.3.4: Implement
 
+**Anti-Hallucination Workflow (Constraints A7, A7.5, A4):**
+
+Before writing implementation code:
+
+**1. Search for Existing Patterns**
+```bash
+# Check internal knowledge base
+/kb search [task-feature]
+
+# If using new/unfamiliar library, retrieve verified examples
+Context7: /example [library] [feature]
+Context7: /lookup [library] [method]    # Confirm API signatures
+```
+
+**2. Copy and Adapt Verified Code**
+- Start with official examples from Context7
+- Adapt to your specific requirements
+- Preserve proven patterns and structure
+- **Never** generate from memory for unfamiliar APIs
+
+**3. Document Sources**
+```javascript
+// Pattern adapted from: [Library] official docs via Context7
+// Modified for: [Your specific use case]
+// Validated via Context7: [library].[method]() confirmed
+```
+
+**4. Validate Implementation**
+- Confirm adapted code compiles/runs
+- Test edge cases
+- Compare against original example to ensure correctness
+
+**See:** [roles/senior-developer.md](../config/roles/senior-developer.md#anti-hallucination-practices) for complete anti-hallucination workflow.
+
+---
+
 **State Management & Data Flow Optimization**:
 
 For each task, explicitly optimize:
@@ -305,6 +341,91 @@ Store:
 #### 3.3.8: Mark Complete
 
 Update status to ✅.
+
+#### 3.3.8.5: Update Recovery Checkpoint & Review for KB
+
+**Action**: Update checkpoint after each task completion to ensure session continuity.
+
+**Update** `docs/implementation/.recovery-checkpoint.md`:
+
+```markdown
+# Recovery Checkpoint
+
+| Field | Value |
+|-------|-------|
+| Last Updated | [Current timestamp] |
+| Phase | 3 |
+| Active Role | Senior Developer |
+| Current Task | T-[X.X.X] - [Just completed] |
+| Next Task | T-[Y.Y.Y] - [Next in queue] |
+| Git Commit | [Latest commit hash] |
+| Git Branch | develop |
+| Session Model | [Sonnet/Opus/Haiku] |
+| Tokens Used | [X]K ([Y]% of budget) |
+
+## Progress Summary
+- Completed: [N]/[Total] tasks ([Z]%)
+- Current Milestone: M[X] - [Name]
+- Status: [On track / Behind / Ahead]
+
+## Quick Resume
+Load next task: `/task T-[Y.Y.Y]`
+Check status: `/status`
+
+## Lazy Load Map
+blueprint → docs/architecture/blueprint.md
+task-dag → docs/architecture/task-dag.mermaid
+module-context-M[X] → implementation/context-packages/module-M[X]-context.md
+```
+
+**Review for Knowledge Base Additions:**
+
+After each task completion, check if learnings should be added to KB:
+
+**1. Check for Reusable Patterns**
+```bash
+# If task implementation created valuable pattern
+/kb add pattern
+
+# Example triggers:
+- Solved problem in elegant/novel way
+- Discovered better approach than planned
+- Created reusable utility/component
+- Found optimization technique
+```
+
+**2. Check for Failure Prevention**
+```bash
+# If task had challenges that could help future work
+/kb add failure
+
+# Example triggers:
+- Bug that was hard to find/fix
+- Library gotcha or unexpected behavior
+- Integration issue with third-party service
+- Performance bottleneck discovered
+```
+
+**3. Check for API/Library Learnings**
+```bash
+# If learned important API usage pattern
+/kb add pattern
+
+# Example triggers:
+- Adapted Context7 example successfully
+- Discovered undocumented API behavior
+- Found best practice for library usage
+```
+
+**KB Review Questions:**
+- Did this task reveal a reusable pattern?
+- Did I encounter a failure others should avoid?
+- Did I learn something about a library/API worth sharing?
+- Would future similar tasks benefit from this knowledge?
+
+**If YES to any:** Add to knowledge base before committing
+
+**Deliverable:** Updated checkpoint + KB entries (if applicable)
 
 #### 3.3.9: Git Commit
 
