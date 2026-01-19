@@ -452,24 +452,272 @@ CLAUDE.md
 # Uncomment the line above to keep CLAUDE.md in the repository during development
 # and only remove it via cleanup.sh before final release
 
-# Common project files
-node_modules/
-.env
-.DS_Store
-*.log
+###############################################################################
+# ---> IDEs & Editors
+###############################################################################
 
-# Build artifacts
-dist/
-build/
-target/
-*.egg-info/
-__pycache__/
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.vscode-test
+.history/
 
-# IDE files
-.vscode/
+# JetBrains / IntelliJ
 .idea/
+
+# Vim
 *.swp
 *.swo
+
+# Spyder / Rope
+.spyderproject
+.spyproject
+.ropeproject
+
+
+###############################################################################
+# Operating Systems
+###############################################################################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+###############################################################################
+# Logs & Runtime Artifacts
+###############################################################################
+
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+pids
+*.pid
+*.pid.lock
+*.seed
+hs_err_pid*
+replay_pid*
+
+
+###############################################################################
+# Environment & Secrets
+###############################################################################
+
+.env
+.envrc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+
+###############################################################################
+# Node.js / JavaScript
+###############################################################################
+
+node_modules/
+jspm_packages/
+web_modules/
+
+# Build & cache
+dist
+build
+out
+.next
+.nuxt
+coverage
+.nyc_output
+.parcel-cache
+.cache
+.grunt
+.lock-wscript
+.yarn-integrity
+
+# Snowpack / VitePress / VuePress
+.vuepress/dist
+.temp
+**/.vitepress/dist
+**/.vitepress/cache
+
+# Yarn v2+
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Misc
+*.tgz
+.node_repl_history
+lib-cov
+build/Release
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+###############################################################################
+# Java
+###############################################################################
+
+*.class
+*.ctxt
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+target/
+
+
+###############################################################################
+# Python
+###############################################################################
+
+# Bytecode / caches
+__pycache__/
+*.py[codz]
+*$py.class
+*.so
+
+# Packaging / build
+.Python
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+__pypackages__/
+
+# Testing / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+nosetests.xml
+*.cover
+*.py.cover
+.pytest_cache/
+.hypothesis/
+cover/
+
+# Tools
+.pybuilder/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+.ruff_cache/
+
+# Jupyter / IPython
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# Frameworks
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
+.scrapy
+docs/_build/
+
+
+###############################################################################
+# Data Stores / Messaging
+###############################################################################
+
+# Redis
+*.rdb
+*.aof
+
+# RabbitMQ
+mnesia/
+rabbitmq/
+rabbitmq-data/
+
+# ActiveMQ
+activemq-data/
+
+# DynamoDB
+.dynamodb/
+
+
+###############################################################################
+# Documentation / Static Sites
+###############################################################################
+
+.site
+.docusaurus
+.serverless/
+.fusebox/
+
+
+###############################################################################
+# Miscellaneous Tools & Platforms
+###############################################################################
+
+# Abstra
+.abstra/
+
+# PyPI
+.pypirc
+
+# Marimo
+marimo/_static/
+marimo/_lsp/
+__marimo__/
+
+# Streamlit
+.streamlit/secrets.toml
 EOF
 
 echo "   ✓ .gitignore created"
