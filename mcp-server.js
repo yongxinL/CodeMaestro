@@ -347,6 +347,78 @@ class CodeMaestroMCPServer {
 
             statusText += `🏥 Project Health: ${status.valid ? '✅ Valid' : '❌ Issues Found'}\n`;
 
+            // Try to read recovery checkpoint for additional details
+            try {
+              const config = require('./lib/config');
+              await config.load();
+              const checkpointPath = config.get().paths.recovery_checkpoint;
+
+              if (await require('fs-extra').pathExists(checkpointPath)) {
+                const checkpointContent = await require('fs-extra').readFile(checkpointPath, 'utf8');
+
+                // Extract latest information from checkpoint
+                const lastUpdatedMatch = checkpointContent.match(/- \*\*Last Updated\*\*: ([^*\n]+)/);
+                const currentTaskMatch = checkpointContent.match(/- \*\*Current Task\*\*: ([^*\n]+)/);
+                const contextMatch = checkpointContent.match(/## Active Context\n([\s\S]*?)(?=\n##)/);
+                const milestonesMatch = checkpointContent.match(/## Completed Milestones\n([\s\S]*?)(?=\n##)/);
+                const nextActionsMatch = checkpointContent.match(/## Next Actions\n([\s\S]*?)(?=\n##)/);
+                const blockersMatch = checkpointContent.match(/## Open Blockers\n([\s\S]*?)(?=\n---)/);
+
+                if (lastUpdatedMatch || currentTaskMatch) {
+                  statusText += '\n📊 Latest Session Details:\n';
+
+                  if (lastUpdatedMatch) {
+                    const lastUpdated = new Date(lastUpdatedMatch[1]);
+                    const timeAgo = Math.floor((Date.now() - lastUpdated.getTime()) / (1000 * 60)); // minutes ago
+                    statusText += `  • Last Updated: ${timeAgo} minutes ago\n`;
+                  }
+
+                  if (currentTaskMatch && currentTaskMatch[1].trim()) {
+                    statusText += `  • Current Focus: ${currentTaskMatch[1].trim()}\n`;
+                  }
+                }
+
+                if (milestonesMatch && milestonesMatch[1].trim()) {
+                  const milestones = milestonesMatch[1].trim().split('\n').filter(m => m.trim());
+                  if (milestones.length > 0) {
+                    statusText += '\n✅ Recent Milestones:\n';
+                    milestones.slice(-3).forEach(milestone => { // Show last 3 milestones
+                      statusText += `  • ${milestone.replace(/^-\s*/, '')}\n`;
+                    });
+                    if (milestones.length > 3) {
+                      statusText += `  • ... and ${milestones.length - 3} more\n`;
+                    }
+                  }
+                }
+
+                if (nextActionsMatch && nextActionsMatch[1].trim()) {
+                  const nextActions = nextActionsMatch[1].trim().split('\n').filter(a => a.trim());
+                  if (nextActions.length > 0) {
+                    statusText += '\n🎯 Next Recommended Actions:\n';
+                    nextActions.slice(0, 3).forEach(action => { // Show first 3 next actions
+                      statusText += `  • ${action.replace(/^-\s*/, '')}\n`;
+                    });
+                    if (nextActions.length > 3) {
+                      statusText += `  • ... and ${nextActions.length - 3} more suggested actions\n`;
+                    }
+                  }
+                }
+
+                if (blockersMatch && blockersMatch[1].trim() && !blockersMatch[1].includes('None identified')) {
+                  const blockers = blockersMatch[1].trim().split('\n').filter(b => b.trim());
+                  if (blockers.length > 0) {
+                    statusText += '\n🚨 Active Blockers:\n';
+                    blockers.forEach(blocker => {
+                      statusText += `  • ${blocker.replace(/^-\s*/, '')}\n`;
+                    });
+                  }
+                }
+              }
+            } catch (checkpointError) {
+              // Silently ignore checkpoint reading errors - not critical for basic status
+              logger.debug(`Could not read recovery checkpoint: ${checkpointError.message}`);
+            }
+
             if (status.issues.length > 0) {
               statusText += '\n🚨 Issues:\n';
               status.issues.forEach(issue => statusText += `  • ${issue}\n`);
