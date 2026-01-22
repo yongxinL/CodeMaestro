@@ -227,3 +227,5 @@ target/
 hs_err_pid*
 replay_pid*
 
+## remove docs folder as this will be create by initial project command
+/docs
