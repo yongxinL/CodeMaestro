@@ -500,128 +500,210 @@ class CodeMaestroMCPServer {
               await projectDetector.updateRecoveryCheckpoint({
                 phase: 1,
                 role: 'Product Manager',
-                task: 'Creating product specification document',
-                context: 'Working on product specification template',
+                task: 'Creating product specification with user input',
+                context: 'Gathering specification details interactively',
                 milestones: ['Started product specification'],
                 nextActions: ['Complete specification details', 'Analyze competitive landscape', 'Generate user stories']
               });
 
-              return `📋 Creating Product Specification
+              // Return questions in ask-user-questions-mcp format for interactive collection
+              return `🔍 Interactive Product Specification Creation
 
-I've created a template for your product specification. Here's what you need to define:
+To create a comprehensive product specification, I need to ask you some key questions. Here are the questions I'll ask:
 
-## Product Specification Template
+**Questions to be answered:**
+1. **Product Name**: What is the name of your product?
+2. **Target Audience**: Who is the target audience for this product?
+3. **Problem Solved**: What is the primary problem this product solves?
+4. **Technology Stack**: What is your preferred technology stack?
 
-### Product Overview
-- **Name**: [Product Name]
-- **Version**: [Version Number]
-- **Target Audience**: [Who will use this product]
-- **Problem Solved**: [What problem does this solve]
+**Ready to begin the interactive questioning process?**
 
-### Functional Requirements
-- [List key features and capabilities]
-- [Define user interactions]
-- [Specify business logic]
+**To start interactive questioning, use:**
+*"Ask me questions about my product specification"*
 
-### Non-Functional Requirements
-- **Performance**: [Response times, throughput, etc.]
-- **Security**: [Authentication, authorization, data protection]
-- **Scalability**: [User load, data volume, etc.]
-- **Usability**: [User experience requirements]
-
-### Technical Constraints
-- [Technology stack preferences]
-- [Integration requirements]
-- [Compliance needs]
-
-### Success Metrics
-- [How will you measure success]
-- [Key performance indicators]
-
----
+**Or use the codem_ask_user tool directly:**
+\`\`\`
+{
+  "questions": [
+    {
+      "prompt": "What is the name of your product?",
+      "title": "Product Name",
+      "options": [
+        {"label": "Green Landing", "description": "Current project name"},
+        {"label": "Custom Name", "description": "Enter a different product name"}
+      ],
+      "multiSelect": false
+    },
+    {
+      "prompt": "Who is the target audience for this product?",
+      "title": "Target Audience",
+      "options": [
+        {"label": "Small Business Owners", "description": "Entrepreneurs and small business operators"},
+        {"label": "Enterprise Customers", "description": "Large organizations and corporations"},
+        {"label": "Individual Consumers", "description": "End users and consumers"},
+        {"label": "Developers", "description": "Software developers and technical users"}
+      ],
+      "multiSelect": true
+    },
+    {
+      "prompt": "What is the primary problem this product solves?",
+      "title": "Problem Solved",
+      "options": [
+        {"label": "Process Automation", "description": "Automating manual processes"},
+        {"label": "Data Management", "description": "Organizing and analyzing data"},
+        {"label": "Communication", "description": "Improving communication and collaboration"},
+        {"label": "Productivity", "description": "Increasing efficiency and productivity"}
+      ],
+      "multiSelect": false
+    },
+    {
+      "prompt": "What is your preferred technology stack?",
+      "title": "Tech Stack",
+      "options": [
+        {"label": "React + Node.js", "description": "JavaScript full-stack solution"},
+        {"label": "Vue + Python", "description": "Progressive frontend with Django/Flask"},
+        {"label": "Angular + Java", "description": "Enterprise-grade solution"},
+        {"label": "Other", "description": "Specify custom technology preferences"}
+      ],
+      "multiSelect": false
+    }
+  ]
+}
+\`\`\`
 
 **Next Actions:**
 🔍 **"Analyze the competitive landscape"** - Perform market research and competitor analysis
 📝 **"Generate user stories"** - Create detailed user stories and acceptance criteria
 ➡️ **"Continue to planning phase"** - Move to technical architecture and design
-❌ **"I'm not ready yet"** - Stay in requirements phase for more work
 
-What would you like to do next?`;
+Would you like to start the interactive specification process or take another action?`;
 
             case 'competitive':
               // Update checkpoint for competitive analysis
               await projectDetector.updateRecoveryCheckpoint({
                 phase: 1,
                 role: 'Product Manager',
-                task: 'Performing competitive analysis and market research',
-                context: 'Working on competitive analysis questionnaire',
+                task: 'Performing competitive analysis with user input',
+                context: 'Gathering competitive analysis details interactively',
                 milestones: ['Started competitive analysis'],
                 nextActions: ['Complete market research', 'Define competitive positioning', 'Move to planning phase']
               });
 
-              return `🔍 Competitive Analysis
+              return `🔍 Interactive Competitive Analysis
 
-To create a comprehensive competitive analysis for your Body Lotion product, I need to understand:
+To perform a comprehensive competitive analysis, I need to ask you targeted questions about your market positioning. Here are the key questions:
 
-1. **Market Segment**: What type of body lotion? (Luxury, natural, budget, therapeutic, etc.)
-
-2. **Key Competitors**: Who are your main competitors in this space?
-
+**Questions to be answered:**
+1. **Market Segment**: What type of body lotion are you developing?
+2. **Key Competitors**: Who are your main competitors?
 3. **Competitive Advantages**: What makes your product unique?
-
 4. **Market Position**: How do you want to position your product?
-
 5. **Pricing Strategy**: What price point are you targeting?
 
----
+**To start interactive questioning, use:**
+*"Ask me questions about competitive analysis"*
+
+**Or use the codem_ask_user tool with:**
+\`\`\`
+{
+  "questions": [
+    {
+      "prompt": "What type of body lotion are you developing?",
+      "title": "Market Segment",
+      "options": [
+        {"label": "Luxury", "description": "High-end, premium positioning"},
+        {"label": "Natural/Organic", "description": "Eco-friendly, natural ingredients"},
+        {"label": "Budget", "description": "Affordable, mass-market"},
+        {"label": "Therapeutic", "description": "Medical, treatment-oriented"},
+        {"label": "Specialty", "description": "Niche market focus"}
+      ],
+      "multiSelect": false
+    },
+    {
+      "prompt": "What price point are you targeting?",
+      "title": "Pricing Strategy",
+      "options": [
+        {"label": "$5-15", "description": "Budget-friendly products"},
+        {"label": "$15-30", "description": "Mid-range positioning"},
+        {"label": "$30-60", "description": "Premium products"},
+        {"label": "$60+", "description": "Luxury/high-end market"}
+      ],
+      "multiSelect": false
+    }
+  ]
+}
+\`\`\`
 
 **Next Actions:**
 📋 **"Create the product specification"** - Define the core product requirements
 📝 **"Generate user stories"** - Create detailed user stories and acceptance criteria
 ➡️ **"Continue to planning phase"** - Move to technical architecture and design
-💡 **"Provide market details"** - Share more information about your target market
 
-Please provide details about your target market and positioning, or choose a next action above.`;
+Would you like to start the interactive competitive analysis or take another action?`;
 
             case 'stories':
               // Update checkpoint for user story generation
               await projectDetector.updateRecoveryCheckpoint({
                 phase: 1,
                 role: 'Product Manager',
-                task: 'Generating user stories and acceptance criteria',
-                context: 'Working on user story creation',
+                task: 'Generating user stories with user input',
+                context: 'Creating user stories interactively',
                 milestones: ['Generated initial user stories'],
                 nextActions: ['Customize user stories', 'Create acceptance criteria', 'Move to planning phase']
               });
 
-              return `📝 User Story Generation
+              return `📝 Interactive User Story Generation
 
-Based on your product requirements, here are some example user stories for a Body Lotion product:
+To create user stories that accurately reflect your product's value proposition, I need to ask you questions about your key user personas and their needs.
 
-## User Stories
+**Questions to be answered:**
+1. **Primary User Persona**: Who is your main target user?
+2. **Key User Goals**: What are the most important tasks users want to accomplish?
+3. **Pain Points**: What problems do users currently face?
+4. **Success Criteria**: How will users know they've achieved their goals?
 
-### Customer Stories
-- **As a busy professional**, I want moisturizing lotion that absorbs quickly so that I can get dressed immediately after application
-- **As someone with sensitive skin**, I want hypoallergenic ingredients so that I don't experience irritation or allergic reactions
-- **As an eco-conscious consumer**, I want natural and sustainable ingredients so that I'm supporting environmentally friendly products
+**To start interactive questioning, use:**
+*"Ask me questions about user stories and personas"*
 
-### Business Stories
-- **As a retailer**, I want attractive packaging that stands out on shelves so that customers notice the product
-- **As a marketer**, I want a unique selling proposition that differentiates from competitors so that we can build brand loyalty
-
-### Technical Stories
-- **As a developer**, I want an e-commerce platform that handles inventory and orders so that customers can purchase easily
-- **As a quality assurance tester**, I want clear product specifications so that I can validate the lotion meets requirements
-
----
+**Or use the codem_ask_user tool with:**
+\`\`\`
+{
+  "questions": [
+    {
+      "prompt": "Who is your primary target user persona?",
+      "title": "Primary Persona",
+      "options": [
+        {"label": "Busy Professional", "description": "Time-constrained office workers"},
+        {"label": "Health-Conscious Consumer", "description": "Focus on wellness and natural products"},
+        {"label": "Eco-Conscious Shopper", "description": "Environmentally aware consumers"},
+        {"label": "Beauty Enthusiast", "description": "Skincare and beauty focused users"},
+        {"label": "Budget Shopper", "description": "Value-driven price-sensitive buyers"}
+      ],
+      "multiSelect": true
+    },
+    {
+      "prompt": "What are the most important user goals?",
+      "title": "Key Goals",
+      "options": [
+        {"label": "Quick Absorption", "description": "Fast-acting moisturization"},
+        {"label": "Long-lasting Moisture", "description": "Extended hydration benefits"},
+        {"label": "Natural Ingredients", "description": "Clean, organic formulations"},
+        {"label": "Affordable Pricing", "description": "Value for money"},
+        {"label": "Convenient Packaging", "description": "Easy to use and carry"}
+      ],
+      "multiSelect": true
+    }
+  ]
+}
+\`\`\`
 
 **Next Actions:**
 📋 **"Create the product specification"** - Define the core product requirements
 🔍 **"Analyze the competitive landscape"** - Perform market research and competitor analysis
 ➡️ **"Continue to planning phase"** - Move to technical architecture and design
-✏️ **"Customize these user stories"** - Modify stories based on your specific product details
 
-Would you like me to create more specific user stories or take another action?`;
+Would you like to start the interactive user story generation or take another action?`;
 
             case 'list':
               return `📋 Requirements Documents
