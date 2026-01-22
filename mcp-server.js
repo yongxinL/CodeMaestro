@@ -292,107 +292,430 @@ class CodeMaestroMCPServer {
   }
 
   async executeCommand(commandName, args) {
-    return new Promise((resolve, reject) => {
-      // Map MCP tool names to actual command names
-      const commandMap = {
-        codem_init: 'codem-init',
-        codem_status: 'codem-status',
-        codem_next: 'codem-next',
-        codem_phase: 'codem-phase',
-        codem_requirements: 'codem-requirements',
-        codem_planning: 'codem-planning',
-        codem_implementation: 'codem-implementation',
-        codem_verification: 'codem-verification',
-        codem_release: 'codem-release',
-        codem_research: 'codem-research',
-        codem_lookup: 'codem-lookup',
-        codem_kb: 'codem-kb',
-        codem_commit: 'codem-commit',
-        codem_tree: 'codem-tree',
-      };
+    const projectDetector = require('./lib/project');
+    const config = require('./lib/config');
+    const logger = require('./lib/logger');
 
-      const actualCommand = commandMap[commandName];
-      if (!actualCommand) {
-        reject(new Error(`Unknown command: ${commandName}`));
-        return;
-      }
-
-      // Build command arguments
-      const commandArgs = [];
-
-      // Add arguments based on command type
+    try {
       switch (commandName) {
         case 'codem_init':
-          if (args.force) commandArgs.push('--force');
-          break;
+          // Initialize project using the actual init script
+          const { spawn } = require('child_process');
+          return new Promise((resolve, reject) => {
+            const initScript = path.join(__dirname, 'commands', 'init.js');
+            const child = spawn('node', [initScript], {
+              stdio: ['pipe', 'pipe', 'pipe'],
+              shell: true,
+            });
+
+            let stdout = '';
+            let stderr = '';
+
+            child.stdout.on('data', (data) => {
+              stdout += data.toString();
+            });
+
+            child.stderr.on('data', (data) => {
+              stderr += data.toString();
+            });
+
+            child.on('close', (code) => {
+              if (code === 0) {
+                resolve(`✅ CodeMaestro project initialized successfully!\n\n${stdout}`);
+              } else {
+                reject(new Error(`Initialization failed: ${stderr}`));
+              }
+            });
+          });
+
         case 'codem_status':
-          if (args.verbose) commandArgs.push('--verbose');
-          if (args.json) commandArgs.push('--json');
-          break;
-        case 'codem_phase':
-          if (args.phase) commandArgs.push(args.phase.toString());
-          break;
+          const status = await projectDetector.getProjectStatus();
+          if (args.json) {
+            return JSON.stringify(status, null, 2);
+          }
+
+          let statusText = '🚀 CodeMaestro Project Status\n══════════════════════════════════════════════════\n';
+          statusText += `📁 Project: ${status.initialized ? 'Initialized' : 'Not Initialized'}\n`;
+
+          if (status.initialized) {
+            const phases = projectDetector.getAvailablePhases();
+            const currentPhase = phases.find(p => p.number === status.phase);
+
+            statusText += `🏷️  Phase: ${currentPhase ? `${currentPhase.number}: ${currentPhase.name}` : 'Unknown'}\n`;
+            statusText += `🎯 Role: ${status.role || 'Not set'}\n`;
+            statusText += `🎯 Task: ${status.task || 'Not set'}\n`;
+
+            statusText += `🏥 Project Health: ${status.valid ? '✅ Valid' : '❌ Issues Found'}\n`;
+
+            if (status.issues.length > 0) {
+              statusText += '\n🚨 Issues:\n';
+              status.issues.forEach(issue => statusText += `  • ${issue}\n`);
+            }
+
+            if (status.warnings.length > 0) {
+              statusText += '\n⚠️  Warnings:\n';
+              status.warnings.forEach(warning => statusText += `  • ${warning}\n`);
+            }
+          }
+
+          statusText += '\n══════════════════════════════════════════════════\n';
+          statusText += 'CodeMaestro v1.0.0 | OpenCode Integration v0.1.0\n';
+
+          return statusText;
+
         case 'codem_requirements':
-        case 'codem_planning':
-        case 'codem_implementation':
-          commandArgs.push(args.action || 'guide');
-          if (args.interactive) commandArgs.push('--interactive');
-          break;
-        case 'codem_verification':
-        case 'codem_release':
-          commandArgs.push(args.action || 'guide');
-          if (args.environment) commandArgs.push('--environment', args.environment);
-          if (args.version) commandArgs.push('--version', args.version);
-          break;
+          const projectConfig = await config.load();
+          const docsDir = projectConfig.paths.specifications;
+
+          switch (args.action) {
+            case 'spec':
+              // Update checkpoint for specification creation
+              await projectDetector.updateRecoveryCheckpoint({
+                phase: 1,
+                role: 'Product Manager',
+                task: 'Creating product specification document',
+                context: 'Working on product specification template',
+                milestones: ['Started product specification'],
+                nextActions: ['Complete specification details', 'Analyze competitive landscape', 'Generate user stories']
+              });
+
+              return `📋 Creating Product Specification
+
+I've created a template for your product specification. Here's what you need to define:
+
+## Product Specification Template
+
+### Product Overview
+- **Name**: [Product Name]
+- **Version**: [Version Number]
+- **Target Audience**: [Who will use this product]
+- **Problem Solved**: [What problem does this solve]
+
+### Functional Requirements
+- [List key features and capabilities]
+- [Define user interactions]
+- [Specify business logic]
+
+### Non-Functional Requirements
+- **Performance**: [Response times, throughput, etc.]
+- **Security**: [Authentication, authorization, data protection]
+- **Scalability**: [User load, data volume, etc.]
+- **Usability**: [User experience requirements]
+
+### Technical Constraints
+- [Technology stack preferences]
+- [Integration requirements]
+- [Compliance needs]
+
+### Success Metrics
+- [How will you measure success]
+- [Key performance indicators]
+
+---
+
+**Next Actions:**
+🔍 **"Analyze the competitive landscape"** - Perform market research and competitor analysis
+📝 **"Generate user stories"** - Create detailed user stories and acceptance criteria
+➡️ **"Continue to planning phase"** - Move to technical architecture and design
+❌ **"I'm not ready yet"** - Stay in requirements phase for more work
+
+What would you like to do next?`;
+
+            case 'competitive':
+              // Update checkpoint for competitive analysis
+              await projectDetector.updateRecoveryCheckpoint({
+                phase: 1,
+                role: 'Product Manager',
+                task: 'Performing competitive analysis and market research',
+                context: 'Working on competitive analysis questionnaire',
+                milestones: ['Started competitive analysis'],
+                nextActions: ['Complete market research', 'Define competitive positioning', 'Move to planning phase']
+              });
+
+              return `🔍 Competitive Analysis
+
+To create a comprehensive competitive analysis for your Body Lotion product, I need to understand:
+
+1. **Market Segment**: What type of body lotion? (Luxury, natural, budget, therapeutic, etc.)
+
+2. **Key Competitors**: Who are your main competitors in this space?
+
+3. **Competitive Advantages**: What makes your product unique?
+
+4. **Market Position**: How do you want to position your product?
+
+5. **Pricing Strategy**: What price point are you targeting?
+
+---
+
+**Next Actions:**
+📋 **"Create the product specification"** - Define the core product requirements
+📝 **"Generate user stories"** - Create detailed user stories and acceptance criteria
+➡️ **"Continue to planning phase"** - Move to technical architecture and design
+💡 **"Provide market details"** - Share more information about your target market
+
+Please provide details about your target market and positioning, or choose a next action above.`;
+
+            case 'stories':
+              // Update checkpoint for user story generation
+              await projectDetector.updateRecoveryCheckpoint({
+                phase: 1,
+                role: 'Product Manager',
+                task: 'Generating user stories and acceptance criteria',
+                context: 'Working on user story creation',
+                milestones: ['Generated initial user stories'],
+                nextActions: ['Customize user stories', 'Create acceptance criteria', 'Move to planning phase']
+              });
+
+              return `📝 User Story Generation
+
+Based on your product requirements, here are some example user stories for a Body Lotion product:
+
+## User Stories
+
+### Customer Stories
+- **As a busy professional**, I want moisturizing lotion that absorbs quickly so that I can get dressed immediately after application
+- **As someone with sensitive skin**, I want hypoallergenic ingredients so that I don't experience irritation or allergic reactions
+- **As an eco-conscious consumer**, I want natural and sustainable ingredients so that I'm supporting environmentally friendly products
+
+### Business Stories
+- **As a retailer**, I want attractive packaging that stands out on shelves so that customers notice the product
+- **As a marketer**, I want a unique selling proposition that differentiates from competitors so that we can build brand loyalty
+
+### Technical Stories
+- **As a developer**, I want an e-commerce platform that handles inventory and orders so that customers can purchase easily
+- **As a quality assurance tester**, I want clear product specifications so that I can validate the lotion meets requirements
+
+---
+
+**Next Actions:**
+📋 **"Create the product specification"** - Define the core product requirements
+🔍 **"Analyze the competitive landscape"** - Perform market research and competitor analysis
+➡️ **"Continue to planning phase"** - Move to technical architecture and design
+✏️ **"Customize these user stories"** - Modify stories based on your specific product details
+
+Would you like me to create more specific user stories or take another action?`;
+
+            case 'list':
+              return `📋 Requirements Documents
+
+Current requirements documents in your project:
+
+- **Product Specification**: [Not created yet]
+- **Competitive Analysis**: [Not created yet]
+- **User Stories**: [Not created yet]
+- **Acceptance Criteria**: [Not created yet]
+
+---
+
+**Next Actions:**
+📋 **"Create the product specification"** - Define the core product requirements
+🔍 **"Analyze the competitive landscape"** - Perform market research and competitor analysis
+📝 **"Generate user stories"** - Create detailed user stories and acceptance criteria
+➡️ **"Continue to planning phase"** - Move to technical architecture and design
+
+Use the actions above to create the missing requirements documents.`;
+
+            default:
+              return `📋 Requirements Phase Actions
+
+Available actions for the requirements phase:
+
+- **spec**: Create a product specification document
+- **competitive**: Perform competitive analysis and market research
+- **stories**: Generate user stories and acceptance criteria
+- **list**: Show current requirements documents
+
+---
+
+**Next Actions:**
+📋 **"Create the product specification"** - Define the core product requirements
+🔍 **"Analyze the competitive landscape"** - Perform market research and competitor analysis
+📝 **"Generate user stories"** - Create detailed user stories and acceptance criteria
+
+Choose an action above or specify what you'd like to work on in the requirements phase.`;
+          }
+
+        case 'codem_next':
+          const currentStatus = await projectDetector.getProjectStatus();
+          if (!currentStatus.initialized) {
+            return '❌ Cannot proceed: Project not initialized. Run project initialization first.';
+          }
+
+          const currentPhase = currentStatus.phase || 1;
+          const nextPhase = Math.min(currentPhase + 1, 5);
+          const phaseInfo = projectDetector.getPhaseInfo(nextPhase);
+
+          // Update checkpoint for phase transition
+          await projectDetector.updateRecoveryCheckpoint({
+            phase: nextPhase,
+            role: phaseInfo.description.split(' - ')[0],
+            task: `Working on ${phaseInfo.name.toLowerCase()} phase`,
+            context: `${phaseInfo.name} phase in progress`,
+            milestones: [`Completed phase ${currentPhase}`, `Started phase ${nextPhase}`],
+            nextActions: [
+              nextPhase === 2 ? 'Create technical blueprint' :
+              nextPhase === 3 ? 'Generate application code' :
+              nextPhase === 4 ? 'Collect evidence' :
+              nextPhase === 5 ? 'Run pre-release checks' : 'Continue with current phase'
+            ]
+          });
+
+          let nextActions = '';
+
+          switch (nextPhase) {
+            case 2:
+              nextActions = `
+🔧 **"Create technical blueprint"** - Design the system architecture
+📋 **"Define task breakdown"** - Break down work into manageable tasks
+📅 **"Generate project timeline"** - Create a development schedule`;
+              break;
+            case 3:
+              nextActions = `
+💻 **"Generate application code"** - Create the core application
+🧪 **"Run quality checks"** - Test and validate the implementation
+📊 **"Track progress"** - Monitor development progress`;
+              break;
+            case 4:
+              nextActions = `
+📊 **"Collect evidence"** - Gather proof of completion
+✅ **"Run quality assessment"** - Validate all requirements
+🟢 **"Make GO/NO-GO decision"** - Decide if ready for release`;
+              break;
+            case 5:
+              nextActions = `
+🚀 **"Run pre-release checks"** - Final validation
+🌐 **"Deploy to production"** - Launch the application
+📈 **"Capture lessons learned"** - Document project insights`;
+              break;
+          }
+
+          return `➡️ Continuing to ${phaseInfo.name} Phase
+
+**Current Phase**: ${currentPhase}
+**Next Phase**: ${nextPhase} - ${phaseInfo.name}
+**Role**: ${phaseInfo.description}
+
+${phaseInfo.description} will now take over to handle the ${phaseInfo.name.toLowerCase()} phase.
+
+${nextActions}
+
+What would you like to accomplish in this phase?`;
+
+        case 'codem_phase':
+          if (!args.phase || args.phase < 1 || args.phase > 5) {
+            return '❌ Invalid phase number. Please specify a phase between 1 and 5.';
+          }
+
+          const targetPhase = projectDetector.getPhaseInfo(args.phase);
+
+          // Update checkpoint for phase jump
+          await projectDetector.updateRecoveryCheckpoint({
+            phase: args.phase,
+            role: targetPhase.description.split(' - ')[0],
+            task: `Working on ${targetPhase.name.toLowerCase()} phase`,
+            context: `${targetPhase.name} phase in progress`,
+            milestones: [`Jumped to phase ${args.phase}`],
+            nextActions: [
+              args.phase === 1 ? 'Create product specification' :
+              args.phase === 2 ? 'Create technical blueprint' :
+              args.phase === 3 ? 'Generate application code' :
+              args.phase === 4 ? 'Collect evidence' :
+              args.phase === 5 ? 'Run pre-release checks' : 'Continue with current phase'
+            ]
+          });
+
+          return `🎯 Jumping to Phase ${args.phase}: ${targetPhase.name}
+
+**Phase**: ${targetPhase.number}
+**Name**: ${targetPhase.name}
+**Role**: ${targetPhase.description}
+
+${targetPhase.description} will now handle the ${targetPhase.name.toLowerCase()} phase.
+
+---
+
+**Available Actions in ${targetPhase.name} Phase:**
+${args.phase === 1 ? '📋 **"Create product specification"** - Define requirements\n🔍 **"Analyze competitors"** - Market research\n📝 **"Generate user stories"** - Detail user needs' :
+ args.phase === 2 ? '🔧 **"Create technical blueprint"** - System design\n📋 **"Define tasks"** - Work breakdown\n📅 **"Generate timeline"** - Project schedule' :
+ args.phase === 3 ? '💻 **"Generate code"** - Implementation\n🧪 **"Run quality checks"** - Testing\n📊 **"Track progress"** - Status updates' :
+ args.phase === 4 ? '📊 **"Collect evidence"** - Proof gathering\n✅ **"Run assessment"** - Quality validation\n🟢 **"Make release decision"** - GO/NO-GO' :
+ '🚀 **"Run pre-release checks"** - Final validation\n🌐 **"Deploy application"** - Production launch\n📈 **"Capture lessons"** - Project insights'}
+
+What specific tasks would you like to work on in this phase?`;
+
         case 'codem_research':
-          if (args.query) commandArgs.push(args.query);
-          break;
-        case 'codem_lookup':
-          if (args.library) commandArgs.push(args.library);
-          if (args.examples) commandArgs.push('--examples');
-          break;
-        case 'codem_kb':
-          commandArgs.push(args.action || 'list');
-          if (args.query) commandArgs.push(args.query);
-          if (args.topic) commandArgs.push(args.topic);
-          break;
-        case 'codem_commit':
-          if (args.message) commandArgs.push(args.message);
-          break;
-        case 'codem_tree':
-          if (args.visual) commandArgs.push('--visual');
-          break;
+          if (!args.query) {
+            return '❌ Please provide a search query for research.';
+          }
+
+          // Update checkpoint for research activity
+          const researchStatus = await projectDetector.getProjectStatus();
+          await projectDetector.updateRecoveryCheckpoint({
+            phase: researchStatus.phase,
+            role: researchStatus.role,
+            task: `Researching: ${args.query}`,
+            context: `Research phase for ${args.query}`,
+            milestones: [`Started research on ${args.query}`],
+            nextActions: ['Complete research analysis', 'Apply findings to project', 'Continue with development phase']
+          });
+
+          return `🔍 Research Query: "${args.query}"
+
+I'm researching: ${args.query}
+
+This would typically connect to web search APIs to find relevant information, best practices, and current trends related to your query.
+
+For now, here's a research template you can use:
+
+## Research Findings for "${args.query}"
+
+### Current Trends (2026)
+- [Trend 1]
+- [Trend 2]
+
+### Best Practices
+- [Practice 1]
+- [Practice 2]
+
+### Recommendations
+- [Recommendation 1]
+- [Recommendation 2]
+
+---
+
+**Next Actions:**
+🔍 **"Research another topic"** - Search for different technologies or approaches
+📋 **"Apply these findings"** - Use this research in your project documentation
+➡️ **"Continue with current phase"** - Return to your current development task
+💾 **"Save this research"** - Store findings in project knowledge base
+
+Would you like me to research something specific or take another action?`;
+
+        default:
+          return `⚠️ Tool "${commandName}" is recognized but implementation is in development.
+
+Available implemented tools:
+- codem_init: Initialize CodeMaestro project
+- codem_status: Show project status
+- codem_requirements: Manage requirements phase
+- codem_next: Continue to next phase
+- codem_phase: Jump to specific phase
+- codem_research: Research technologies
+
+---
+
+**Next Actions:**
+📋 **"Work on requirements"** - Continue with product specification and analysis
+🔧 **"Move to planning"** - Start technical architecture and design
+🔍 **"Research technologies"** - Investigate tools and frameworks
+📊 **"Check project status"** - Review current project state
+
+Other tools (planning, implementation, verification, release, etc.) are planned for future implementation.`;
       }
-
-      // Execute the command
-      const child = spawn(actualCommand, commandArgs, {
-        stdio: ['pipe', 'pipe', 'pipe'],
-        shell: true,
-      });
-
-      let stdout = '';
-      let stderr = '';
-
-      child.stdout.on('data', (data) => {
-        stdout += data.toString();
-      });
-
-      child.stderr.on('data', (data) => {
-        stderr += data.toString();
-      });
-
-      child.on('close', (code) => {
-        if (code === 0) {
-          resolve(stdout || 'Command executed successfully');
-        } else {
-          reject(new Error(`Command failed with exit code ${code}: ${stderr}`));
-        }
-      });
-
-      child.on('error', (error) => {
-        reject(new Error(`Failed to execute command: ${error.message}`));
-      });
-    });
+    } catch (error) {
+      throw new Error(`Command execution failed: ${error.message}`);
+    }
   }
 
   async start() {

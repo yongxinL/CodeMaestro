@@ -23,20 +23,7 @@
   "author": "CodeMaestro Team",
   "license": "MIT",
   "bin": {
-    "codem-init": "./commands/init.js",
-    "codem-status": "./commands/status.js",
-    "codem-next": "./commands/next.js",
-    "codem-phase": "./commands/phase.js",
-    "codem-tree": "./commands/tree.js",
-    "codem-commit": "./commands/commit.js",
-    "codem-kb": "./commands/kb.js",
-    "codem-research": "./commands/research.js",
-    "codem-lookup": "./commands/lookup.js",
-    "codem-requirements": "./commands/requirements.js",
-    "codem-planning": "./commands/planning.js",
-    "codem-implementation": "./commands/implementation.js",
-    "codem-verification": "./commands/verification.js",
-    "codem-release": "./commands/release.js"
+    "codem-init": "./commands/init.js"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
@@ -46,14 +33,14 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.3",
     "chalk": "^4.1.2",
     "commander": "^11.0.0",
     "fs-extra": "^11.0.0",
-    "inquirer": "^9.0.0",
+    "inquirer": "^8.0.0",
     "js-yaml": "^4.1.0",
     "ora": "^7.0.0",
-    "progress": "^2.0.3",
-    "@modelcontextprotocol/sdk": "^0.5.0"
+    "progress": "^2.0.3"
   },
   "engines": {
     "node": ">=18.0.0"
