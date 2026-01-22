@@ -169,11 +169,12 @@ async function initCommand(options) {
 
     const codemEntries = [
       '# CodeMaestro framework files',
-      '.CodeMaestro/opencode/node_modules/',
-      '.CodeMaestro/opencode/*.log',
+      'node_modules/',
+      '*.log',
+      '.git/',
       '',
       '# Optional: Exclude entire framework after delivery',
-      '# .CodeMaestro/',
+      '# .CodeMaestro-legacy/',
       '# CLAUDE.md'
     ];
 

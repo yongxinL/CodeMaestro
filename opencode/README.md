@@ -662,7 +662,7 @@ When reporting issues, please include:
 ## 📁 Project Structure
 
 ```
-.CodeMaestro/opencode/
+./
 ├── commands/              # CLI command implementations (15 commands)
 │   ├── init.js           # Project initialization
 │   ├── status.js         # Project status display
@@ -696,7 +696,7 @@ When reporting issues, please include:
 │   ├── research.test.js       # MCP WebSearch tests
 │   ├── lookup.test.js         # MCP Context7 tests
 │   └── [other integration tests]
-├── docs/                 # Documentation
+├── docs/                 # Generated documentation
 │   └── COMMANDS-CORE.md  # Complete command reference
 ├── config/               # Configuration files
 │   └── default.yaml      # Default configuration
@@ -704,6 +704,8 @@ When reporting issues, please include:
 ├── jest.config.js        # Test configuration
 ├── .eslintrc.json        # Code quality configuration
 ├── README.md             # This file
+├── .CodeMaestro-legacy/  # Original Claude Code implementation (preserved)
+├── CLAUDE.md             # Original Claude Code documentation
 └── node_modules/         # Dependencies (not committed)
 ```
 

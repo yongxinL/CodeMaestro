@@ -121,39 +121,16 @@ Status: Ready for Phase 1"
 
 Check that you have:
 ```
-your-project/
-├── CLAUDE.md                     ✅ Framework developer guide
-├── cleanup.sh                    ✅ Framework cleanup script
-├── .gitignore                    ✅ Excludes .CodeMaestro/ from version control
-├── .CodeMaestro/                 ✅ Local framework copy
-│   ├── init-docs.sh             ✅ Initialization script (reusable)
-│   ├── prompts/                 ✅ Phase prompts (00-05)
-│   │   ├── 00-core.md           ✅ System configuration
-│   │   ├── 01-requirement.md    ✅ Phase 1 workflow
-│   │   ├── 02-planning.md       ✅ Phase 2 workflow
-│   │   ├── 03-implementation.md ✅ Phase 3 workflow
-│   │   ├── 04-verification.md   ✅ Phase 4 workflow
-│   │   ├── 05-master-control.md ✅ Phase 5 workflow
-│   │   └── [templates].md       ✅ On-demand templates
-│   ├── config/                  ✅ Configuration files
-│   │   ├── token-estimation.md  ✅ NEW: Token estimation guide
-│   │   ├── handoff-messages.md  ✅ NEW: Session handoff templates
-│   │   ├── cleanup-verification.md ✅ NEW: Cleanup guide
-│   │   ├── git-commands.md      ✅ Git templates
-│   │   ├── constraints-reference.md ✅ Full constraint list
-│   │   └── roles/               ✅ Role definitions
-│   └── docs/                    ✅ Command references
-│       ├── COMMANDS-CORE.md     ✅ Essential commands (Phases 1-5)
-│       └── COMMANDS-ADVANCED.md ✅ Phase F commands (Phases 4-5)
-└── docs/                         ✅ YOUR project documentation
-    ├── specifications/          ✅ Phase 1 outputs
-    ├── architecture/            ✅ Phase 2 outputs
-    ├── implementation/          ✅ Phase 3 tracking
-    ├── verification/            ✅ Phase 4 evidence
-    ├── release/                 ✅ Phase 5 release docs
-    ├── knowledge-base/          ✅ Project learnings
-    │   └── kb-index.md          ✅ Fresh index (0 entries)
-    └── portfolio/               ✅ Portfolio generation
+./
+├── commands/          # 15 command modules (9 new agents + 6 core)
+├── lib/               # 5 core infrastructure modules
+├── tests/             # 13 comprehensive test suites (151 tests)
+├── docs/              # Generated documentation
+├── config/            # Configuration files
+├── README.md          # Complete user and developer documentation
+├── package.json       # Dependencies and scripts
+├── jest.config.js     # Test configuration
+└── .eslintrc.json     # Code quality rules
 ```
 
 **Note:** The `.CodeMaestro/` directory is in `.gitignore` by default. You can remove it from deliverables using `cleanup.sh`.
