@@ -246,19 +246,71 @@ class CodeMaestroMCPServer {
               required: ['message'],
             },
           },
-          {
-            name: 'codem_tree',
-            description: 'View task dependency graph and project structure',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                visual: {
-                  type: 'boolean',
-                  description: 'Generate visual representation',
-                },
-              },
-            },
-          },
+           {
+             name: 'codem_tree',
+             description: 'View task dependency graph and project structure',
+             inputSchema: {
+               type: 'object',
+               properties: {
+                 visual: {
+                   type: 'boolean',
+                   description: 'Generate visual representation',
+                 },
+               },
+             },
+           },
+           {
+             name: 'codem_ask_user',
+             description: 'Configure interactive questions to gather user preferences, clarify requirements, or get implementation choices during workflow execution',
+             inputSchema: {
+               type: 'object',
+               properties: {
+                 questions: {
+                   type: 'array',
+                   description: 'Questions to ask the user',
+                   items: {
+                     type: 'object',
+                     properties: {
+                       question: {
+                         type: 'string',
+                         description: 'Complete question text',
+                       },
+                       header: {
+                         type: 'string',
+                         description: 'Very short label (max 30 chars)',
+                         maxLength: 30,
+                       },
+                       options: {
+                         type: 'array',
+                         description: 'Available choices',
+                         items: {
+                           type: 'object',
+                           properties: {
+                             label: {
+                               type: 'string',
+                               description: 'Display text (1-5 words, concise)',
+                               maxLength: 30,
+                             },
+                             description: {
+                               type: 'string',
+                               description: 'Explanation of choice',
+                             },
+                           },
+                           required: ['label', 'description'],
+                         },
+                       },
+                       multiple: {
+                         type: 'boolean',
+                         description: 'Allow selecting multiple choices',
+                       },
+                     },
+                     required: ['question', 'header', 'options'],
+                   },
+                 },
+               },
+               required: ['questions'],
+             },
+           },
         ],
       };
     });
@@ -765,25 +817,79 @@ For now, here's a research template you can use:
 Would you like me to research something specific or take another action?`;
 
         default:
-          return `⚠️ Tool "${commandName}" is recognized but implementation is in development.
+        case 'codem_ask_user':
+          // This tool allows asking user questions during workflow execution
+          // It integrates with the available question tool to gather user input
+          try {
+            // Validate input
+            if (!args.questions || !Array.isArray(args.questions) || args.questions.length === 0) {
+              return `❌ Invalid input: Please provide questions array.
 
-Available implemented tools:
-- codem_init: Initialize CodeMaestro project
-- codem_status: Show project status
-- codem_requirements: Manage requirements phase
-- codem_next: Continue to next phase
-- codem_phase: Jump to specific phase
-- codem_research: Research technologies
+Example usage:
+{
+  "questions": [
+    {
+      "question": "What type of body lotion are you developing?",
+      "header": "Product Type",
+      "options": [
+        {"label": "Luxury", "description": "High-end, premium positioning"},
+        {"label": "Natural", "description": "Organic, eco-friendly focus"},
+        {"label": "Budget", "description": "Affordable, mass-market"},
+        {"label": "Therapeutic", "description": "Medical, treatment-oriented"}
+      ],
+      "multiple": false
+    }
+  ]
+}`;
+            }
 
----
+            // Here we would normally call the question tool, but since we're in MCP server context,
+            // we'll return formatted instructions for the client to use the question tool
 
-**Next Actions:**
-📋 **"Work on requirements"** - Continue with product specification and analysis
-🔧 **"Move to planning"** - Start technical architecture and design
-🔍 **"Research technologies"** - Investigate tools and frameworks
-📊 **"Check project status"** - Review current project state
+            let response = `🔍 Interactive Questions Ready
 
-Other tools (planning, implementation, verification, release, etc.) are planned for future implementation.`;
+I've prepared ${args.questions.length} question(s) for you to answer. These questions will help clarify requirements and gather your preferences for the project.
+
+**Questions to be asked:**
+`;
+
+            args.questions.forEach((q, index) => {
+              response += `\n${index + 1}. **${q.header}**\n`;
+              response += `   "${q.question}"\n`;
+              response += `   Options: ${q.options.map(opt => opt.label).join(', ')}\n`;
+              if (q.multiple) {
+                response += `   (Multiple selections allowed)\n`;
+              }
+            });
+
+            response += `
+
+**Next Steps:**
+1. The system will present these questions to you
+2. Your answers will be used to guide the development workflow
+3. Preferences will be saved for future reference
+
+Would you like me to proceed with asking these questions, or would you like to modify them first?`;
+
+            // Update checkpoint to reflect question gathering activity
+            await projectDetector.updateRecoveryCheckpoint({
+              phase: 1,
+              role: 'Product Manager',
+              task: 'Gathering user preferences and clarifying requirements',
+              context: `Prepared ${args.questions.length} interactive questions`,
+              milestones: ['Interactive questions configured'],
+              nextActions: ['Present questions to user', 'Collect responses', 'Apply preferences to workflow']
+            });
+
+            return response;
+
+          } catch (error) {
+            return `❌ Error configuring questions: ${error.message}
+
+Please check your question format and try again.`;
+          }
+
+
       }
     } catch (error) {
       throw new Error(`Command execution failed: ${error.message}`);

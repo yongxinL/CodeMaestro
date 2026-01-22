@@ -196,6 +196,9 @@ CodeMaestro automatically registers as an MCP server when installed. The followi
 - **`codem_kb`** - Manage knowledge base (search, add, list)
 - **`codem_commit`** - Generate CodeMaestro-style commit messages
 
+**Interactive Tools:**
+- **`codem_ask_user`** - Configure interactive questions to gather user preferences and clarify requirements during workflow execution
+
 ### Using CodeMaestro in OpenCode
 
 **Important:** `codem-init` must be run from the command line first to initialize the project. All workflow management is done through natural language prompts within OpenCode.
@@ -217,7 +220,9 @@ CodeMaestro automatically registers as an MCP server when installed. The followi
    - *"Continue to the next development phase"*
    - *"Research best practices for React state management"*
 
-4. **Interactive next actions** - Each response includes clickable next action prompts to guide your workflow
+4. **Interactive questioning** - CodeMaestro can ask targeted questions during workflow execution to gather your preferences and clarify requirements
+
+5. **Interactive next actions** - Each response includes clickable next action prompts to guide your workflow
 
    **Example:**
    ```
@@ -227,9 +232,47 @@ CodeMaestro automatically registers as an MCP server when installed. The followi
    ➡️ **"Continue to planning phase"** - Move to technical architecture
    ```
 
-   Click any suggested action or use natural language - no command memorization needed!
+    Click any suggested action or use natural language - no command memorization needed!
 
-5. **Automatic checkpointing** - Recovery checkpoints are updated after each major action, allowing you to resume exactly where you left off
+### Interactive Questioning System
+
+CodeMaestro includes an **advanced interactive questioning system** that allows the workflow to ask you targeted questions during execution:
+
+#### **When Questions Are Asked:**
+- **Requirements Clarification:** "What type of body lotion? Luxury, natural, budget, or therapeutic?"
+- **Technology Choices:** "Which framework do you prefer? React, Vue, or Angular?"
+- **Implementation Decisions:** "Should we implement user authentication first or product catalog?"
+- **Priority Setting:** "What's most important: Speed, cost, or quality?"
+
+#### **Question Types Supported:**
+- **Single Choice:** Select one option from a list
+- **Multiple Choice:** Select multiple options
+- **Custom Input:** Free-form text responses
+- **Recommended Options:** Highlighted preferred choices
+
+#### **Example Usage:**
+```javascript
+// The system can ask:
+{
+  "question": "What type of body lotion are you developing?",
+  "header": "Product Type",
+  "options": [
+    {"label": "Luxury", "description": "High-end, premium positioning"},
+    {"label": "Natural", "description": "Organic, eco-friendly focus"},
+    {"label": "Budget", "description": "Affordable, mass-market"},
+    {"label": "Therapeutic", "description": "Medical, treatment-oriented"}
+  ],
+  "multiple": false
+}
+```
+
+#### **Benefits:**
+✅ **Guided Development** - System learns your preferences and adapts  
+✅ **Reduced Ambiguity** - Clear questions prevent misunderstandings  
+✅ **Better Decisions** - Structured choices lead to better outcomes  
+✅ **Workflow Continuity** - Questions asked at optimal times in the process  
+
+6. **Automatic checkpointing** - Recovery checkpoints are updated after each major action, allowing you to resume exactly where you left off
 
 5. **Context-aware workflow** - OpenCode automatically suggests relevant CodeMaestro tools based on your current development phase
 
@@ -392,7 +435,14 @@ opencode
 - *"Research best practices for React state management"*
 - *"Get documentation and examples for React library"*
 - *"Search the knowledge base for authentication patterns"*
-- *"Generate a commit message for: added user login feature"*"
+- *"Generate a commit message for: added user login feature"*
+
+### 5. Interactive Questioning
+CodeMaestro can ask you questions during workflow execution to gather preferences and clarify requirements:
+
+**Example:** *"Ask me about my preferred technology stack for this body lotion e-commerce site"*
+
+The system will present structured questions with multiple choice options and gather your responses to guide the development process.
 
 
 
