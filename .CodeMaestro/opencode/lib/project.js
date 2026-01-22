@@ -96,9 +96,9 @@ class ProjectDetector {
       const content = await fs.readFile(checkpointPath, 'utf8');
 
       // Parse phase information from checkpoint
-      const phaseMatch = content.match(/Phase:\s*(\d+)/i);
-      const roleMatch = content.match(/Role:\s*([^|\n]+)/i);
-      const taskMatch = content.match(/Current Task:\s*([^\n]+)/i);
+      const phaseMatch = content.match(/\*\*Phase:\*\*\s*(\d+)/i);
+      const roleMatch = content.match(/\*\*Role:\*\*\s*([^*\n]+)/i);
+      const taskMatch = content.match(/\*\*Current Task:\*\*\s*([^*\n]+)/i);
 
       return {
         phase: phaseMatch ? parseInt(phaseMatch[1]) : null,

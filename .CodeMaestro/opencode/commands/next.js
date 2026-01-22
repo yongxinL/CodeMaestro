@@ -1,0 +1,318 @@
+#!/usr/bin/env node
+
+const { program } = require('commander');
+const chalk = require('chalk');
+const fs = require('fs-extra');
+const path = require('path');
+
+const config = require('../lib/config');
+const logger = require('../lib/logger');
+const projectDetector = require('../lib/project');
+
+/**
+ * Get next task in the 5-phase workflow
+ */
+async function getNextTask(currentPhase, currentTask = null) {
+  const phases = {
+    1: {
+      name: 'Requirements',
+      role: 'Product Manager',
+      tasks: [
+        'Analyze project requirements and create specification document',
+        'Perform competitive analysis and market research',
+        'Define acceptance criteria and success metrics',
+        'Document functional and non-functional requirements'
+      ]
+    },
+    2: {
+      name: 'Planning',
+      role: 'Software Architect',
+      tasks: [
+        'Design system architecture and component structure',
+        'Create technical blueprint and design documents',
+        'Define task dependencies and create project timeline',
+        'Estimate token budget and resource requirements'
+      ]
+    },
+    3: {
+      name: 'Implementation',
+      role: 'Senior Developer',
+      tasks: [
+        'Implement core functionality and business logic',
+        'Write production-quality code following patterns',
+        'Create comprehensive tests and documentation',
+        'Track actual effort vs planning estimates'
+      ]
+    },
+    4: {
+      name: 'Verification',
+      role: 'QA Lead',
+      tasks: [
+        'Collect evidence package and test results',
+        'Perform security scanning and performance testing',
+        'Execute acceptance criteria validation',
+        'Make GO/NO-GO decision for release'
+      ]
+    },
+    5: {
+      name: 'Release',
+      role: 'Release Manager',
+      tasks: [
+        'Coordinate final release preparation',
+        'Capture lessons learned and update knowledge base',
+        'Document organizational learning and improvements',
+        'Execute deployment and monitor initial performance'
+      ]
+    }
+  };
+
+  if (!currentPhase || currentPhase < 1 || currentPhase > 5) {
+    if (currentPhase && (currentPhase < 1 || currentPhase > 5)) {
+      throw new Error(`Invalid phase: ${currentPhase}`);
+    }
+    return {
+      phase: 1,
+      role: phases[1].role,
+      task: phases[1].tasks[0],
+      isFirst: true
+    };
+  }
+
+  const phaseInfo = phases[currentPhase];
+  if (!phaseInfo) {
+    throw new Error(`Invalid phase: ${currentPhase}`);
+  }
+
+  // If no current task, return first task of current phase
+  if (!currentTask) {
+    return {
+      phase: currentPhase,
+      role: phaseInfo.role,
+      task: phaseInfo.tasks[0],
+      isFirst: true
+    };
+  }
+
+  const currentTaskIndex = phaseInfo.tasks.indexOf(currentTask);
+
+  // If current task is not found in phase tasks, start from beginning
+  if (currentTaskIndex === -1) {
+    return {
+      phase: currentPhase,
+      role: phaseInfo.role,
+      task: phaseInfo.tasks[0],
+      isFirst: true
+    };
+  }
+
+  // If there's a next task in current phase
+  if (currentTaskIndex < phaseInfo.tasks.length - 1) {
+    return {
+      phase: currentPhase,
+      role: phaseInfo.role,
+      task: phaseInfo.tasks[currentTaskIndex + 1],
+      isNext: true
+    };
+  }
+
+  // If current phase is complete, move to next phase
+  if (currentPhase < 5) {
+    const nextPhase = currentPhase + 1;
+    const nextPhaseInfo = phases[nextPhase];
+    return {
+      phase: nextPhase,
+      role: nextPhaseInfo.role,
+      task: nextPhaseInfo.tasks[0],
+      isNewPhase: true
+    };
+  }
+
+  // Project is complete
+  return {
+    phase: currentPhase,
+    role: phaseInfo.role,
+    task: currentTask,
+    isComplete: true
+  };
+}
+
+/**
+ * Update recovery checkpoint with new task information
+ */
+async function updateCheckpoint(nextTask) {
+  const projectConfig = await config.load();
+  const checkpointPath = projectConfig.paths.recovery_checkpoint;
+
+  // Ensure implementation directory exists
+  await fs.ensureDir(path.dirname(checkpointPath));
+
+  const timestamp = new Date().toISOString();
+  const checkpoint = `# CodeMaestro Recovery Checkpoint
+
+**Last Updated:** ${timestamp}
+**Phase:** ${nextTask.phase}
+**Role:** ${nextTask.role}
+**Current Task:** ${nextTask.task}
+
+## Phase Progress
+
+${nextTask.isFirst ? '- ✅ Started Phase' : nextTask.isNext ? '- ➡️ Next task in phase' : nextTask.isNewPhase ? '- 🎯 Advanced to new phase' : '- 🎉 Project complete'}
+
+## Recovery Information
+
+If this session is interrupted, use the following commands to resume:
+
+1. **Current Phase:** \`${nextTask.phase}\`
+2. **Current Role:** ${nextTask.role}
+3. **Resume Command:** \`/codem-next\`
+
+## Task Guidance
+
+${nextTask.isComplete ?
+    '🎉 **Project Complete!** All phases have been finished.' :
+    `**Next Steps:**
+- Focus on: ${nextTask.task}
+- Role: ${nextTask.role}
+- Use available tools and documentation to complete this task`
+}
+
+---
+*Auto-generated by CodeMaestro OpenCode*
+`;
+
+  await fs.writeFile(checkpointPath, checkpoint);
+  return checkpointPath;
+}
+
+/**
+ * Display next task information to user
+ */
+function displayNextTask(nextTask, checkpointPath) {
+  console.log(chalk.bold.blue('🎯 CodeMaestro Next Task'));
+  console.log('═'.repeat(50));
+
+  const phaseInfo = projectDetector.getPhaseInfo(nextTask.phase);
+  if (phaseInfo) {
+    console.log(chalk.bold(`📊 Phase ${nextTask.phase}:`), chalk.cyan(phaseInfo.name));
+    console.log(`   ${phaseInfo.description}`);
+  }
+
+  console.log(chalk.bold('\n👤 Role:'), chalk.green(nextTask.role));
+  console.log(chalk.bold('🎯 Task:'), nextTask.task);
+
+  // Status indicators
+  if (nextTask.isFirst) {
+    console.log('\n' + chalk.green('🆕 Starting fresh task'));
+  } else if (nextTask.isNext) {
+    console.log('\n' + chalk.blue('➡️ Continuing to next task'));
+  } else if (nextTask.isNewPhase) {
+    console.log('\n' + chalk.yellow('🎯 Advanced to new phase!'));
+  } else if (nextTask.isComplete) {
+    console.log('\n' + chalk.green('🎉 Project complete!'));
+    return;
+  }
+
+  // Guidance section
+  console.log('\n' + chalk.bold('💡 Guidance:'));
+
+  if (nextTask.phase === 1) {
+    console.log('• Review project requirements and objectives');
+    console.log('• Use /codem-research for market analysis');
+    console.log('• Document findings in docs/specifications/');
+  } else if (nextTask.phase === 2) {
+    console.log('• Design system architecture and components');
+    console.log('• Create technical specifications');
+    console.log('• Use /codem-lookup for technical research');
+  } else if (nextTask.phase === 3) {
+    console.log('• Implement features following established patterns');
+    console.log('• Write comprehensive tests');
+    console.log('• Track progress with /codem-commit');
+  } else if (nextTask.phase === 4) {
+    console.log('• Collect evidence and test results');
+    console.log('• Perform security and performance checks');
+    console.log('• Validate against acceptance criteria');
+  } else if (nextTask.phase === 5) {
+    console.log('• Prepare release package');
+    console.log('• Document lessons learned');
+    console.log('• Update knowledge base with /codem-kb');
+  }
+
+  console.log('\n' + chalk.bold('🔧 Available Commands:'));
+  console.log(`• ${chalk.cyan('/codem-status')} - Check current progress`);
+  console.log(`• ${chalk.cyan('/codem-commit')} - Create progress commits`);
+  console.log(`• ${chalk.cyan('/codem-kb')} - Manage knowledge base`);
+
+  if (nextTask.phase >= 2) {
+    console.log(`• ${chalk.cyan('/codem-research')} - Research and analysis tools`);
+    console.log(`• ${chalk.cyan('/codem-lookup')} - Technical documentation lookup`);
+  }
+
+  console.log('\n' + chalk.gray(`Checkpoint saved: ${path.relative(process.cwd(), checkpointPath)}`));
+  console.log('═'.repeat(50));
+}
+
+/**
+ * Navigate to next task in workflow
+ */
+async function nextCommand() {
+  try {
+    logger.info('Determining next task in CodeMaestro workflow...');
+
+    // Check if this is a CodeMaestro project
+    if (!await projectDetector.isCodeMaestroProject()) {
+      logger.error('Not a CodeMaestro project. Run `/codem-init` first.');
+      console.log(chalk.blue(`
+💡 To initialize a CodeMaestro project:
+   ${chalk.cyan('/codem-init')}
+      `));
+      return;
+    }
+
+    // Get current phase information
+    const currentPhaseInfo = await projectDetector.getCurrentPhase();
+    const currentPhase = currentPhaseInfo?.phase || null;
+    const currentTask = currentPhaseInfo?.task || null;
+
+    // Determine next task
+    const nextTask = await getNextTask(currentPhase, currentTask);
+
+    // Update checkpoint
+    const checkpointPath = await updateCheckpoint(nextTask);
+
+    // Display information
+    displayNextTask(nextTask, checkpointPath);
+
+    // Handle completion
+    if (nextTask.isComplete) {
+      console.log(chalk.green.bold('\n🎉 Congratulations! Your CodeMaestro project is complete.'));
+      console.log('Use /codem-status to review the final state.');
+      return;
+    }
+
+    // Success message
+    const action = nextTask.isFirst ? 'Started' :
+      nextTask.isNewPhase ? 'Advanced to' : 'Continuing with';
+    console.log(chalk.green(`\n✅ ${action} Phase ${nextTask.phase}: ${nextTask.task}`));
+
+  } catch (error) {
+    logger.error('Failed to determine next task', error);
+    process.exit(1);
+  }
+}
+
+// CLI setup
+program
+  .name('codem-next')
+  .description('Navigate to next task in CodeMaestro 5-phase workflow')
+  .option('-v, --verbose', 'Show detailed information')
+  .action(nextCommand);
+
+// Export for testing
+module.exports = {
+  getNextTask,
+  updateCheckpoint,
+  displayNextTask,
+  nextCommand
+};
+
+program.parse();
