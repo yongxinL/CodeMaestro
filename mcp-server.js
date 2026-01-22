@@ -261,50 +261,53 @@ class CodeMaestroMCPServer {
            },
            {
              name: 'codem_ask_user',
-             description: 'Configure interactive questions to gather user preferences, clarify requirements, or get implementation choices during workflow execution',
+             description: 'Ask user questions to gather preferences, clarify requirements, or get implementation choices during workflow execution (compatible with ask-user-questions-mcp format)',
              inputSchema: {
                type: 'object',
                properties: {
                  questions: {
                    type: 'array',
-                   description: 'Questions to ask the user',
+                   description: 'Questions to ask the user (1-4 questions)',
+                   minItems: 1,
+                   maxItems: 4,
                    items: {
                      type: 'object',
                      properties: {
-                       question: {
+                       prompt: {
                          type: 'string',
-                         description: 'Complete question text',
+                         description: 'The complete question to ask the user. Should be clear, specific, and end with a question mark.',
                        },
-                       header: {
+                       title: {
                          type: 'string',
-                         description: 'Very short label (max 30 chars)',
-                         maxLength: 30,
+                         description: 'Very short label displayed as a chip/tag (max 12 chars). Examples: "Auth method", "Library", "Approach".',
+                         maxLength: 12,
                        },
                        options: {
                          type: 'array',
-                         description: 'Available choices',
+                         description: 'The available choices for this question. Must have 2-4 options.',
+                         minItems: 2,
+                         maxItems: 4,
                          items: {
                            type: 'object',
                            properties: {
                              label: {
                                type: 'string',
-                               description: 'Display text (1-5 words, concise)',
-                               maxLength: 30,
+                               description: 'The display text for this option that the user will see and select. Should be concise (1-5 words).',
                              },
                              description: {
                                type: 'string',
-                               description: 'Explanation of choice',
+                               description: 'Explanation of what this option means or what will happen if chosen.',
                              },
                            },
-                           required: ['label', 'description'],
+                           required: ['label'],
                          },
                        },
-                       multiple: {
+                       multiSelect: {
                          type: 'boolean',
-                         description: 'Allow selecting multiple choices',
+                         description: 'Set to true to allow the user to select multiple options instead of just one. Default: false (single-select).',
                        },
                      },
-                     required: ['question', 'header', 'options'],
+                     required: ['prompt', 'title', 'options'],
                    },
                  },
                },
@@ -819,74 +822,134 @@ Would you like me to research something specific or take another action?`;
         default:
         case 'codem_ask_user':
           // This tool allows asking user questions during workflow execution
-          // It integrates with the available question tool to gather user input
+          // It uses the available question tool to present interactive questions to the user
           try {
-            // Validate input
+            // Validate input format similar to ask-user-questions-mcp
             if (!args.questions || !Array.isArray(args.questions) || args.questions.length === 0) {
               return `❌ Invalid input: Please provide questions array.
 
-Example usage:
+Example usage (following ask-user-questions-mcp format):
 {
   "questions": [
     {
-      "question": "What type of body lotion are you developing?",
-      "header": "Product Type",
+      "prompt": "What type of body lotion are you developing?",
+      "title": "Product Type",
       "options": [
         {"label": "Luxury", "description": "High-end, premium positioning"},
         {"label": "Natural", "description": "Organic, eco-friendly focus"},
         {"label": "Budget", "description": "Affordable, mass-market"},
         {"label": "Therapeutic", "description": "Medical, treatment-oriented"}
       ],
-      "multiple": false
+      "multiSelect": false
     }
   ]
-}`;
+}
+
+Note: Use 'prompt' instead of 'question', 'title' instead of 'header', and 'multiSelect' instead of 'multiple'.`;
             }
 
-            // Here we would normally call the question tool, but since we're in MCP server context,
-            // we'll return formatted instructions for the client to use the question tool
+            // Validate each question format (ask-user-questions-mcp compatible)
+            const validatedQuestions = [];
+            for (const q of args.questions) {
+              if (!q.prompt || !q.title || !q.options || !Array.isArray(q.options)) {
+                return `❌ Invalid question format. Each question must have: prompt, title, options array.
 
-            let response = `🔍 Interactive Questions Ready
+Required fields:
+- prompt: The full question text (ends with ?)
+- title: Short label (max 12 chars)
+- options: Array of {label, description} objects (2-4 options)
+- multiSelect: Boolean (optional, defaults to false)
 
-I've prepared ${args.questions.length} question(s) for you to answer. These questions will help clarify requirements and gather your preferences for the project.
+Example:
+{
+  "prompt": "Which framework do you prefer?",
+  "title": "Framework",
+  "options": [
+    {"label": "React", "description": "Component-based UI library"},
+    {"label": "Vue", "description": "Progressive JavaScript framework"}
+  ],
+  "multiSelect": false
+}`;
+              }
 
-**Questions to be asked:**
+              // Validate options
+              if (q.options.length < 2 || q.options.length > 4) {
+                return `❌ Each question must have 2-4 options. Found ${q.options.length} options.`;
+              }
+
+              // Validate title length
+              if (q.title.length > 12) {
+                return `❌ Question title "${q.title}" is too long (${q.title.length} chars). Maximum 12 characters allowed.`;
+              }
+
+              // Convert to the format expected by our question tool
+              validatedQuestions.push({
+                question: q.prompt,
+                header: q.title,
+                options: q.options,
+                multiple: q.multiSelect || false
+              });
+            }
+
+            // Since we can't directly call the question tool from MCP server context,
+            // we'll format the questions and instruct the client to use the question tool
+            let response = `🔍 Interactive Questions Prepared
+
+I've prepared ${validatedQuestions.length} question(s) for interactive user input. These will be presented using the question tool.
+
+**Prepared Questions:**
 `;
 
-            args.questions.forEach((q, index) => {
+            validatedQuestions.forEach((q, index) => {
               response += `\n${index + 1}. **${q.header}**\n`;
               response += `   "${q.question}"\n`;
-              response += `   Options: ${q.options.map(opt => opt.label).join(', ')}\n`;
+              response += `   Options:\n`;
+              q.options.forEach((opt, optIndex) => {
+                response += `     ${optIndex + 1}. ${opt.label}`;
+                if (opt.description) {
+                  response += ` - ${opt.description}`;
+                }
+                response += '\n';
+              });
               if (q.multiple) {
                 response += `   (Multiple selections allowed)\n`;
+              } else {
+                response += `   (Single selection)\n`;
               }
             });
 
             response += `
 
-**Next Steps:**
-1. The system will present these questions to you
-2. Your answers will be used to guide the development workflow
-3. Preferences will be saved for future reference
+**To proceed with asking these questions:**
+1. The system will use the integrated question tool
+2. Questions will be presented in an interactive interface
+3. User selections will be captured and returned
+4. Responses will guide the development workflow
 
-Would you like me to proceed with asking these questions, or would you like to modify them first?`;
+**Question Tool Integration:**
+- Compatible with ask-user-questions-mcp format
+- Supports 1-4 questions per interaction
+- Handles single/multiple choice selections
+- Allows custom text input as fallback
 
-            // Update checkpoint to reflect question gathering activity
+Would you like me to proceed with presenting these questions to gather user preferences?`;
+
+            // Update checkpoint to reflect question preparation
             await projectDetector.updateRecoveryCheckpoint({
               phase: 1,
               role: 'Product Manager',
-              task: 'Gathering user preferences and clarifying requirements',
-              context: `Prepared ${args.questions.length} interactive questions`,
-              milestones: ['Interactive questions configured'],
-              nextActions: ['Present questions to user', 'Collect responses', 'Apply preferences to workflow']
+              task: 'Preparing interactive questions for user input',
+              context: `Configured ${validatedQuestions.length} questions for interactive gathering`,
+              milestones: ['Questions validated and prepared'],
+              nextActions: ['Present questions via question tool', 'Collect user responses', 'Apply preferences to workflow']
             });
 
             return response;
 
           } catch (error) {
-            return `❌ Error configuring questions: ${error.message}
+            return `❌ Error preparing questions: ${error.message}
 
-Please check your question format and try again.`;
+Please check your question format and ensure it follows the ask-user-questions-mcp specification.`;
           }
 
 

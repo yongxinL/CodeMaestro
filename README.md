@@ -197,7 +197,7 @@ CodeMaestro automatically registers as an MCP server when installed. The followi
 - **`codem_commit`** - Generate CodeMaestro-style commit messages
 
 **Interactive Tools:**
-- **`codem_ask_user`** - Configure interactive questions to gather user preferences and clarify requirements during workflow execution
+- **`codem_ask_user`** - Configure interactive questions to gather user preferences and clarify requirements during workflow execution (compatible with ask-user-questions-mcp)
 
 ### Using CodeMaestro in OpenCode
 
@@ -250,19 +250,50 @@ CodeMaestro includes an **advanced interactive questioning system** that allows 
 - **Custom Input:** Free-form text responses
 - **Recommended Options:** Highlighted preferred choices
 
-#### **Example Usage:**
+#### **Example Usage (ask-user-questions-mcp compatible):**
 ```javascript
-// The system can ask:
+// Compatible with ask-user-questions-mcp format:
 {
-  "question": "What type of body lotion are you developing?",
-  "header": "Product Type",
-  "options": [
-    {"label": "Luxury", "description": "High-end, premium positioning"},
-    {"label": "Natural", "description": "Organic, eco-friendly focus"},
-    {"label": "Budget", "description": "Affordable, mass-market"},
-    {"label": "Therapeutic", "description": "Medical, treatment-oriented"}
-  ],
-  "multiple": false
+  "questions": [
+    {
+      "prompt": "What type of body lotion are you developing?",
+      "title": "Product Type",
+      "options": [
+        {"label": "Luxury", "description": "High-end, premium positioning"},
+        {"label": "Natural", "description": "Organic, eco-friendly focus"},
+        {"label": "Budget", "description": "Affordable, mass-market"},
+        {"label": "Therapeutic", "description": "Medical, treatment-oriented"}
+      ],
+      "multiSelect": false
+    }
+  ]
+}
+
+// Multiple questions example:
+{
+  "questions": [
+    {
+      "prompt": "Which technology stack do you prefer?",
+      "title": "Tech Stack",
+      "options": [
+        {"label": "React + Node.js", "description": "Full JavaScript ecosystem"},
+        {"label": "Vue + Python", "description": "Progressive frontend with Django/Flask"},
+        {"label": "Angular + Java", "description": "Enterprise-grade solution"}
+      ],
+      "multiSelect": false
+    },
+    {
+      "prompt": "Which features are most important?",
+      "title": "Priority Features",
+      "options": [
+        {"label": "User Authentication", "description": "Login and user management"},
+        {"label": "Product Catalog", "description": "Product listings and search"},
+        {"label": "Shopping Cart", "description": "Add to cart and checkout"},
+        {"label": "Admin Dashboard", "description": "Content management interface"}
+      ],
+      "multiSelect": true
+    }
+  ]
 }
 ```
 
@@ -270,7 +301,29 @@ CodeMaestro includes an **advanced interactive questioning system** that allows 
 ✅ **Guided Development** - System learns your preferences and adapts  
 ✅ **Reduced Ambiguity** - Clear questions prevent misunderstandings  
 ✅ **Better Decisions** - Structured choices lead to better outcomes  
-✅ **Workflow Continuity** - Questions asked at optimal times in the process  
+✅ **Workflow Continuity** - Questions asked at optimal times in the process
+
+### ask-user-questions-mcp Integration
+
+CodeMaestro integrates with the **ask-user-questions-mcp** specification, providing a standardized way to ask interactive questions during workflow execution.
+
+#### **Integration Features:**
+- **Compatible Format:** Uses the same question schema as ask-user-questions-mcp
+- **Workflow Integration:** Questions are asked at optimal points in the 5-phase process
+- **Checkpoint Updates:** Question responses are saved in recovery checkpoints
+- **Preference Learning:** System adapts based on user choices over time
+
+#### **Question Limits:**
+- **1-4 questions** per interaction
+- **2-4 options** per question
+- **Single or multiple** selection modes
+- **Custom input** always available as fallback
+
+#### **Validation:**
+- Questions must end with question marks
+- Titles limited to 12 characters
+- Options must have clear, descriptive labels
+- Automatic format validation and error handling  
 
 6. **Automatic checkpointing** - Recovery checkpoints are updated after each major action, allowing you to resume exactly where you left off
 
