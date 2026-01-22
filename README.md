@@ -152,22 +152,25 @@ opencode --version
 #### Install CodeMaestro OpenCode
 ```bash
 # Install globally for CLI access
-npm install -g codemaestro-opencode
+npm install -g codemaestro (coming soon)
 
 # Or install from source
-git clone https://github.com/your-org/codemaestro-opencode.git
-cd codemaestro-opencode
+git clone https://github.com/your-org/codemaestro.git
+cd codemaestro
 npm install
 npm link  # For global CLI access
 ```
 
-#### Verify OpenCode Installation
+#### Verify CodeMaestro Installation
 ```bash
-# Test CodeMaestro OpenCode installation
+# Test CodeMaestro commands directly
 codem-init --help
+codem-status --help
 
-# Check all available commands
-opencode --help | grep codem
+# Within OpenCode, use the / prefix for commands
+opencode
+/codem-init --help
+/codem-status
 ```
 
 ### Option 2: Claude Code Implementation (Legacy)
@@ -244,11 +247,11 @@ Each maintains its own project state and documentation.
 cd your-project-directory
 
 # Install CodeMaestro
-npm install codemaestro-opencode --save-dev
+npm install codemaestro --save-dev
 
 # Or install from source
-git clone https://github.com/your-org/codemaestro-opencode.git
-cd codemaestro-opencode
+git clone https://github.com/your-org/codemaestro.git
+cd codemaestro
 npm install
 npm link  # For global CLI access
 ```
@@ -491,8 +494,8 @@ codem-phase 3  # Jump to implementation phase
 ### Setup Development Environment
 ```bash
 # Clone repository
-git clone https://github.com/your-org/codemaestro-opencode.git
-cd codemaestro-opencode
+git clone https://github.com/your-org/codemaestro.git
+cd codemaestro
 
 # Install dependencies
 npm install
@@ -627,7 +630,10 @@ describe('Requirements Agent', () => {
 # If codem-* commands are not found
 npm link
 # Or reinstall globally
-npm install -g codemaestro-opencode
+npm install -g codemaestro
+
+# Test installation
+codem-init --help
 ```
 
 #### "Phase validation failed" Error
@@ -809,7 +815,7 @@ When reporting issues, please include:
 
 **Version:** 1.0.0 | **Release Date:** 2026-01-22 | **Maintainer:** CodeMaestro Team
 
-[⬆️ Back to Top](#codemaestro-opencode)
+[⬆️ Back to Top](#codemaestro)
 
 ## 📁 Project Structure
 
@@ -1114,7 +1120,7 @@ The integration leverages these MCP tools:
 - [ESLint](https://eslint.org/)
 
 ### Community
-- [GitHub Issues](https://github.com/your-org/codemaestro-opencode/issues)
+- [GitHub Issues](https://github.com/your-org/codemaestro/issues)
 - [Discord Community](https://discord.gg/codemaestro)
 - [OpenCode Community](https://opencode.ai/community)
 
@@ -1137,4 +1143,4 @@ For issues related to:
 **Version:** 1.0.0 | **Codename:** Phoenix | **Release Date:** 2026-01-22
 **Maintainer:** CodeMaestro Team | **License:** MIT
 
-[⬆️ Back to Top](#codemaestro-opencode)
+[⬆️ Back to Top](#codemaestro)
