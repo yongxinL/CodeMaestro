@@ -138,6 +138,104 @@ Planning Agent for Phase 2 - Technical planning and architecture
 
 **See:** [.CodeMaestro/opencode/commands/planning.js](.CodeMaestro/opencode/commands/planning.js)
 
+### `/verification [action]`
+Verification Agent for Phase 4 - Quality assurance and release readiness validation
+
+**Syntax:**
+```bash
+/codem-verification evidence      # Collect evidence from all phases
+/codem-verification quality       # Run comprehensive quality assessment
+/codem-verification decide        # Make GO/NO-GO release decision
+/codem-verification report        # Generate verification report
+/codem-verification list          # List verification documents
+/codem-verification               # Show guide
+```
+
+**Features:**
+- Evidence collection from all previous phases (requirements, planning, implementation)
+- Comprehensive quality assessment (testing, security, performance, acceptance criteria)
+- Automated testing execution with coverage analysis
+- Security vulnerability scanning and compliance validation
+- Performance benchmarking against defined standards
+- Acceptance criteria validation with automated testing
+- GO/NO-GO decision framework with risk assessment
+- Confidence scoring and blocker identification
+- Professional verification reports with recommendations
+
+**Quality Gates:**
+- **Testing:** ≥80% coverage, all critical tests pass
+- **Security:** Vulnerability scan (0 critical/high), input validation
+- **Performance:** Lighthouse ≥90, response <500ms, resource limits
+- **Acceptance:** 100% criteria pass rate with automated validation
+
+**Evidence Sources:**
+- Requirements: Product specs, user stories, competitive analysis
+- Planning: Technical blueprints, task breakdowns, timelines
+- Implementation: Code structure, progress tracking, quality gates
+
+**Output:** Creates verification reports and quality assessments in `docs/verification/`
+
+**Decision Framework:**
+- Calculates confidence score based on quality metrics
+- Identifies release blockers and mitigation strategies
+- Provides actionable recommendations
+- Supports phased release approaches for blocked items
+
+**See:** [.CodeMaestro/opencode/commands/verification.js](.CodeMaestro/opencode/commands/verification.js)
+
+### `/release [action]`
+Release Agent for Phase 5 - Deployment orchestration and organizational learning
+
+**Syntax:**
+```bash
+/codem-release check                      # Run pre-release checks
+/codem-release deploy --environment staging   # Deploy to staging
+/codem-release deploy --environment production # Deploy to production
+/codem-release notes --version v1.0.0     # Generate release notes
+/codem-release retrospective              # Capture lessons learned
+/codem-release stakeholders               # Coordinate communications
+/codem-release list                       # List release documents
+/codem-release                            # Show guide
+```
+
+**Features:**
+- Multi-environment deployment orchestration (staging → production)
+- Pre-release validation (dependencies, security, documentation)
+- Automated deployment with health checks and rollback capabilities
+- Release notes generation with change categorization
+- Stakeholder communication coordination and approval workflows
+- Comprehensive project retrospectives with lessons learned
+- Knowledge base updates with technical and process insights
+- Process improvement analysis and recommendations
+
+**Deployment Capabilities:**
+- **Environment Management:** Staging, production, rollback configurations
+- **Health Validation:** Application startup, database connectivity, API responses
+- **Rollback Support:** Automated rollback to previous versions on failure
+- **Monitoring Integration:** Performance metrics and error tracking
+
+**Learning & Improvement:**
+- **Retrospectives:** Success analysis, challenge identification, action items
+- **Knowledge Capture:** Technical patterns, anti-patterns, technology evaluations
+- **Process Metrics:** Duration vs. budget analysis, defect tracking, velocity metrics
+- **Future Recommendations:** Similar project guidance, strategic improvements
+
+**Communication Features:**
+- **Stakeholder Notifications:** Email/Slack notifications with release details
+- **Approval Workflows:** Structured approval requests with deadlines
+- **Timeline Management:** Pre-release, release day, post-release coordination
+- **Documentation:** Release notes, migration guides, rollback procedures
+
+**Output:** Creates release documentation, deployment logs, and retrospectives in `docs/release/`
+
+**Knowledge Management:**
+- Updates global knowledge base with project insights
+- Documents successful patterns and lessons learned
+- Identifies training needs and skill development areas
+- Provides quantitative analysis for future project planning
+
+**See:** [.CodeMaestro/opencode/commands/release.js](.CodeMaestro/opencode/commands/release.js)
+
 ---
 
 ## Git Commands
