@@ -14,6 +14,18 @@ const projectDetector = require('../lib/project');
  */
 async function initCommand(options) {
   try {
+    // Check for required dependencies
+    try {
+      require('inquirer');
+      require('chalk');
+    } catch (depError) {
+      console.error('❌ Missing required dependencies. Please install CodeMaestro properly:');
+      console.error('   npm install -g codemaestro');
+      console.error('   # Then install dependencies:');
+      console.error('   npm install -g inquirer chalk commander fs-extra js-yaml ora progress @modelcontextprotocol/sdk');
+      process.exit(1);
+    }
+
     logger.info('Initializing CodeMaestro project for OpenCode...');
 
     // Check if already initialized

@@ -312,17 +312,29 @@ Each maintains its own project state and documentation.
 
 ### Install CodeMaestro
 ```bash
-# Clone or navigate to your project
-cd your-project-directory
+# Install globally for CLI access
+npm install -g codemaestro
 
-# Install CodeMaestro
-npm install codemaestro --save-dev
+# Install required runtime dependencies globally
+npm install -g inquirer chalk commander fs-extra js-yaml ora progress @modelcontextprotocol/sdk
 
 # Or install from source
 git clone https://github.com/your-org/codemaestro.git
 cd codemaestro
 npm install
 npm link  # For global CLI access
+```
+
+#### Verify CodeMaestro Installation
+```bash
+# Test CodeMaestro commands directly
+codem-init --help
+codem-status --help
+
+# Within OpenCode, use the / prefix for commands
+opencode
+/codem-init --help
+/codem-status
 ```
 
 ### Verify Installation
@@ -724,6 +736,17 @@ opencode --version
 
 # Check MCP tool configuration
 opencode config list
+```
+
+#### "inquirer.prompt is not a function" or Dependency Errors
+```bash
+# Install required runtime dependencies globally
+npm install -g inquirer chalk commander fs-extra js-yaml ora progress @modelcontextprotocol/sdk
+
+# If still failing, reinstall CodeMaestro
+npm uninstall -g codemaestro
+npm install -g codemaestro
+npm install -g inquirer chalk commander fs-extra js-yaml ora progress @modelcontextprotocol/sdk
 ```
 
 #### Test Failures
