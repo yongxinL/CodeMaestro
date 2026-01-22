@@ -136,7 +136,7 @@ Planning Agent for Phase 2 - Technical planning and architecture
 - Project timeline and milestones
 - Resource and token estimates
 
-**See:** [.CodeMaestro/opencode/commands/planning.js](.CodeMaestro/opencode/commands/planning.js)
+**See:** [commands/planning.js](commands/planning.js)
 
 ### `/verification [action]`
 Verification Agent for Phase 4 - Quality assurance and release readiness validation
@@ -181,7 +181,7 @@ Verification Agent for Phase 4 - Quality assurance and release readiness validat
 - Provides actionable recommendations
 - Supports phased release approaches for blocked items
 
-**See:** [.CodeMaestro/opencode/commands/verification.js](.CodeMaestro/opencode/commands/verification.js)
+**See:** [commands/verification.js](commands/verification.js)
 
 ### `/release [action]`
 Release Agent for Phase 5 - Deployment orchestration and organizational learning
@@ -234,7 +234,7 @@ Release Agent for Phase 5 - Deployment orchestration and organizational learning
 - Identifies training needs and skill development areas
 - Provides quantitative analysis for future project planning
 
-**See:** [.CodeMaestro/opencode/commands/release.js](.CodeMaestro/opencode/commands/release.js)
+**See:** [commands/release.js](commands/release.js)
 
 ---
 

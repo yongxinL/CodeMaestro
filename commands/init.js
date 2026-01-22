@@ -78,7 +78,6 @@ async function initCommand(options) {
       '.CodeMaestro/config',
       '.CodeMaestro/prompts',
       '.CodeMaestro/docs',
-      '.CodeMaestro/opencode',
       'docs/specifications',
       'docs/architecture',
       'docs/implementation',
