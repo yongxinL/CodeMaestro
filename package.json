@@ -1,27 +1,21 @@
 {
   "name": "codemaestro-opencode",
-  "version": "1.0.0",
-  "description": "CodeMaestro framework for OpenCode CLI - Complete 5-phase development workflow system",
+  "version": "0.1.0",
+  "description": "CodeMaestro framework for OpenCode CLI",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint commands lib tests",
     "lint:fix": "eslint commands lib tests --fix",
-    "build": "npm run lint && npm test",
-    "coverage": "jest --coverage"
+    "build": "npm run lint && npm test"
   },
   "keywords": [
     "codemaestro",
     "opencode",
     "development",
     "workflow",
-    "cli",
-    "ai",
-    "llm",
-    "software-development",
-    "project-management",
-    "quality-assurance"
+    "cli"
   ],
   "author": "CodeMaestro Team",
   "license": "MIT",
@@ -43,29 +37,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "bin": {
-    "codem-init": "./commands/init.js",
-    "codem-status": "./commands/status.js",
-    "codem-next": "./commands/next.js",
-    "codem-phase": "./commands/phase.js",
-    "codem-tree": "./commands/tree.js",
-    "codem-commit": "./commands/commit.js",
-    "codem-kb": "./commands/kb.js",
-    "codem-research": "./commands/research.js",
-    "codem-lookup": "./commands/lookup.js",
-    "codem-requirements": "./commands/requirements.js",
-    "codem-planning": "./commands/planning.js",
-    "codem-implementation": "./commands/implementation.js",
-    "codem-verification": "./commands/verification.js",
-    "codem-release": "./commands/release.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-org/codemaestro-opencode.git"
-  },
-  "bugs": {
-    "url": "https://github.com/your-org/codemaestro-opencode/issues"
-  },
-  "homepage": "https://github.com/your-org/codemaestro-opencode#readme"
+  }
 }
