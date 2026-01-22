@@ -25,8 +25,20 @@ async function initCommand(options) {
 
     const projectRoot = process.cwd();
 
-    // Interactive setup
-    const answers = await inquirer.prompt([
+    // Check for non-interactive mode
+    let answers;
+    if (options.yes) {
+      // Use default values for non-interactive mode
+      answers = {
+        projectName: options.name || path.basename(projectRoot),
+        skillTier: options.skill || 'advanced',
+        projectType: options.type || 'web',
+        includeExamples: true,
+        includeTemplates: true
+      };
+    } else {
+      // Interactive setup
+      answers = await inquirer.prompt([
       {
         type: 'input',
         name: 'projectName',
@@ -58,7 +70,7 @@ async function initCommand(options) {
         ]
       }
     ]);
-
+    }
     // Create directory structure
     const spinner = logger.startSpinner('Creating project structure...');
 
@@ -81,7 +93,7 @@ async function initCommand(options) {
     }
 
     // Copy framework files from the CodeMaestro source
-    const sourceDir = path.join(__dirname, '../../'); // .CodeMaestro directory
+    const sourceDir = path.join(__dirname, '..', '.CodeMaestro'); // .CodeMaestro directory
     const targetDir = path.join(projectRoot, '.CodeMaestro');
 
     // Copy essential framework files
@@ -209,6 +221,8 @@ async function initCommand(options) {
 
   } catch (error) {
     logger.error('Failed to initialize CodeMaestro project', error);
+    console.error('Full error details:', error.message);
+    console.error('Stack trace:', error.stack);
     process.exit(1);
   }
 }
@@ -218,6 +232,10 @@ program
   .name('codem-init')
   .description('Initialize CodeMaestro project for OpenCode')
   .option('-f, --force', 'Force reinitialization even if project exists')
+  .option('-y, --yes', 'Non-interactive mode with default values')
+  .option('-n, --name <name>', 'Project name (default: current directory name)')
+  .option('-t, --type <type>', 'Project type: web, mobile, api, desktop, library (default: web)')
+  .option('-s, --skill <skill>', 'Skill tier: beginner, advanced, ninja (default: advanced)')
   .action(initCommand);
 
 program.parse();
