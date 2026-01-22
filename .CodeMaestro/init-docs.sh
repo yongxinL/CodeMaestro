@@ -447,7 +447,7 @@ echo "🔒 Creating .gitignore..."
 cat > .gitignore << 'EOF'
 # CodeMaestro Framework (exclude from deliverables)
 .CodeMaestro/
-CLAUDE.md
+/cleanup.sh
 
 # Uncomment the line above to keep CLAUDE.md in the repository during development
 # and only remove it via cleanup.sh before final release

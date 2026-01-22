@@ -1,0 +1,58 @@
+# CodeMaestro OpenCode Configuration
+
+# Version information
+version: "0.1.0"
+framework_version: "1.0.0"
+
+# Command configuration
+commands:
+  prefix: "codem"
+  namespace: "CodeMaestro"
+
+# Development settings
+development:
+  debug: true
+  log_level: "info"
+
+# Project detection
+project:
+  markers:
+    - ".CodeMaestro/"
+    - "docs/specifications/"
+    - "docs/architecture/"
+  config_file: ".CodeMaestro/config/opencode.json"
+
+# MCP Tools configuration
+mcp:
+  context7:
+    enabled: true
+    max_calls_per_minute: 10
+  websearch:
+    enabled: true
+    max_results: 8
+  webfetch:
+    enabled: true
+    cache_timeout: 900
+
+# File paths (relative to project root)
+paths:
+  codemaestro_dir: ".CodeMaestro"
+  project_docs: "docs"
+  recovery_checkpoint: "docs/implementation/.recovery-checkpoint.md"
+  knowledge_base: "docs/kb"
+  specifications: "docs/specifications"
+  architecture: "docs/architecture"
+  implementation: "docs/implementation"
+  verification: "docs/verification"
+  release: "docs/release"
+
+# Git configuration
+git:
+  commit_message_template: "[{phase}]: {type} {description}\n\n{body}\n\nRefs: {constraints}\nCo-Authored-By: {author}"
+  branch_prefix: "feature/codem-"
+
+# Quality gates
+quality_gates:
+  test_coverage_minimum: 70
+  security_issues_max: 0
+  acceptance_criteria_pass_rate: 100
