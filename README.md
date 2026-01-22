@@ -167,10 +167,9 @@ npm link  # For global CLI access
 codem-init --help
 codem-status --help
 
-# Within OpenCode, use the / prefix for commands
+# Within OpenCode, CodeMaestro tools are available through MCP
 opencode
-/codem-init --help
-/codem-status
+# Use the tools through OpenCode's interface - they'll appear in the tools panel
 ```
 
 ### Option 2: Claude Code Implementation (Legacy)
@@ -202,7 +201,77 @@ claude
 
 Both implementations maintain separate project states and can coexist peacefully.
 
-### Migration Guide
+## 🔌 OpenCode Integration (MCP)
+
+CodeMaestro integrates with OpenCode through the **Model Context Protocol (MCP)**, providing all workflow capabilities as AI-accessible tools.
+
+### MCP Server Configuration
+
+CodeMaestro automatically registers as an MCP server when installed. The following tools are available within OpenCode:
+
+### **Project Management Tools**
+- **`codem_init`** - Initialize CodeMaestro project
+- **`codem_status`** - Show project status and current phase
+- **`codem_next`** - Continue to next task/phase
+- **`codem_phase`** - Jump to specific phase (1-5)
+- **`codem_tree`** - View task dependency graph
+
+### **Workflow Phase Tools**
+- **`codem_requirements`** - Manage requirements (specs, stories, competitive analysis)
+- **`codem_planning`** - Manage planning (blueprints, tasks, timelines)
+- **`codem_implementation`** - Manage implementation (code generation, quality gates)
+- **`codem_verification`** - Manage verification (evidence, quality assessment, GO/NO-GO)
+- **`codem_release`** - Manage release (deployment, retrospectives, communication)
+
+### **Research & Knowledge Tools**
+- **`codem_research`** - Research technologies and best practices
+- **`codem_lookup`** - Get library documentation and examples
+- **`codem_kb`** - Manage knowledge base (search, add, list)
+- **`codem_commit`** - Generate CodeMaestro-style commit messages
+
+### Using CodeMaestro in OpenCode
+
+1. **Start OpenCode** in your project directory:
+   ```bash
+   cd your-project
+   opencode
+   ```
+
+2. **CodeMaestro tools** will be available in the OpenCode interface
+
+3. **Use natural language** to invoke tools:
+   - *"Initialize a CodeMaestro project"*
+   - *"Show me the current project status"*
+   - *"Generate requirements specification"*
+   - *"Create a technical blueprint"*
+
+4. **Tools work contextually** - OpenCode understands when to use CodeMaestro tools based on your development workflow
+
+### MCP Server Details
+
+The CodeMaestro MCP server (`mcp-server.js`) provides:
+- **15 specialized tools** covering the complete development lifecycle
+- **Error handling** with meaningful error messages
+- **Async execution** for long-running operations
+- **Type-safe interfaces** with JSON schema validation
+
+### Configuration
+
+The MCP server is automatically configured in `~/.config/opencode/opencode.json`:
+
+```json
+{
+  "mcp": {
+    "codemaestro": {
+      "type": "local",
+      "command": ["node", "/path/to/codemaestro/mcp-server.js"],
+      "enabled": true
+    }
+  }
+}
+```
+
+## 🔄 Migration Guide
 
 #### From Claude Code to OpenCode
 If you're currently using the Claude Code implementation, you can migrate to OpenCode:
