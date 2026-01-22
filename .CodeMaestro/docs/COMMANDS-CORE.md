@@ -85,6 +85,61 @@ Multi-role consultation
 
 ---
 
+## Agent Commands (v1.0+)
+
+### `/requirements [action]`
+Requirements Agent for Phase 1 - Interactive specification creation
+
+**Syntax:**
+```bash
+/requirements spec --interactive     # Interactive product specification
+/requirements competitive --interactive  # Interactive competitive analysis
+/requirements stories --interactive  # Interactive user story creation
+/requirements spec --template        # Create specification template
+/requirements list                   # List existing documents
+/requirements                        # Show guide
+```
+
+**Features:**
+- Interactive guided creation with targeted questions
+- Professional document templates with placeholders
+- Competitive analysis integration
+- User story generation with acceptance criteria
+- Phase 1 validation and workflow guidance
+
+**Output:** Creates markdown documents in `docs/specifications/`
+
+### `/planning [action]`
+Planning Agent for Phase 2 - Technical planning and architecture
+
+**Syntax:**
+```bash
+/planning blueprint --interactive    # Interactive technical blueprint
+/planning tasks --interactive        # Interactive task breakdown and DAG
+/planning timeline --interactive     # Interactive project timeline
+/planning blueprint --template       # Create blueprint template
+/planning list                       # List existing documents
+/planning                            # Show guide
+```
+
+**Features:**
+- Architecture decision capture and validation
+- Task dependency graph (DAG) generation
+- Token budget estimation and planning
+- Gantt chart timeline creation
+- Technical constraint analysis
+- Risk assessment and mitigation
+
+**Output:** Creates documents in `docs/planning/` including:
+- Technical blueprint with architecture decisions
+- Task breakdown with dependencies
+- Project timeline and milestones
+- Resource and token estimates
+
+**See:** [.CodeMaestro/opencode/commands/planning.js](.CodeMaestro/opencode/commands/planning.js)
+
+---
+
 ## Git Commands
 
 ### `/commit`
