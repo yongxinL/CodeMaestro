@@ -333,7 +333,7 @@ Use natural language to interact with CodeMaestro. Simply describe what you want
 | Architecture help | "Help me decide between REST and GraphQL" |
 | Generate tests | "Generate test stubs for AC-1.2" |
 
-> **Tip:** You can also use slash commands if preferred. See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) for complete reference.
+> **More interactions:** See [.CodeMaestro/docs/INTERACTIONS-CORE.md](.CodeMaestro/docs/INTERACTIONS-CORE.md) for complete reference.
 
 ---
 

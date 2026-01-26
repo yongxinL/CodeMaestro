@@ -36,8 +36,8 @@ Load these configs based on the current phase:
 | [software-architect.md](roles/software-architect.md) | Software Architect role details | Phase 2 role activation |
 | [ethics-security-engineer.md](roles/ethics-security-engineer.md) | Ethics & Security Engineer role | Phase 2 Step 2.6 (threat modeling) |
 | [domain-scaffolding.md](domain-scaffolding.md) **OR** domain-specific files | Domain-specific scaffolding | Phase 2 Step 2.3.5 (auto-detect domain) |
-| [ai-estimation.md](ai-estimation.md) | AI-powered task estimation | Phase 2 Step 2.9 (task generation) - **Optional** |
-| [visual-task-dag.md](visual-task-dag.md) | Task DAG visualization | Phase 2 Step 2.7 (`/tree --visual`) |
+| [token-estimation.md](token-estimation.md) | Task token estimation | Phase 2 Step 2.9 (task generation) |
+| [visual-task-dag.md](visual-task-dag.md) | Task DAG visualization | Phase 2 Step 2.7 ("Show task tree") |
 
 ### Phase 3: Implementation
 
@@ -46,9 +46,9 @@ Load these configs based on the current phase:
 | [03-implementation.md](../prompts/03-implementation.md) | Phase 3 workflow | Phase 3 start |
 | [03-implementation-templates.md](../prompts/03-implementation-templates.md) | Phase 3 templates | On-demand (Step 3.3-3.8) |
 | [senior-developer.md](roles/senior-developer.md) | Senior Developer role details | Phase 3 role activation |
-| [git-automation.md](git-automation.md) | Automated git commits | Phase 3 Step 3.3.9 (`/commit --auto`) |
-| [code-generation-from-ac.md](code-generation-from-ac.md) | Test stub generation | Phase 3 Step 3.3.1b (`/generate test`) |
-| [cicd-generation.md](cicd-generation.md) | CI/CD pipeline generation | Phase 3 (`/generate ci-cd`) - **Optional** |
+| [git-automation.md](git-automation.md) | Automated git commits | Phase 3 Step 3.3.9 ("Generate commit") |
+| [code-generation-from-ac.md](code-generation-from-ac.md) | Test stub generation | Phase 3 Step 3.3.1b ("Generate tests") |
+| [cicd-generation.md](cicd-generation.md) | CI/CD pipeline generation | Phase 3 ("Generate CI/CD pipeline") - **Optional** |
 
 ### Phase 4: Verification
 
@@ -93,14 +93,13 @@ These configs are optional and loaded only when the user or workflow explicitly 
 
 | File | Purpose | Load When |
 |------|---------|-----------|
-| [phase-init-wizard.md](phase-init-wizard.md) | Phase initialization wizard | `/init-phase` command |
+| [phase-init-wizard.md](phase-init-wizard.md) | Phase initialization wizard | "Start Phase [N]" or "Initialize phase" |
 | [skill-tier-optimization.md](skill-tier-optimization.md) | Skill tier adaptation strategies | Phase 1 onboarding (skill tier selection) |
-| [multi-project-kb.md](multi-project-kb.md) | Knowledge base management | `/kb` commands or Phase 5 export |
-| [ai-estimation.md](ai-estimation.md) | AI-powered estimation | `/estimate suggest`, `/estimate track`, `/estimate analyze` |
-| [cicd-generation.md](cicd-generation.md) | CI/CD pipeline generation | `/generate ci-cd` command |
-| [code-generation-from-ac.md](code-generation-from-ac.md) | Test stub generation | `/generate test` command |
-| [git-automation.md](git-automation.md) | Automated git workflows | `/commit --auto` command |
-| [security-scanning.md](security-scanning.md) | Security vulnerability scanning | `/security scan` command |
+| [multi-project-kb.md](multi-project-kb.md) | Knowledge base management | "Search KB" or Phase 5 export |
+| [cicd-generation.md](cicd-generation.md) | CI/CD pipeline generation | "Generate CI/CD pipeline" |
+| [code-generation-from-ac.md](code-generation-from-ac.md) | Test stub generation | "Generate tests for [AC]" |
+| [git-automation.md](git-automation.md) | Automated git workflows | "Generate commit" |
+| [security-scanning.md](security-scanning.md) | Security vulnerability scanning | "Security scan" |
 | [handoff-messages.md](handoff-messages.md) | Session handoff guidance (core structure) | Phase transitions, session resume |
 | [templates/handoff-phase-templates.md](templates/handoff-phase-templates.md) | Phase-specific handoff templates | On-demand when creating phase transition handoffs |
 | [token-estimation.md](token-estimation.md) | Token budget management | All phases (budget tracking) |
@@ -191,6 +190,6 @@ Roles are loaded **on-activation**, not eagerly at system start:
 
 ## Related Documentation
 
-- [.CodeMaestro/docs/COMMANDS-CORE.md](../../.CodeMaestro/docs/COMMANDS-CORE.md) - Core command reference
-- [.CodeMaestro/docs/COMMANDS-ADVANCED.md](../../.CodeMaestro/docs/COMMANDS-ADVANCED.md) - Phase F advanced commands
+- [.CodeMaestro/docs/INTERACTIONS-CORE.md](../../.CodeMaestro/docs/INTERACTIONS-CORE.md) - Core interactions reference
+- [.CodeMaestro/docs/INTERACTIONS-ADVANCED.md](../../.CodeMaestro/docs/INTERACTIONS-ADVANCED.md) - Advanced interactions
 - [CLAUDE.md](../../CLAUDE.md) - Developer guide and architecture overview

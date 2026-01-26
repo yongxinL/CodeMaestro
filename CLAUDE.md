@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-**CodeMaestro v1.0** (Codename: Phoenix) is a role-based automated development system that orchestrates software development through a 5-phase lifecycle. This is a **framework/tool**, not a traditional codebase—it's designed to guide developers (and AI) through structured software development processes.
+**CodeMaestro v1.1** (Codename: Phoenix) is a role-based automated development system that orchestrates software development through a 5-phase lifecycle. This is a **framework/tool**, not a traditional codebase—it's designed to guide developers (and AI) through structured software development processes.
 
 **Key Characteristics:**
 - Documentation-driven architecture
@@ -31,8 +31,8 @@
 | `.CodeMaestro/init-docs.sh` | Project initialization script |
 | `CLAUDE.md` | This file (developer guide for Claude Code) |
 | `README.md` | User-facing installation guide |
-| `.CodeMaestro/docs/COMMANDS-CORE.md` | Essential commands (Phases 1-5) |
-| `.CodeMaestro/docs/COMMANDS-ADVANCED.md` | Phase F commands (load in Phase 4-5 only) |
+| `.CodeMaestro/docs/INTERACTIONS-CORE.md` | Essential interactions (Phases 1-5) |
+| `.CodeMaestro/docs/INTERACTIONS-ADVANCED.md` | Advanced interactions (Phases 4-5 only) |
 
 **Note:** All CodeMaestro framework files are in `.CodeMaestro/` directory for easy exclusion from project deliverables. User projects will have their own `.CodeMaestro/` directory (created by init-docs.sh) and `docs/` for project-specific documentation.
 
@@ -42,8 +42,8 @@
 |------|---------|-----------|
 | **[.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md](.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md)** | **START HERE** - Quick index of all configs with loading guidance | Always reference first |
 | **[.CodeMaestro/prompts/00-core.md](.CodeMaestro/prompts/00-core.md)** | System configuration: roles, constraints (A1-E33), thresholds, skill tiers | Every session |
-| **[.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md)** | Essential commands (daily workflow, Phases 1-5) | Phases 1-5 |
-| **[.CodeMaestro/docs/COMMANDS-ADVANCED.md](.CodeMaestro/docs/COMMANDS-ADVANCED.md)** | Phase F commands (estimation, benchmarking, ethics/compliance) | Phases 4-5 only |
+| **[.CodeMaestro/docs/INTERACTIONS-CORE.md](.CodeMaestro/docs/INTERACTIONS-CORE.md)** | Essential interactions (daily workflow) | Phases 1-5 |
+| **[.CodeMaestro/docs/INTERACTIONS-ADVANCED.md](.CodeMaestro/docs/INTERACTIONS-ADVANCED.md)** | Advanced interactions (estimation, compliance) | Phases 4-5 only |
 | **[.CodeMaestro/config/git-commands.md](.CodeMaestro/config/git-commands.md)** | Git workflow templates (reference by section ID) | All phases |
 | **[.CodeMaestro/config/constraints-reference.md](.CodeMaestro/config/constraints-reference.md)** | Complete constraint list (reference by ID: A1-E33) | Reference only |
 | **[.CodeMaestro/config/mcp-tools.md](.CodeMaestro/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) | Phase 1-4 (research) |
@@ -375,13 +375,12 @@ Automatically captures patterns from development sessions:
 
 - **Quick config index:** See [.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md](.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md) ⭐ **START HERE**
 - **Anti-hallucination guide:** See [.CodeMaestro/config/anti-hallucination-guide.md](.CodeMaestro/config/anti-hallucination-guide.md) ⭐ **CORE PHILOSOPHY**
-- **Core commands:** See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) (Phases 1-5)
-- **Advanced commands:** See [.CodeMaestro/docs/COMMANDS-ADVANCED.md](.CodeMaestro/docs/COMMANDS-ADVANCED.md) (Phase F, Phases 4-5 only)
+- **Core interactions:** See [.CodeMaestro/docs/INTERACTIONS-CORE.md](.CodeMaestro/docs/INTERACTIONS-CORE.md) (Phases 1-5)
+- **Advanced interactions:** See [.CodeMaestro/docs/INTERACTIONS-ADVANCED.md](.CodeMaestro/docs/INTERACTIONS-ADVANCED.md) (Phases 4-5 only)
 - **System configuration:** See [.CodeMaestro/prompts/00-core.md](.CodeMaestro/prompts/00-core.md)
 - **Constraints:** See [.CodeMaestro/config/constraints-reference.md](.CodeMaestro/config/constraints-reference.md)
 - **Git workflows:** See [.CodeMaestro/config/git-commands.md](.CodeMaestro/config/git-commands.md)
 - **Installation (users):** See [README.md](.CodeMaestro/docs/README.md)
-- **Help command:** Run `/help` in Claude Code once initialized
 
 **v1.1 Features:**
 - **Natural language:** See [.CodeMaestro/config/natural-language.md](.CodeMaestro/config/natural-language.md)
