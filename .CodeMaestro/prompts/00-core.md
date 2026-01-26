@@ -447,6 +447,69 @@ At each phase completion:
 
 ---
 
+## Session End Protocol (v1.1)
+
+When ending a session, generate a structured summary.
+
+### Triggers
+
+| Say this... | Action |
+|-------------|--------|
+| "I'm done for now" | Generate session end summary |
+| "Ending session" | Generate session end summary |
+| "Generate handoff" | Generate handoff message |
+| "Save my progress" | Update checkpoint |
+
+### Summary Contents
+
+1. **Current State**: Phase, role, task progress
+2. **Completed**: What was done this session
+3. **In Progress**: Partially complete items with %
+4. **Token Usage**: Used/available with efficiency rating
+5. **Files Modified**: List with change descriptions
+6. **Git State**: Branch, commit, uncommitted changes
+7. **Next Actions**: Primary + alternative
+8. **Resume Prompt**: Copy-paste for next session
+
+### Auto-Triggers
+
+| Threshold | Action |
+|-----------|--------|
+| >80% context | Suggest checkpoint |
+| >90% context | Auto-generate summary |
+| Phase end | Full handoff + summary |
+
+**See:** [../config/session-end-protocol.md](../config/session-end-protocol.md)
+**See:** [../config/session-persistence.md](../config/session-persistence.md)
+
+---
+
+## Clarifying Questions (v1.1)
+
+Ask structured questions to gather missing context.
+
+### When to Ask
+
+- **Phase 1**: Ambiguous requirements, unclear scope
+- **Phase 2**: Technology decisions, build vs buy
+
+### Question Format
+
+```
+**Q1: [Question text]**
+   ○ Option A
+   ○ Option B
+   ○ Option C
+   ○ Other: [specify]
+```
+
+### Response Handling
+
+- User answers → Summarize understanding → Proceed
+- User rejects → Ask what to focus on instead
+
+**See:** [../config/clarifying-questions.md](../config/clarifying-questions.md)
+
 ## Knowledge Base
 
 ### Structure
@@ -455,7 +518,11 @@ At each phase completion:
 ./.CodeMaestro/knowledge-base/
 ├── failures/     # Failure patterns with solutions
 ├── patterns/     # Successful patterns to reuse
-└── decisions/    # Searchable decision index
+├── decisions/    # Searchable decision index
+└── instincts/    # v1.1: Auto-learned behaviors (NEW)
+    ├── personal/     # Learned from this project
+    ├── inherited/    # Imported from other projects
+    └── archived/     # Low-confidence instincts
 ```
 
 ### Integration Points (ALL PHASES)
@@ -468,11 +535,143 @@ At each phase completion:
 
 **Philosophy:** Every phase contributes to organizational learning through KB
 
-### Commands
+### Commands (or Natural Language)
 
-- `/kb search [query]` - Search knowledge base
-- `/kb add failure` - Document a failure
-- `/kb add pattern` - Document a success pattern
+| Command | Natural Language |
+|---------|-----------------|
+| `/kb search [query]` | "Search knowledge base for [topic]" |
+| `/kb add failure` | "Document this failure" |
+| `/kb add pattern` | "Save this pattern" |
+| `/kb list` | "Show knowledge base" |
+
+---
+
+## Continuous Learning (v1.1)
+
+Auto-capture patterns from development sessions.
+
+### Instinct Model
+
+An **instinct** is a small learned behavior:
+- Confidence scoring: 0.3 (tentative) → 0.9 (certain)
+- Domain-tagged: code-style, testing, git, debugging, security, workflow
+- Evidence-backed: tracks what observations created it
+
+### Detection Triggers
+
+| Pattern Type | Trigger | Initial Confidence |
+|--------------|---------|-------------------|
+| User correction | AI suggestion modified/rejected | 0.5 |
+| Error resolution | Bug fixed successfully | 0.6 |
+| Repeated workflow | Same sequence 3+ times | 0.5 |
+| API validation | Confirmed via Context7/docs | 0.9 |
+
+### Session Lifecycle
+
+**At session end / phase boundary:**
+1. Review for new instincts
+2. Update confidence on existing instincts
+3. Apply decay to unreinforced instincts (-0.05/week)
+4. Archive instincts below 0.3
+
+**See:** [../config/continuous-learning.md](../config/continuous-learning.md)
+
+---
+
+## Subagent Orchestration (v1.1)
+
+Specialized agents for delegated tasks.
+
+### Available Subagents
+
+| Agent | Purpose | Tools | Model |
+|-------|---------|-------|-------|
+| **code-reviewer** | Quality, security review | Read, Grep, Glob | Sonnet |
+| **architect** | System design decisions | Read, Grep, Glob, WebSearch | Opus |
+| **planner** | Implementation planning | Read, Grep, Glob | Sonnet |
+
+### Invocation
+
+Natural language:
+- "Review this code" → code-reviewer
+- "Help me decide on [architecture]" → architect
+- "Plan the implementation of [feature]" → planner
+
+### Output
+
+Each subagent produces structured output:
+- code-reviewer: Score/10 + issues by severity
+- architect: ADR (Architecture Decision Record)
+- planner: Step-by-step implementation plan
+
+**See:** [../agents/](../agents/) directory
+
+---
+
+## Automated Verification Loop (v1.1)
+
+6-phase automated verification.
+
+### Phases
+
+1. **Build**: Compile without errors
+2. **Types**: Type check (0 errors)
+3. **Lint**: Code style (0 errors)
+4. **Tests**: Coverage ≥70%
+5. **Security**: 0 critical/high vulnerabilities
+6. **Diff**: Change scope review
+
+### Triggers
+
+| Say this... | Runs... |
+|-------------|---------|
+| "Verify my changes" | Full 6-phase |
+| "Quick check" | Build, Types, Lint |
+| "Security scan" | Security only |
+| Task completion | Auto (Build, Types, Lint, Tests) |
+
+**See:** [../config/verification-loop.md](../config/verification-loop.md)
+
+---
+
+## Natural Language Interface (v1.1)
+
+Alternative to slash commands.
+
+### Intent Detection
+
+| Intent | Natural Language Triggers | Equivalent |
+|--------|--------------------------|------------|
+| kb_search | "search knowledge base", "find pattern" | `/kb search` |
+| commit | "generate commit", "save my work" | `/commit` |
+| generate_test | "generate test", "test for AC" | `/generate test` |
+| status | "my status", "current progress" | `/status` |
+| verify | "verify changes", "check everything" | `/verify` |
+
+**Priority:** Commands (`/`) take precedence; natural language is fallback.
+
+**See:** [../config/natural-language.md](../config/natural-language.md)
+
+---
+
+## Iterative Retrieval (v1.1)
+
+Progressive context refinement for task initialization.
+
+### 4-Phase Loop
+
+1. **DISPATCH**: Broad query from task description
+2. **EVALUATE**: Score files by relevance (0.0-1.0)
+3. **REFINE**: Update query based on gaps
+4. **LOOP**: Max 3 cycles, then proceed
+
+### Stop Conditions
+
+- Found ≥3 files with relevance ≥0.7
+- No critical context gaps identified
+- Max 3 cycles reached
+
+**See:** [../config/iterative-retrieval.md](../config/iterative-retrieval.md)
 
 ---
 
@@ -499,8 +698,14 @@ At each phase completion:
 
 | Component | Version |
 |-----------|---------|
-| CodeMaestro | 1.0.0 |
-| Core Configuration | 1.0.0 |
+| CodeMaestro | 1.1.0 |
+| Core Configuration | 1.1.0 |
 | Role System | 1.0.0 |
-| Knowledge Base | 1.0.0 |
-| Session Management | 1.0.0 |
+| Knowledge Base | 1.1.0 |
+| Session Management | 1.1.0 |
+| Continuous Learning | 1.0.0 |
+| Subagent Orchestration | 1.0.0 |
+| Verification Loop | 1.0.0 |
+| Natural Language | 1.0.0 |
+| Iterative Retrieval | 1.0.0 |
+

@@ -280,6 +280,83 @@ CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 
 ---
 
+## Natural Language Interface (v1.1)
+
+CodeMaestro supports natural language requests as an alternative to slash commands. This provides a more intuitive interface when commands aren't recognized.
+
+**Natural Language Mapping:**
+
+| Instead of... | Say... |
+|---------------|--------|
+| `/kb search [query]` | "Search the knowledge base for [topic]" |
+| `/commit` | "Generate a commit for my changes" |
+| `/generate test AC-1.2` | "Generate test stubs for AC 1.2" |
+| `/status` | "What's my current progress?" |
+| `/next` | "What should I work on next?" |
+| `/verify` | "Verify my changes" |
+
+**See:** [.CodeMaestro/config/natural-language.md](.CodeMaestro/config/natural-language.md)
+
+---
+
+## Subagent Orchestration (v1.1)
+
+Specialized agents can be delegated for focused tasks:
+
+| Agent | Purpose | Invoke With |
+|-------|---------|-------------|
+| **code-reviewer** | Quality, security, maintainability review | "Review this code" |
+| **architect** | System design, technology decisions | "Help me decide on [architecture]" |
+| **planner** | Implementation planning, task breakdown | "Plan the implementation of [feature]" |
+
+**Agents have:**
+- Limited scope (focused on their specialty)
+- Specific tools (minimal footprint)
+- Clear output formats
+
+**See:** [.CodeMaestro/agents/](.CodeMaestro/agents/) directory
+
+---
+
+## Continuous Learning (v1.1)
+
+Automatically captures patterns from development sessions:
+
+**Instinct Model:**
+- Small learned behaviors with confidence scoring (0.3 → 0.9)
+- Auto-detected from user corrections, error resolutions, repeated workflows
+- Stored in `.CodeMaestro/knowledge-base/instincts/`
+- Confidence evolves based on reinforcement
+
+**Session End:**
+- Review for new instincts
+- Update confidence on existing instincts
+- Auto-decay unused patterns
+
+**See:** [.CodeMaestro/config/continuous-learning.md](.CodeMaestro/config/continuous-learning.md)
+
+---
+
+## Automated Verification Loop (v1.1)
+
+6-phase verification for code quality:
+
+1. **Build**: Compile without errors
+2. **Types**: Type safety (0 errors)
+3. **Lint**: Code style (0 errors)
+4. **Tests**: Pass rate + coverage (≥70%)
+5. **Security**: Vulnerability scan (0 critical/high)
+6. **Diff**: Change scope review
+
+**Triggers:**
+- "Verify my changes" → Full verification
+- Task completion (Phase 3) → Quick check
+- Before PR → Full + evidence
+
+**See:** [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
+
+---
+
 ## Key Principles
 
 1. **Anti-Hallucination First:** Copy verified examples, connect to existing solutions, reuse proven patterns
@@ -306,11 +383,18 @@ CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 - **Installation (users):** See [README.md](.CodeMaestro/docs/README.md)
 - **Help command:** Run `/help` in Claude Code once initialized
 
+**v1.1 Features:**
+- **Natural language:** See [.CodeMaestro/config/natural-language.md](.CodeMaestro/config/natural-language.md)
+- **Subagents:** See [.CodeMaestro/agents/](.CodeMaestro/agents/) (code-reviewer, architect, planner)
+- **Continuous learning:** See [.CodeMaestro/config/continuous-learning.md](.CodeMaestro/config/continuous-learning.md)
+- **Verification loop:** See [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
+- **Iterative retrieval:** See [.CodeMaestro/config/iterative-retrieval.md](.CodeMaestro/config/iterative-retrieval.md)
+
 ---
 
 ## Version
 
-**CodeMaestro:** 1.0.0
-**Release:** 2026-01-01
+**CodeMaestro:** 1.1.0
+**Release:** 2026-01-27
 **Codename:** Phoenix
-**Last Updated:** 2026-01-12
+**Last Updated:** 2026-01-27

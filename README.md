@@ -1,12 +1,12 @@
-# CodeMaestro v1.0.0
+# CodeMaestro v1.1.0
 
 ## 🚀 Welcome to CodeMaestro
 
 CodeMaestro is a role-based automated development system that orchestrates software development through a 5-phase lifecycle with intelligent session management, progressive disclosure, token estimation, and organizational learning.
 
 **Codename:** Phoenix
-**Version:** 1.0.0
-**Release Date:** 2026-01-16
+**Version:** 1.1.0
+**Release Date:** 2026-01-27
 
 ---
 
@@ -70,6 +70,49 @@ This repository contains the complete CodeMaestro framework:
 - **Harmonic Resonance:** Module-level architectural vision
 - **Gantt Visualization:** Visual timeline alongside dependency DAG
 - **Portfolio Generation:** On-demand professional documentation
+
+---
+
+## ✨ What's New in v1.1.0
+
+### 💬 Feature 5: Natural Language Interface
+- **Use natural language** instead of slash commands
+- Say "Search knowledge base" instead of `/kb search`
+- Say "Generate a commit" instead of `/commit`
+- Automatic intent detection with confirmation
+- See [.CodeMaestro/config/natural-language.md](.CodeMaestro/config/natural-language.md)
+
+### 🧠 Feature 6: Continuous Learning
+- **Auto-capture patterns** from development sessions
+- Instinct-based learning with confidence scoring (0.3 → 0.9)
+- Learns from user corrections and error resolutions
+- See [.CodeMaestro/config/continuous-learning.md](.CodeMaestro/config/continuous-learning.md)
+
+### ✅ Feature 7: Automated Verification Loop
+- **6-phase verification**: Build, Types, Lint, Tests, Security, Diff
+- Run with "Verify my changes"
+- Automatic quality gate checking
+- See [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
+
+### 🤖 Feature 8: Subagent Orchestration
+- **Specialized agents** for focused tasks
+- `code-reviewer` - Code quality and security review
+- `architect` - System design and ADRs
+- `planner` - Implementation planning
+- See [.CodeMaestro/agents/](.CodeMaestro/agents/)
+
+### ❓ Feature 9: Clarifying Questions
+- **Structured questions** for Phase 1 & 2
+- Multiple-choice + "Other" option format
+- Reduces hallucination by gathering context first
+- Optional MCP integration with ask-user-questions
+- See [.CodeMaestro/config/clarifying-questions.md](.CodeMaestro/config/clarifying-questions.md)
+
+### 📊 Feature 10: Session End Summary
+- **Structured output** when ending sessions
+- Progress, token usage, files modified
+- Next action and resume prompt
+- See [.CodeMaestro/config/session-end-protocol.md](.CodeMaestro/config/session-end-protocol.md)
 
 ---
 
@@ -233,62 +276,64 @@ Claude Code will automatically:
 
 ---
 
-## 💻 Commands Reference
+## 💬 Talking to CodeMaestro
 
-### Core Commands (Always Available)
+Use natural language to interact with CodeMaestro. Simply describe what you want:
 
-```bash
-# Navigation
-/status              # Show current state
-/next                # Load next task
-/task T-X.X.X        # Load specific task
-/phase N             # Jump to phase
-/tree                # Show task DAG
+### Navigation & Status
 
-# Token Management (NEW v1.0+)
-/estimate task T-X   # Estimate task tokens
-/estimate milestone  # Estimate milestone tokens
-/budget              # Check session budget status
-/budget --forecast   # Forecast remaining tasks
-/variance            # Analyze token variance
-/tokens              # Quick token status
+| What you want | Say this |
+|---------------|----------|
+| Check progress | "What's my current status?" |
+| Start next task | "What should I work on next?" |
+| Load specific task | "Load task T-2.1.1" |
+| See task tree | "Show me the task dependencies" |
+| Change phase | "Move to Phase 3" |
 
-# Session Handoff (NEW v1.0+)
-/handoff             # Generate handoff message
-/handoff --next      # Include next phase prep
-/handoff --tokens    # Include token analysis
-/handoff --recovery  # Include recovery instructions
+### Token & Budget Management
 
-# Recovery
-/recover             # Execute recovery protocol
-/snapshot            # Save checkpoint
-/history             # Show decision log
+| What you want | Say this |
+|---------------|----------|
+| Check budget | "How much context do I have left?" |
+| Estimate task | "How many tokens will T-2.1.1 use?" |
+| Check variance | "How accurate were our estimates?" |
+| Token summary | "Quick token status" |
 
-# Knowledge Base
-/kb search [query]   # Search patterns/failures
-/kb add failure      # Document failure
-/kb add pattern      # Document success
+### Session Management
 
-# Git
-/commit              # Show commit template
-/commit --auto       # Auto-generate commit
-/checkpoint          # Pause for review
-```
+| What you want | Say this |
+|---------------|----------|
+| Generate handoff | "Generate a handoff for this session" |
+| Save progress | "Save my progress" |
+| Resume work | "Where were we?" |
+| End session | "I'm done for now" |
 
-### Advanced Commands (Phases 4-5)
+### Knowledge Base
 
-```bash
-# Portfolio
-/portfolio generate  # Create portfolio materials
-/portfolio preview   # Preview content
+| What you want | Say this |
+|---------------|----------|
+| Search patterns | "Search knowledge base for authentication" |
+| Save a pattern | "Save this pattern to knowledge base" |
+| Document failure | "Document this failure" |
 
-# Analytics (Phase 4-5)
-/estimate [scope]    # Effort estimation
-/benchmark [metric]  # Performance benchmarking
-/compliance          # Regulatory compliance check
-```
+### Code & Git
 
-See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) for complete reference.
+| What you want | Say this |
+|---------------|----------|
+| Generate commit | "Generate a commit for my changes" |
+| Verify code | "Verify my changes" |
+| Review code | "Review this code for issues" |
+| Create checkpoint | "Checkpoint my work" |
+
+### Planning & Architecture
+
+| What you want | Say this |
+|---------------|----------|
+| Plan feature | "Plan the implementation of user login" |
+| Architecture help | "Help me decide between REST and GraphQL" |
+| Generate tests | "Generate test stubs for AC-1.2" |
+
+> **Tip:** You can also use slash commands if preferred. See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) for complete reference.
 
 ---
 
@@ -428,8 +473,65 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 
 ## 📄 License
 
-CodeMaestro v1.0.0
+CodeMaestro v1.1.0
 All rights reserved.
+
+---
+
+## 🔄 Project Lifecycle
+
+### Starting a New Project
+
+```
+1. Run init-docs.sh in your project directory
+2. Copy CLAUDE.md to project root
+3. Initialize git (git init, git checkout -b dev)
+4. Open Claude Code and say:
+   "Let's start Phase 1. I want to build [describe project]."
+```
+
+**Your project version:** Starts at `v0.1.0`
+
+### Starting a New Phase
+
+```
+1. Complete current phase (all tasks done)
+2. Generate handoff: "Generate handoff for this session"
+3. Review recovery checkpoint
+4. Say: "Move to Phase [N]"
+5. AI loads new phase prompt and activates new role
+```
+
+### Starting a New Task
+
+```
+1. Say: "What should I work on next?" or "Load task T-X.X.X"
+2. AI checks token budget
+3. AI loads relevant context (iterative retrieval)
+4. Proceed with implementation
+5. On completion: "Generate commit for my changes"
+```
+
+### Handover to New Session
+
+**Before ending:**
+```
+1. Say: "I'm done for now" or "Generate session end summary"
+2. AI generates structured summary with:
+   - Completed/in-progress items
+   - Token usage
+   - Files modified
+   - Suggested next action
+   - Resume prompt to copy
+3. Recovery checkpoint is auto-updated
+```
+
+**Starting new session:**
+```
+1. Open Claude Code
+2. Say: "Where were we?" or paste resume prompt
+3. AI loads checkpoint and resumes
+```
 
 ---
 
@@ -443,39 +545,42 @@ All rights reserved.
 - [ ] Open Claude Code in project directory
 - [ ] Say: "Let's start Phase 1. I want to build [project]."
 - [ ] Follow 5-phase workflow
-- [ ] Use `/budget` to track tokens (Feature 3)
-- [ ] Review handoff at checkpoints (Feature 4)
-- [ ] Run `cleanup.sh --verify` before delivery (Feature 2)
+- [ ] Say "How much context left?" to track tokens
+- [ ] Say "Generate handoff" at checkpoints
+- [ ] Say "I'm done for now" for session end summary
 
-### Key Features to Use
+### Key Features (v1.1)
 
-1. **Token Estimation (Phase 2):** Get estimates for all tasks
-2. **Budget Checks (Phase 3):** Run `/budget` before each task
-3. **Token Tracking (Phase 3):** Record actuals after each task
-4. **Session Handoffs (All Phases):** Review at checkpoints
-5. **Token Retrospective (Phase 5):** Learn from variance
-6. **Framework Cleanup (Phase 5):** Remove before delivery
+1. **Natural Language** - Just describe what you want
+2. **Clarifying Questions** - AI asks before assuming (Phase 1 & 2)
+3. **Session End Summary** - Progress, tokens, next actions
+4. **Verification Loop** - "Verify my changes" before PR
+5. **Subagents** - "Review this code", "Plan the implementation"
+6. **Continuous Learning** - Patterns captured automatically
 
 ---
 
-## 🎉 Happy Building with CodeMaestro v1.0.0!
+## 🎉 Happy Building with CodeMaestro v1.1.0!
 
 **CodeMaestro Phoenix** - Orchestrating Development, One Phase at a Time
 
-**New in v1.0.0:**
+**New in v1.1.0:**
+- 💬 Natural language interface
+- ❓ Clarifying questions (Phase 1 & 2)
+- 📊 Session end summaries
+- ✅ Automated verification loops
+- 🤖 Subagent orchestration
+- 🧠 Continuous learning
+
+**v1.0.0 Features:**
 - 🗂️ Reorganized structure (`.CodeMaestro/` directory)
 - 🧹 Framework cleanup system (`cleanup.sh`)
 - 💰 Token estimation & budget management
 - 🔄 Session handoff messages
 
-For detailed changelog, see git history:
-```bash
-git log --oneline --graph dev
-```
-
 ---
 
-**Version:** 1.0.0
+**Framework Version:** 1.1.0
+**Project Versioning:** Your projects start at v0.1.0
 **Codename:** Phoenix
-**Release Date:** 2026-01-16
-**Last Updated:** 2026-01-16
+**Last Updated:** 2026-01-27
