@@ -165,8 +165,8 @@ domain: "api-knowledge"
 ## Storage Structure
 
 ```
-.CodeMaestro/knowledge-base/
-├── instincts/
+docs/knowledge-base/
+├── instincts/ (v1.1)
 │   ├── personal/           # Auto-learned from this project
 │   │   ├── prefer-zod-validation.md
 │   │   ├── always-test-first.md

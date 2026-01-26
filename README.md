@@ -31,7 +31,7 @@ This repository contains the complete CodeMaestro framework:
 - **All framework files** consolidated in `.CodeMaestro/` directory
 - Clean root: Only `CLAUDE.md` and `LICENSE`
 - **Easy exclusion:** One directory vs 14+ scattered files
-- User projects get their own `.CodeMaestro/` directory via `init-docs.sh`
+- User projects get their own `.CodeMaestro/` directory via `setup.sh`
 
 ### 🧹 Feature 2: File Exclusion System
 - **`cleanup.sh`** script automatically generated in user projects
@@ -124,15 +124,15 @@ This repository contains the complete CodeMaestro framework:
 # Clone or copy CodeMaestro to your project
 cd /path/to/your-project
 
-# Run initialization script (creates .CodeMaestro/ and docs/ in your project)
-chmod +x /path/to/CodeMaestro/.CodeMaestro/init-docs.sh
-/path/to/CodeMaestro/.CodeMaestro/init-docs.sh
+# Run setup script (creates .CodeMaestro/ and docs/ in your project)
+chmod +x /path/to/CodeMaestro/setup.sh
+/path/to/CodeMaestro/setup.sh
 
 # Copy CLAUDE.md to your project root
 cp /path/to/CodeMaestro/CLAUDE.md ./CLAUDE.md
 ```
 
-**What `init-docs.sh` does:**
+**What `setup.sh` does:**
 1. Creates `.CodeMaestro/` directory in your project (local copy of framework)
 2. Generates `docs/` structure for your project documentation
 3. Creates `cleanup.sh` script for framework removal before delivery
@@ -423,7 +423,7 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 ### "Cannot find prompt files"
 - Ensure `.CodeMaestro/prompts/` exists in your project
 - Check filenames match exactly (case-sensitive)
-- Re-run `init-docs.sh` if needed
+- Re-run `setup.sh` if needed
 
 ### "Phase detection failed"
 - Check `docs/implementation/.recovery-checkpoint.md`
@@ -442,7 +442,7 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 4. Load phase prompt manually if needed
 
 ### "Cleanup script missing"
-- Re-run `init-docs.sh` to regenerate `cleanup.sh`
+- Re-run `setup.sh` to regenerate `cleanup.sh`
 - Script template: `.CodeMaestro/config/templates/cleanup-script-template.sh`
 
 ---
@@ -483,7 +483,7 @@ All rights reserved.
 ### Starting a New Project
 
 ```
-1. Run init-docs.sh in your project directory
+1. Run setup.sh in your project directory
 2. Copy CLAUDE.md to project root
 3. Initialize git (git init, git checkout -b dev)
 4. Open Claude Code and say:
@@ -539,7 +539,7 @@ All rights reserved.
 
 ### Quick Start Checklist
 
-- [ ] Run `init-docs.sh` in your project
+- [ ] Run `setup.sh` in your project
 - [ ] Copy `CLAUDE.md` to project root
 - [ ] Initialize git (`git init`, `git checkout -b dev`)
 - [ ] Open Claude Code in project directory

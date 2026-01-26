@@ -515,14 +515,10 @@ Ask structured questions to gather missing context.
 ### Structure
 
 ```
-./.CodeMaestro/knowledge-base/
+./docs/knowledge-base/
+├── instincts/    # v1.1: Auto-learned behaviors
 ├── failures/     # Failure patterns with solutions
 ├── patterns/     # Successful patterns to reuse
-├── decisions/    # Searchable decision index
-└── instincts/    # v1.1: Auto-learned behaviors (NEW)
-    ├── personal/     # Learned from this project
-    ├── inherited/    # Imported from other projects
-    └── archived/     # Low-confidence instincts
 ```
 
 ### Integration Points (ALL PHASES)

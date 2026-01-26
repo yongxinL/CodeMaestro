@@ -28,13 +28,13 @@
 | `.CodeMaestro/` | **All framework files** (easy to exclude) |
 | `.CodeMaestro/prompts/` | Core system prompts (00-core, phase prompts, templates) |
 | `.CodeMaestro/config/` | Configuration files (git-commands, constraints, roles, etc.) |
-| `.CodeMaestro/init-docs.sh` | Project initialization script |
+| `setup.sh` | Project initialization script |
 | `CLAUDE.md` | This file (developer guide for Claude Code) |
 | `README.md` | User-facing installation guide |
 | `.CodeMaestro/docs/INTERACTIONS-CORE.md` | Essential interactions (Phases 1-5) |
 | `.CodeMaestro/docs/INTERACTIONS-ADVANCED.md` | Advanced interactions (Phases 4-5 only) |
 
-**Note:** All CodeMaestro framework files are in `.CodeMaestro/` directory for easy exclusion from project deliverables. User projects will have their own `.CodeMaestro/` directory (created by init-docs.sh) and `docs/` for project-specific documentation.
+**Note:** All CodeMaestro framework files are in `.CodeMaestro/` directory for easy exclusion from project deliverables. User projects will have their own `.CodeMaestro/` directory (created by setup.sh) and `docs/` for project-specific documentation.
 
 ### Key Files to Understand
 
@@ -47,7 +47,7 @@
 | **[.CodeMaestro/config/git-commands.md](.CodeMaestro/config/git-commands.md)** | Git workflow templates (reference by section ID) | All phases |
 | **[.CodeMaestro/config/constraints-reference.md](.CodeMaestro/config/constraints-reference.md)** | Complete constraint list (reference by ID: A1-E33) | Reference only |
 | **[.CodeMaestro/config/mcp-tools.md](.CodeMaestro/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) | Phase 1-4 (research) |
-| **[.CodeMaestro/init-docs.sh](.CodeMaestro/init-docs.sh)** | Creates directory structure for user projects | Project setup |
+| **[setup.sh](setup.sh)** | Creates directory structure for user projects | Project setup |
 | **[README.md](.CodeMaestro/docs/README.md)** | User-facing installation guide (not for Claude Code) | User reference only |
 
 ---

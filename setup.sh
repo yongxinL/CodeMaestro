@@ -10,7 +10,7 @@ echo ""
 
 # Detect script location to find the source .CodeMaestro directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CODEMAESTRO_SOURCE="$(dirname "$SCRIPT_DIR")"
+CODEMAESTRO_SOURCE="$SCRIPT_DIR"
 
 # Validate source exists
 if [[ ! -d "$CODEMAESTRO_SOURCE/.CodeMaestro" ]]; then
@@ -54,6 +54,9 @@ mkdir -p docs/release/runbooks
 mkdir -p docs/knowledge-base/failures
 mkdir -p docs/knowledge-base/patterns
 mkdir -p docs/knowledge-base/decisions
+mkdir -p docs/knowledge-base/instincts/personal
+mkdir -p docs/knowledge-base/instincts/inherited
+mkdir -p docs/knowledge-base/instincts/archived
 mkdir -p docs/portfolio
 mkdir -p docs/team
 echo "   ✓ User documentation directories created"
@@ -437,7 +440,7 @@ _No decision entries yet. Use `/kb add decision` to create your first entry._
 
 ### Updating This Index
 
-After adding KB entries, update this index manually or use `/kb reindex` to regenerate counts and summaries.
+After adding KB entries, update this index manually or use "Update KB index" to regenerate counts and summaries.
 EOF
 
 echo "   ✓ Essential documentation files created"
@@ -750,14 +753,14 @@ echo "   • cleanup.sh            - Script to remove framework files before rel
 echo "   • .gitignore            - Git ignore patterns"
 echo ""
 echo "🚀 Next steps:"
-echo "   1. Review '.CodeMaestro/docs/COMMANDS-CORE.md' for available commands"
-echo "   2. Run '/init-phase 1' in Claude Code to start Phase 1 (Requirements)"
+echo "   1. Review '.CodeMaestro/docs/INTERACTIONS-CORE.md' for available interactions"
+echo "   2. Say 'Start Phase 1' in Claude Code to begin Requirements phase"
 echo "   3. Customize .CodeMaestro/config/thresholds.md if needed"
 echo "   4. Before final release, run './cleanup.sh --verify' to check framework files"
 echo ""
 echo "📖 Documentation:"
 echo "   • CLAUDE.md                              - Framework overview and instructions"
-echo "   • .CodeMaestro/docs/COMMANDS-CORE.md     - Core commands reference"
+echo "   • .CodeMaestro/docs/INTERACTIONS-CORE.md - Core interactions reference"
 echo "   • .CodeMaestro/prompts/00-core.md        - System configuration"
 echo ""
 echo "Happy coding! 🎉"
