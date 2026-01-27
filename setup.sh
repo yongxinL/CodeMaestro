@@ -64,19 +64,6 @@ echo "   ✓ User documentation directories created"
 # Step 4: Create user-specific override files in .CodeMaestro/config/
 echo "⚙️  Creating project-specific configuration files..."
 
-# Custom roles override (empty template)
-cat > .CodeMaestro/config/roles/custom-roles.md << 'EOF'
-# Custom Roles
-
-> Define custom roles here to override or extend the default role system.
-> See `./.CodeMaestro/prompts/00-core.md` for the custom role template.
-
-## Custom Roles
-
-<!-- Add your custom role definitions below -->
-
-EOF
-
 # Quality thresholds override (commented template)
 cat > .CodeMaestro/config/thresholds.md << 'EOF'
 # Quality Thresholds
