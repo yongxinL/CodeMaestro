@@ -27,7 +27,9 @@
 |----------------|---------|
 | `.CodeMaestro/` | **All framework files** (easy to exclude) |
 | `.CodeMaestro/prompts/` | Core system prompts (00-core, phase prompts, templates) |
-| `.CodeMaestro/config/` | Configuration files (git-commands, constraints, roles, etc.) |
+| `.CodeMaestro/config/` | Configuration files (git-commands, constraints, etc.) |
+| `.CodeMaestro/agents/` | Agent definitions (product-manager, architect, developer, etc.) |
+| `.CodeMaestro/orchestrator/` | Orchestrator and handoff protocol |
 | `setup.sh` | Project initialization script |
 | `CLAUDE.md` | This file (developer guide for Claude Code) |
 | `README.md` | User-facing installation guide |
@@ -79,17 +81,22 @@ The system reduces token usage by loading templates **on-demand**:
 
 **Target:** 50-55% token reduction vs. inline approach
 
-### Role-Based State Machine
+### Agent-Based Orchestration
 
-Each phase activates specific roles with specialized behaviors:
+Each phase invokes specialized agents via the orchestrator with minimal context handoffs:
 
-- **Product Manager** (Phase 1): Domain expertise, requirements clarity
-- **Software Architect** (Phase 2): System design, task decomposition, architectural decisions
-- **Senior Developer** (Phase 3): Production code quality, pattern reuse, optimization
-- **QA Lead** (Phase 4): Evidence collection, security scanning, performance validation
-- **Release Manager** (Phase 5): Go/no-go decisions, delivery coordination, learning capture
-- **Data Interpreter** (Phase 4-5): Performance visualization, KPI dashboards
-- **Ethics & Security Engineer** (Phase 2, 4): Bias detection, GDPR compliance, accessibility
+- **product-manager** (Phase 1): Requirements gathering, competitive analysis, AC generation
+- **architect** (Phase 2): System design, task decomposition, architectural decisions
+- **planner** (Phase 2, 3): Task breakdown, implementation planning
+- **developer** (Phase 3): Production code quality, pattern reuse, anti-hallucination workflow
+- **code-reviewer** (Phase 3, 4): Code quality review, security analysis
+- **qa-lead** (Phase 4): Evidence collection, quality gate enforcement, GO/NO-GO decisions
+- **security-engineer** (Phase 2, 4): Threat modeling, vulnerability scanning, security validation
+- **data-interpreter** (Phase 4, 5): Performance visualization, KPI dashboards
+- **release-manager** (Phase 5): Release coordination, lessons learned, knowledge base updates
+
+**Orchestrator:** `orchestrator/phase-controller.md` manages agent invocation, state, and quality gates
+**Handoff Protocol:** `orchestrator/handoff-protocol.md` defines minimal context passing between agents
 
 ### Skill Tier Adaptation
 
@@ -154,14 +161,17 @@ CodeMaestro integrates with Model Context Protocol (MCP) tools:
 See templates in `02-planning-templates.md` for detailed task structures.
 ```
 
-#### Adding/Modifying Roles
+#### Adding/Modifying Agents
 
-**Files:** `.CodeMaestro/config/roles/*.md` and `.CodeMaestro/prompts/00-core.md`
+**Files:** `.CodeMaestro/agents/*.md` and `.CodeMaestro/prompts/00-core.md`
 
-1. Define role in `00-core.md` with template format
-2. Create detailed file in `.CodeMaestro/config/roles/new-role.md`
-3. Reference in phase prompts where role is active
-4. Update COMMANDS.md if adding role-specific commands
+1. Define agent in `00-core.md` agent registry
+2. Create agent file in `.CodeMaestro/agents/new-agent.md` following agent template
+3. Register in `orchestrator/phase-controller.md` with model assignment
+4. Define handoff inputs/outputs in `orchestrator/handoff-protocol.md`
+5. Update phase prompts to invoke agent where needed
+
+**Agent Template:** See `docs/MIGRATION-ROLES-TO-AGENTS.md` for agent structure (YAML frontmatter, inputs, process, outputs, quality checks, handoff)
 
 #### Updating Constraints
 
@@ -259,11 +269,12 @@ CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 3. Create implementation guidance in phase-specific templates
 4. Test command flow in test project
 
-#### Modify a role's responsibilities
-1. Update role definition in `.CodeMaestro/config/roles/*.md`
-2. Update role entry in `00-core.md`
-3. Adjust phase prompts that reference the role
-4. Test role transitions in test project
+#### Modify an agent's responsibilities
+1. Update agent definition in `.CodeMaestro/agents/*.md`
+2. Update agent entry in `00-core.md` agent registry
+3. Update orchestrator if changing model assignment or phase
+4. Adjust phase prompts that invoke the agent
+5. Test agent invocation in test project
 
 #### Improve token efficiency
 1. Identify inline content that should be templated
@@ -282,20 +293,21 @@ CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 
 ## Natural Language Interface (v1.1)
 
-CodeMaestro supports natural language requests as an alternative to slash commands. This provides a more intuitive interface when commands aren't recognized.
+CodeMaestro uses natural language as the primary interface in Claude Code environments.
 
-**Natural Language Mapping:**
+**Common Natural Language Requests:**
 
-| Instead of... | Say... |
-|---------------|--------|
-| `/kb search [query]` | "Search the knowledge base for [topic]" |
-| `/commit` | "Generate a commit for my changes" |
-| `/generate test AC-1.2` | "Generate test stubs for AC 1.2" |
-| `/status` | "What's my current progress?" |
-| `/next` | "What should I work on next?" |
-| `/verify` | "Verify my changes" |
+| Intent | Examples |
+|--------|----------|
+| Search knowledge base | "Search the knowledge base for [topic]", "find pattern for [topic]" |
+| Generate commit | "Generate a commit for my changes", "save my work" |
+| Generate tests | "Generate test stubs for AC-1.2", "create tests for this feature" |
+| Show status | "What's my current progress?", "show my status" |
+| Next task | "What should I work on next?", "continue work" |
+| Verify changes | "Verify my changes", "run quality checks" |
+| Invoke agent | "Review this code" (code-reviewer), "help me decide on [architecture]" (architect) |
 
-**See:** [.CodeMaestro/config/natural-language.md](.CodeMaestro/config/natural-language.md)
+**Note:** Natural language is processed directly by Claude Code. Slash commands (`/command`) are not supported and have been removed from CodeMaestro v1.1.
 
 ---
 
@@ -383,8 +395,8 @@ Automatically captures patterns from development sessions:
 - **Installation (users):** See [README.md](.CodeMaestro/docs/README.md)
 
 **v1.1 Features:**
-- **Natural language:** See [.CodeMaestro/config/natural-language.md](.CodeMaestro/config/natural-language.md)
-- **Subagents:** See [.CodeMaestro/agents/](.CodeMaestro/agents/) (code-reviewer, architect, planner)
+- **Agent architecture:** See [.CodeMaestro/agents/](.CodeMaestro/agents/) (9 specialized agents with orchestrator)
+- **Natural language interface:** Native support in Claude Code (see "Natural Language Interface" section above)
 - **Continuous learning:** See [.CodeMaestro/config/continuous-learning.md](.CodeMaestro/config/continuous-learning.md)
 - **Verification loop:** See [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
 - **Iterative retrieval:** See [.CodeMaestro/config/iterative-retrieval.md](.CodeMaestro/config/iterative-retrieval.md)

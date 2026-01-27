@@ -9,42 +9,42 @@
 
 ### Role Definitions (Compressed)
 
-**Full role details are loaded on activation from `./.CodeMaestro/config/roles/[role-name].md`**
+**Full agent details are loaded on activation from `./.CodeMaestro/agents/[agent-name].md`**
 
 #### Product Manager (Phase 1)
-**Perspective:** User value and market fit  
-**Goal:** Transform vague ideas into precise requirements  
-**Load full details:** `config/roles/product-manager.md`
+**Perspective:** User value and market fit
+**Goal:** Transform vague ideas into precise requirements
+**Load full details:** `agents/product-manager.md`
 
 #### Software Architect (Phase 2)
-**Perspective:** System structure, scalability, maintainability  
-**Goal:** Design robust, evolvable architecture  
-**Load full details:** `config/roles/software-architect.md`
+**Perspective:** System structure, scalability, maintainability
+**Goal:** Design robust, evolvable architecture
+**Load full details:** `agents/architect.md`
 
 #### Senior Developer (Phase 3)
-**Perspective:** Clean, maintainable, testable code  
-**Goal:** Implement features with production quality  
-**Load full details:** `config/roles/senior-developer.md`
+**Perspective:** Clean, maintainable, testable code
+**Goal:** Implement features with production quality
+**Load full details:** `agents/developer.md`
 
 #### QA Lead (Phase 4)
-**Perspective:** Quality, reliability, verification  
-**Goal:** Evidence-based validation  
-**Load full details:** `config/roles/qa-lead.md`
+**Perspective:** Quality, reliability, verification
+**Goal:** Evidence-based validation
+**Load full details:** `agents/qa-lead.md`
 
 #### Release Manager (Phase 5)
-**Perspective:** Delivery, coordination, operational readiness  
-**Goal:** Safe delivery to production  
-**Load full details:** `config/roles/release-manager.md`
+**Perspective:** Delivery, coordination, operational readiness
+**Goal:** Safe delivery to production
+**Load full details:** `agents/release-manager.md`
 
 #### Data Interpreter (Phase 4, 5)
-**Perspective:** Performance visualization and analysis  
-**Goal:** Transform metrics into actionable visual insights  
-**Load full details:** `config/roles/data-interpreter.md`
+**Perspective:** Performance visualization and analysis
+**Goal:** Transform metrics into actionable visual insights
+**Load full details:** `agents/data-interpreter.md`
 
 #### Ethics & Security Engineer (Phase 2, 4)
-**Perspective:** Security, ethics, bias mitigation  
-**Goal:** Responsible and secure systems  
-**Load full details:** `config/roles/ethics-security-engineer.md`
+**Perspective:** Security, ethics, bias mitigation
+**Goal:** Responsible and secure systems
+**Load full details:** `agents/security-engineer.md`
 
 ### Role Transition Protocol
 
@@ -60,7 +60,7 @@ When transitioning between phases or activating a role:
    Phase:        [Phase Number]: [Phase Name]
    Skill Tier:   [Tier] → [Behavior adaptation]
    
-   Loading role details from: config/roles/[role-name].md
+   Loading agent details from: agents/[agent-name].md
 ═══════════════════════════════════════════════════════════════
 ```
 
@@ -531,14 +531,14 @@ Ask structured questions to gather missing context.
 
 **Philosophy:** Every phase contributes to organizational learning through KB
 
-### Commands (or Natural Language)
+### Natural Language Interface
 
-| Command | Natural Language |
-|---------|-----------------|
-| `/kb search [query]` | "Search knowledge base for [topic]" |
-| `/kb add failure` | "Document this failure" |
-| `/kb add pattern` | "Save this pattern" |
-| `/kb list` | "Show knowledge base" |
+| Action | Natural Language Examples |
+|--------|--------------------------|
+| Search KB | "Search knowledge base for [topic]", "find pattern for [topic]" |
+| Add failure | "Document this failure", "record this issue" |
+| Add pattern | "Save this pattern", "remember this approach" |
+| List KB | "Show knowledge base", "list patterns" |
 
 ---
 
@@ -632,21 +632,20 @@ Each subagent produces structured output:
 
 ## Natural Language Interface (v1.1)
 
-Alternative to slash commands.
+CodeMaestro uses natural language as the primary interface.
 
-### Intent Detection
+### Common Intents
 
-| Intent | Natural Language Triggers | Equivalent |
-|--------|--------------------------|------------|
-| kb_search | "search knowledge base", "find pattern" | `/kb search` |
-| commit | "generate commit", "save my work" | `/commit` |
-| generate_test | "generate test", "test for AC" | `/generate test` |
-| status | "my status", "current progress" | `/status` |
-| verify | "verify changes", "check everything" | `/verify` |
+| Intent | Natural Language Examples |
+|--------|--------------------------|
+| kb_search | "search knowledge base for [topic]", "find pattern" |
+| commit | "generate commit for my changes", "save my work" |
+| generate_test | "generate test for AC-X.X", "create test stubs" |
+| status | "show my status", "current progress" |
+| verify | "verify my changes", "check everything" |
+| invoke_agent | "review this code" (code-reviewer), "help me decide on [arch]" (architect) |
 
-**Priority:** Commands (`/`) take precedence; natural language is fallback.
-
-**See:** [../config/natural-language.md](../config/natural-language.md)
+**Note:** Natural language is the primary interface. Claude Code's native commands take precedence.
 
 ---
 

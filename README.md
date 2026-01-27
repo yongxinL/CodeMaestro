@@ -463,11 +463,13 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 - **Constraints Reference:** `.CodeMaestro/config/constraints-reference.md`
 
 ### Role Definitions
-- `.CodeMaestro/config/roles/product-manager.md`
-- `.CodeMaestro/config/roles/software-architect.md`
-- `.CodeMaestro/config/roles/senior-developer.md`
-- `.CodeMaestro/config/roles/qa-lead.md`
-- `.CodeMaestro/config/roles/release-manager.md`
+- `.CodeMaestro/agents/product-manager.md`
+- `.CodeMaestro/agents/architect.md`
+- `.CodeMaestro/agents/developer.md`
+- `.CodeMaestro/agents/qa-lead.md`
+- `.CodeMaestro/agents/release-manager.md`
+- `.CodeMaestro/orchestrator/phase-controller.md`
+- `.CodeMaestro/orchestrator/handoff-protocol.md`
 
 ---
 

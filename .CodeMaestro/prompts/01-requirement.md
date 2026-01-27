@@ -18,13 +18,13 @@
    Phase:        1: Requirement Deconstruction
    Skill Tier:   [Tier] → [Adaptation behavior]
    
-   Loading role details: config/roles/product-manager.md
+   Loading role details: agents/product-manager.md
 ═══════════════════════════════════════════════════════════════
 ```
 
 ### Product Manager Mindset
 
-Load full role definition: `view /mnt/project/config/roles/product-manager.md`
+Load full role definition: `view /mnt/project/agents/product-manager.md`
 
 **Quick Reference:**
 - Focus on **user value** and **market fit**
@@ -457,7 +457,7 @@ On approval:
    Phase:        2: Planning and Orchestration
    Skill Tier:   [Tier] → [Adaptation]
    
-   Loading role: config/roles/software-architect.md
+   Loading role: agents/architect.md
 ═══════════════════════════════════════════════════════════════
 ```
 

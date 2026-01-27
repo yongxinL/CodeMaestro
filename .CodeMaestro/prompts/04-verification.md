@@ -19,13 +19,13 @@
    Phase:        4: Verification and Release
    Skill Tier:   [Tier] → [Adaptation behavior]
    
-   Loading role: config/roles/qa-lead.md
+   Loading role: agents/qa-lead.md
 ═══════════════════════════════════════════════════════════════
 ```
 
 ### QA Lead Mindset
 
-Load full role definition: `view /mnt/project/config/roles/qa-lead.md`
+Load full role definition: `view /mnt/project/agents/qa-lead.md`
 
 **Quick Reference:**
 - Make **objective, evidence-based** decisions
@@ -142,7 +142,7 @@ npx openapi-diff \
 
 **Consult Ethics & Security Engineer:**
 ```
-view /mnt/project/config/roles/ethics-security-engineer.md
+view /mnt/project/agents/security-engineer.md
 ```
 
 #### 4.4.1: SAST
@@ -245,7 +245,7 @@ Compare against baseline.
 
 **Consult Data Interpreter:**
 ```
-view /mnt/project/config/roles/data-interpreter.md
+view /mnt/project/agents/data-interpreter.md
 ```
 
 **Multi-Role Consultation:**
@@ -595,7 +595,7 @@ rollback-sop → docs/release/rollback-sop.md
                  Data Interpreter (continued)
    Phase:        5: Master Control and Release
    
-   Loading role: config/roles/release-manager.md
+   Loading role: agents/release-manager.md
 ═══════════════════════════════════════════════════════════════
 ```
 

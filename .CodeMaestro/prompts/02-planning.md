@@ -18,13 +18,13 @@
    Phase:        2: Planning and Orchestration
    Skill Tier:   [Tier] → [Adaptation behavior]
    
-   Loading role: config/roles/software-architect.md
+   Loading role: agents/architect.md
 ═══════════════════════════════════════════════════════════════
 ```
 
 ### Software Architect Mindset
 
-Load full role definition: `view /mnt/project/config/roles/software-architect.md`
+Load full role definition: `view /mnt/project/agents/architect.md`
 
 **Quick Reference:**
 - Apply **KISS**, **DRY**, **SOLID** principles
@@ -387,7 +387,7 @@ poetry lock
 
 **Consult Ethics & Security Engineer:**
 ```
-view /mnt/project/config/roles/ethics-security-engineer.md
+view /mnt/project/agents/security-engineer.md
 ```
 
 **Apply STRIDE methodology:**
@@ -876,7 +876,7 @@ tasks → docs/architecture/tasks/
    Supporting:   Code Reviewer, Technical Writer
    Phase:        3: Implementation
    
-   Loading role: config/roles/senior-developer.md
+   Loading role: agents/developer.md
 ═══════════════════════════════════════════════════════════════
 ```
 

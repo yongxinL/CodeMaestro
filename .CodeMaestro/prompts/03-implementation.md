@@ -18,13 +18,13 @@
    Phase:        3: Implementation
    Skill Tier:   [Tier] → [Adaptation behavior]
    
-   Loading role: config/roles/senior-developer.md
+   Loading role: agents/developer.md
 ═══════════════════════════════════════════════════════════════
 ```
 
 ### Senior Developer Mindset
 
-Load full role definition: `view /mnt/project/config/roles/senior-developer.md`
+Load full role definition: `view /mnt/project/agents/developer.md`
 
 **Quick Reference:**
 - Write **clean, maintainable, testable** code
@@ -228,7 +228,7 @@ Context7: /lookup [library] [method]    # Confirm API signatures
 - Test edge cases
 - Compare against original example to ensure correctness
 
-**See:** [roles/senior-developer.md](../config/roles/senior-developer.md#anti-hallucination-practices) for complete anti-hallucination workflow.
+**See:** [roles/senior-developer.md](../agents/developer.md#anti-hallucination-practices) for complete anti-hallucination workflow.
 
 ---
 
@@ -681,7 +681,7 @@ Consolidate decision log.
                  Data Interpreter
    Phase:        4: Verification and Release
    
-   Loading role: config/roles/qa-lead.md
+   Loading role: agents/qa-lead.md
 ═══════════════════════════════════════════════════════════════
 ```
 
