@@ -16,7 +16,9 @@ This repository contains the complete CodeMaestro framework:
 - ✅ **`CLAUDE.md`** - Developer guide for Claude Code
 - ✅ **`.CodeMaestro/`** - Complete framework (easy to exclude from deliverables)
   - `prompts/` - Modular phase prompts and templates
-  - `config/` - Configuration files, roles, git templates
+  - `config/` - Configuration files, git templates
+  - `agents/` - 9 specialized agents (v1.1)
+  - `orchestrator/` - Agent coordination and handoff protocol (v1.1)
   - `docs/` - Command references (Core & Advanced)
   - `init-docs.sh` - Project initialization script
 - ✅ **`LICENSE`** - Copyright and license information
@@ -80,7 +82,7 @@ This repository contains the complete CodeMaestro framework:
 - Say "Search knowledge base" instead of `/kb search`
 - Say "Generate a commit" instead of `/commit`
 - Automatic intent detection with confirmation
-- See [.CodeMaestro/config/natural-language.md](.CodeMaestro/config/natural-language.md)
+- Native support in Claude Code environment
 
 ### 🧠 Feature 6: Continuous Learning
 - **Auto-capture patterns** from development sessions
@@ -94,12 +96,14 @@ This repository contains the complete CodeMaestro framework:
 - Automatic quality gate checking
 - See [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
 
-### 🤖 Feature 8: Subagent Orchestration
-- **Specialized agents** for focused tasks
-- `code-reviewer` - Code quality and security review
-- `architect` - System design and ADRs
-- `planner` - Implementation planning
-- See [.CodeMaestro/agents/](.CodeMaestro/agents/)
+### 🤖 Feature 8: Agent-Based Architecture
+- **Complete migration** from role-based to agent-based orchestration
+- **9 specialized agents** with minimal context handoffs
+- **Model optimization**: Agents assigned to Sonnet or Haiku based on task complexity
+- **Parallel execution**: Independent agents can run concurrently
+- Agents: `product-manager`, `architect`, `planner`, `developer`, `code-reviewer`, `qa-lead`, `security-engineer`, `data-interpreter`, `release-manager`
+- Orchestrated by `phase-controller` with `handoff-protocol`
+- See [.CodeMaestro/agents/](.CodeMaestro/agents/) and [.CodeMaestro/orchestrator/](.CodeMaestro/orchestrator/)
 
 ### ❓ Feature 9: Clarifying Questions
 - **Structured questions** for Phase 1 & 2
@@ -150,7 +154,7 @@ git checkout -b dev
 
 # Initial commit
 git add .
-git commit -m "Initial project setup with CodeMaestro v1.0.0
+git commit -m "Initial project setup with CodeMaestro v0.1.0
 
 - Initialized CodeMaestro framework
 - Role-based 5-phase workflow enabled
@@ -178,16 +182,23 @@ your-project/
 │   │   ├── 04-verification.md   ✅ Phase 4 workflow
 │   │   ├── 05-master-control.md ✅ Phase 5 workflow
 │   │   └── [templates].md       ✅ On-demand templates
+│   ├── agents/                  ✅ NEW v1.1: 9 specialized agents
+│   │   ├── product-manager.md   ✅ Phase 1 agent
+│   │   ├── architect.md         ✅ Phase 2 agent
+│   │   ├── developer.md         ✅ Phase 3 agent
+│   │   └── [6 more agents]      ✅ See agent directory
+│   ├── orchestrator/            ✅ NEW v1.1: Agent coordination
+│   │   ├── phase-controller.md  ✅ Agent invocation & state
+│   │   └── handoff-protocol.md  ✅ Context passing protocol
 │   ├── config/                  ✅ Configuration files
-│   │   ├── token-estimation.md  ✅ NEW: Token estimation guide
-│   │   ├── handoff-messages.md  ✅ NEW: Session handoff templates
-│   │   ├── cleanup-verification.md ✅ NEW: Cleanup guide
+│   │   ├── token-estimation.md  ✅ NEW v1.0: Token estimation guide
+│   │   ├── handoff-messages.md  ✅ NEW v1.0: Session handoff templates
+│   │   ├── cleanup-verification.md ✅ NEW v1.0: Cleanup guide
 │   │   ├── git-commands.md      ✅ Git templates
-│   │   ├── constraints-reference.md ✅ Full constraint list
-│   │   └── roles/               ✅ Role definitions
+│   │   └── constraints-reference.md ✅ Full constraint list
 │   └── docs/                    ✅ Command references
-│       ├── COMMANDS-CORE.md     ✅ Essential commands (Phases 1-5)
-│       └── COMMANDS-ADVANCED.md ✅ Phase F commands (Phases 4-5)
+│       ├── INTERACTIONS-CORE.md ✅ Essential interactions (Phases 1-5)
+│       └── INTERACTIONS-ADVANCED.md ✅ Advanced interactions (Phases 4-5)
 └── docs/                         ✅ YOUR project documentation
     ├── specifications/          ✅ Phase 1 outputs
     ├── architecture/            ✅ Phase 2 outputs
@@ -462,14 +473,14 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 - **Git Workflows:** `.CodeMaestro/config/git-commands.md`
 - **Constraints Reference:** `.CodeMaestro/config/constraints-reference.md`
 
-### Role Definitions
-- `.CodeMaestro/agents/product-manager.md`
-- `.CodeMaestro/agents/architect.md`
-- `.CodeMaestro/agents/developer.md`
-- `.CodeMaestro/agents/qa-lead.md`
-- `.CodeMaestro/agents/release-manager.md`
-- `.CodeMaestro/orchestrator/phase-controller.md`
-- `.CodeMaestro/orchestrator/handoff-protocol.md`
+### Agent Architecture (v1.1)
+- **Agents:** `.CodeMaestro/agents/` (9 specialized agents)
+  - `product-manager.md`, `architect.md`, `planner.md`, `developer.md`
+  - `code-reviewer.md`, `qa-lead.md`, `security-engineer.md`
+  - `data-interpreter.md`, `release-manager.md`
+- **Orchestration:** `.CodeMaestro/orchestrator/`
+  - `phase-controller.md` - Agent invocation and state management
+  - `handoff-protocol.md` - Minimal context passing between agents
 
 ---
 
@@ -553,12 +564,12 @@ All rights reserved.
 
 ### Key Features (v1.1)
 
-1. **Natural Language** - Just describe what you want
-2. **Clarifying Questions** - AI asks before assuming (Phase 1 & 2)
-3. **Session End Summary** - Progress, tokens, next actions
-4. **Verification Loop** - "Verify my changes" before PR
-5. **Subagents** - "Review this code", "Plan the implementation"
-6. **Continuous Learning** - Patterns captured automatically
+1. **Agent Architecture** - 9 specialized agents with orchestrator (Phase-optimized)
+2. **Natural Language** - Just describe what you want (native Claude Code)
+3. **Clarifying Questions** - AI asks before assuming (Phase 1 & 2)
+4. **Session End Summary** - Progress, tokens, next actions
+5. **Verification Loop** - "Verify my changes" before PR (6-phase gates)
+6. **Continuous Learning** - Patterns captured automatically (instinct model)
 
 ---
 
@@ -567,12 +578,12 @@ All rights reserved.
 **CodeMaestro Phoenix** - Orchestrating Development, One Phase at a Time
 
 **New in v1.1.0:**
-- 💬 Natural language interface
+- 🤖 Agent-based architecture (9 specialized agents with orchestrator)
+- 💬 Natural language interface (native Claude Code support)
 - ❓ Clarifying questions (Phase 1 & 2)
 - 📊 Session end summaries
-- ✅ Automated verification loops
-- 🤖 Subagent orchestration
-- 🧠 Continuous learning
+- ✅ Automated verification loops (6-phase quality gates)
+- 🧠 Continuous learning (instinct-based pattern capture)
 
 **v1.0.0 Features:**
 - 🗂️ Reorganized structure (`.CodeMaestro/` directory)
