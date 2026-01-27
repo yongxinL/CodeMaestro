@@ -1,12 +1,12 @@
-# CodeMaestro v1.0.0
+# CodeMaestro v1.1.0
 
 ## 🚀 Welcome to CodeMaestro
 
 CodeMaestro is a role-based automated development system that orchestrates software development through a 5-phase lifecycle with intelligent session management, progressive disclosure, token estimation, and organizational learning.
 
 **Codename:** Phoenix
-**Version:** 1.0.0
-**Release Date:** 2026-01-16
+**Version:** 1.1.0
+**Release Date:** 2026-01-27
 
 ---
 
@@ -16,7 +16,9 @@ This repository contains the complete CodeMaestro framework:
 - ✅ **`CLAUDE.md`** - Developer guide for Claude Code
 - ✅ **`.CodeMaestro/`** - Complete framework (easy to exclude from deliverables)
   - `prompts/` - Modular phase prompts and templates
-  - `config/` - Configuration files, roles, git templates
+  - `config/` - Configuration files, git templates
+  - `agents/` - 9 specialized agents (v1.1)
+  - `orchestrator/` - Agent coordination and handoff protocol (v1.1)
   - `docs/` - Command references (Core & Advanced)
   - `init-docs.sh` - Project initialization script
 - ✅ **`LICENSE`** - Copyright and license information
@@ -31,7 +33,7 @@ This repository contains the complete CodeMaestro framework:
 - **All framework files** consolidated in `.CodeMaestro/` directory
 - Clean root: Only `CLAUDE.md` and `LICENSE`
 - **Easy exclusion:** One directory vs 14+ scattered files
-- User projects get their own `.CodeMaestro/` directory via `init-docs.sh`
+- User projects get their own `.CodeMaestro/` directory via `setup.sh`
 
 ### 🧹 Feature 2: File Exclusion System
 - **`cleanup.sh`** script automatically generated in user projects
@@ -73,6 +75,51 @@ This repository contains the complete CodeMaestro framework:
 
 ---
 
+## ✨ What's New in v1.1.0
+
+### 💬 Feature 5: Natural Language Interface
+- **Use natural language** instead of slash commands
+- Say "Search knowledge base" instead of `/kb search`
+- Say "Generate a commit" instead of `/commit`
+- Automatic intent detection with confirmation
+- Native support in Claude Code environment
+
+### 🧠 Feature 6: Continuous Learning
+- **Auto-capture patterns** from development sessions
+- Instinct-based learning with confidence scoring (0.3 → 0.9)
+- Learns from user corrections and error resolutions
+- See [.CodeMaestro/config/continuous-learning.md](.CodeMaestro/config/continuous-learning.md)
+
+### ✅ Feature 7: Automated Verification Loop
+- **6-phase verification**: Build, Types, Lint, Tests, Security, Diff
+- Run with "Verify my changes"
+- Automatic quality gate checking
+- See [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
+
+### 🤖 Feature 8: Agent-Based Architecture
+- **Complete migration** from role-based to agent-based orchestration
+- **9 specialized agents** with minimal context handoffs
+- **Model optimization**: Agents assigned to Sonnet or Haiku based on task complexity
+- **Parallel execution**: Independent agents can run concurrently
+- Agents: `product-manager`, `architect`, `planner`, `developer`, `code-reviewer`, `qa-lead`, `security-engineer`, `data-interpreter`, `release-manager`
+- Orchestrated by `phase-controller` with `handoff-protocol`
+- See [.CodeMaestro/agents/](.CodeMaestro/agents/) and [.CodeMaestro/orchestrator/](.CodeMaestro/orchestrator/)
+
+### ❓ Feature 9: Clarifying Questions
+- **Structured questions** for Phase 1 & 2
+- Multiple-choice + "Other" option format
+- Reduces hallucination by gathering context first
+- Optional MCP integration with ask-user-questions
+- See [.CodeMaestro/config/clarifying-questions.md](.CodeMaestro/config/clarifying-questions.md)
+
+### 📊 Feature 10: Session End Summary
+- **Structured output** when ending sessions
+- Progress, token usage, files modified
+- Next action and resume prompt
+- See [.CodeMaestro/config/session-end-protocol.md](.CodeMaestro/config/session-end-protocol.md)
+
+---
+
 ## 🔧 Installation
 
 ### Step 1: Initialize Your Project
@@ -81,15 +128,15 @@ This repository contains the complete CodeMaestro framework:
 # Clone or copy CodeMaestro to your project
 cd /path/to/your-project
 
-# Run initialization script (creates .CodeMaestro/ and docs/ in your project)
-chmod +x /path/to/CodeMaestro/.CodeMaestro/init-docs.sh
-/path/to/CodeMaestro/.CodeMaestro/init-docs.sh
+# Run setup script (creates .CodeMaestro/ and docs/ in your project)
+chmod +x /path/to/CodeMaestro/setup.sh
+/path/to/CodeMaestro/setup.sh
 
 # Copy CLAUDE.md to your project root
 cp /path/to/CodeMaestro/CLAUDE.md ./CLAUDE.md
 ```
 
-**What `init-docs.sh` does:**
+**What `setup.sh` does:**
 1. Creates `.CodeMaestro/` directory in your project (local copy of framework)
 2. Generates `docs/` structure for your project documentation
 3. Creates `cleanup.sh` script for framework removal before delivery
@@ -107,7 +154,7 @@ git checkout -b dev
 
 # Initial commit
 git add .
-git commit -m "Initial project setup with CodeMaestro v1.0.0
+git commit -m "Initial project setup with CodeMaestro v0.1.0
 
 - Initialized CodeMaestro framework
 - Role-based 5-phase workflow enabled
@@ -135,16 +182,23 @@ your-project/
 │   │   ├── 04-verification.md   ✅ Phase 4 workflow
 │   │   ├── 05-master-control.md ✅ Phase 5 workflow
 │   │   └── [templates].md       ✅ On-demand templates
+│   ├── agents/                  ✅ NEW v1.1: 9 specialized agents
+│   │   ├── product-manager.md   ✅ Phase 1 agent
+│   │   ├── architect.md         ✅ Phase 2 agent
+│   │   ├── developer.md         ✅ Phase 3 agent
+│   │   └── [6 more agents]      ✅ See agent directory
+│   ├── orchestrator/            ✅ NEW v1.1: Agent coordination
+│   │   ├── phase-controller.md  ✅ Agent invocation & state
+│   │   └── handoff-protocol.md  ✅ Context passing protocol
 │   ├── config/                  ✅ Configuration files
-│   │   ├── token-estimation.md  ✅ NEW: Token estimation guide
-│   │   ├── handoff-messages.md  ✅ NEW: Session handoff templates
-│   │   ├── cleanup-verification.md ✅ NEW: Cleanup guide
+│   │   ├── token-estimation.md  ✅ NEW v1.0: Token estimation guide
+│   │   ├── handoff-messages.md  ✅ NEW v1.0: Session handoff templates
+│   │   ├── cleanup-verification.md ✅ NEW v1.0: Cleanup guide
 │   │   ├── git-commands.md      ✅ Git templates
-│   │   ├── constraints-reference.md ✅ Full constraint list
-│   │   └── roles/               ✅ Role definitions
+│   │   └── constraints-reference.md ✅ Full constraint list
 │   └── docs/                    ✅ Command references
-│       ├── COMMANDS-CORE.md     ✅ Essential commands (Phases 1-5)
-│       └── COMMANDS-ADVANCED.md ✅ Phase F commands (Phases 4-5)
+│       ├── INTERACTIONS-CORE.md ✅ Essential interactions (Phases 1-5)
+│       └── INTERACTIONS-ADVANCED.md ✅ Advanced interactions (Phases 4-5)
 └── docs/                         ✅ YOUR project documentation
     ├── specifications/          ✅ Phase 1 outputs
     ├── architecture/            ✅ Phase 2 outputs
@@ -233,62 +287,64 @@ Claude Code will automatically:
 
 ---
 
-## 💻 Commands Reference
+## 💬 Talking to CodeMaestro
 
-### Core Commands (Always Available)
+Use natural language to interact with CodeMaestro. Simply describe what you want:
 
-```bash
-# Navigation
-/status              # Show current state
-/next                # Load next task
-/task T-X.X.X        # Load specific task
-/phase N             # Jump to phase
-/tree                # Show task DAG
+### Navigation & Status
 
-# Token Management (NEW v1.0+)
-/estimate task T-X   # Estimate task tokens
-/estimate milestone  # Estimate milestone tokens
-/budget              # Check session budget status
-/budget --forecast   # Forecast remaining tasks
-/variance            # Analyze token variance
-/tokens              # Quick token status
+| What you want | Say this |
+|---------------|----------|
+| Check progress | "What's my current status?" |
+| Start next task | "What should I work on next?" |
+| Load specific task | "Load task T-2.1.1" |
+| See task tree | "Show me the task dependencies" |
+| Change phase | "Move to Phase 3" |
 
-# Session Handoff (NEW v1.0+)
-/handoff             # Generate handoff message
-/handoff --next      # Include next phase prep
-/handoff --tokens    # Include token analysis
-/handoff --recovery  # Include recovery instructions
+### Token & Budget Management
 
-# Recovery
-/recover             # Execute recovery protocol
-/snapshot            # Save checkpoint
-/history             # Show decision log
+| What you want | Say this |
+|---------------|----------|
+| Check budget | "How much context do I have left?" |
+| Estimate task | "How many tokens will T-2.1.1 use?" |
+| Check variance | "How accurate were our estimates?" |
+| Token summary | "Quick token status" |
 
-# Knowledge Base
-/kb search [query]   # Search patterns/failures
-/kb add failure      # Document failure
-/kb add pattern      # Document success
+### Session Management
 
-# Git
-/commit              # Show commit template
-/commit --auto       # Auto-generate commit
-/checkpoint          # Pause for review
-```
+| What you want | Say this |
+|---------------|----------|
+| Generate handoff | "Generate a handoff for this session" |
+| Save progress | "Save my progress" |
+| Resume work | "Where were we?" |
+| End session | "I'm done for now" |
 
-### Advanced Commands (Phases 4-5)
+### Knowledge Base
 
-```bash
-# Portfolio
-/portfolio generate  # Create portfolio materials
-/portfolio preview   # Preview content
+| What you want | Say this |
+|---------------|----------|
+| Search patterns | "Search knowledge base for authentication" |
+| Save a pattern | "Save this pattern to knowledge base" |
+| Document failure | "Document this failure" |
 
-# Analytics (Phase 4-5)
-/estimate [scope]    # Effort estimation
-/benchmark [metric]  # Performance benchmarking
-/compliance          # Regulatory compliance check
-```
+### Code & Git
 
-See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) for complete reference.
+| What you want | Say this |
+|---------------|----------|
+| Generate commit | "Generate a commit for my changes" |
+| Verify code | "Verify my changes" |
+| Review code | "Review this code for issues" |
+| Create checkpoint | "Checkpoint my work" |
+
+### Planning & Architecture
+
+| What you want | Say this |
+|---------------|----------|
+| Plan feature | "Plan the implementation of user login" |
+| Architecture help | "Help me decide between REST and GraphQL" |
+| Generate tests | "Generate test stubs for AC-1.2" |
+
+> **More interactions:** See [.CodeMaestro/docs/INTERACTIONS-CORE.md](.CodeMaestro/docs/INTERACTIONS-CORE.md) for complete reference.
 
 ---
 
@@ -378,7 +434,7 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 ### "Cannot find prompt files"
 - Ensure `.CodeMaestro/prompts/` exists in your project
 - Check filenames match exactly (case-sensitive)
-- Re-run `init-docs.sh` if needed
+- Re-run `setup.sh` if needed
 
 ### "Phase detection failed"
 - Check `docs/implementation/.recovery-checkpoint.md`
@@ -397,7 +453,7 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 4. Load phase prompt manually if needed
 
 ### "Cleanup script missing"
-- Re-run `init-docs.sh` to regenerate `cleanup.sh`
+- Re-run `setup.sh` to regenerate `cleanup.sh`
 - Script template: `.CodeMaestro/config/templates/cleanup-script-template.sh`
 
 ---
@@ -417,19 +473,78 @@ See [.CodeMaestro/config/cleanup-verification.md](.CodeMaestro/config/cleanup-ve
 - **Git Workflows:** `.CodeMaestro/config/git-commands.md`
 - **Constraints Reference:** `.CodeMaestro/config/constraints-reference.md`
 
-### Role Definitions
-- `.CodeMaestro/config/roles/product-manager.md`
-- `.CodeMaestro/config/roles/software-architect.md`
-- `.CodeMaestro/config/roles/senior-developer.md`
-- `.CodeMaestro/config/roles/qa-lead.md`
-- `.CodeMaestro/config/roles/release-manager.md`
+### Agent Architecture (v1.1)
+- **Agents:** `.CodeMaestro/agents/` (9 specialized agents)
+  - `product-manager.md`, `architect.md`, `planner.md`, `developer.md`
+  - `code-reviewer.md`, `qa-lead.md`, `security-engineer.md`
+  - `data-interpreter.md`, `release-manager.md`
+- **Orchestration:** `.CodeMaestro/orchestrator/`
+  - `phase-controller.md` - Agent invocation and state management
+  - `handoff-protocol.md` - Minimal context passing between agents
 
 ---
 
 ## 📄 License
 
-CodeMaestro v1.0.0
+CodeMaestro v1.1.0
 All rights reserved.
+
+---
+
+## 🔄 Project Lifecycle
+
+### Starting a New Project
+
+```
+1. Run setup.sh in your project directory
+2. Copy CLAUDE.md to project root
+3. Initialize git (git init, git checkout -b dev)
+4. Open Claude Code and say:
+   "Let's start Phase 1. I want to build [describe project]."
+```
+
+**Your project version:** Starts at `v0.1.0`
+
+### Starting a New Phase
+
+```
+1. Complete current phase (all tasks done)
+2. Generate handoff: "Generate handoff for this session"
+3. Review recovery checkpoint
+4. Say: "Move to Phase [N]"
+5. AI loads new phase prompt and activates new role
+```
+
+### Starting a New Task
+
+```
+1. Say: "What should I work on next?" or "Load task T-X.X.X"
+2. AI checks token budget
+3. AI loads relevant context (iterative retrieval)
+4. Proceed with implementation
+5. On completion: "Generate commit for my changes"
+```
+
+### Handover to New Session
+
+**Before ending:**
+```
+1. Say: "I'm done for now" or "Generate session end summary"
+2. AI generates structured summary with:
+   - Completed/in-progress items
+   - Token usage
+   - Files modified
+   - Suggested next action
+   - Resume prompt to copy
+3. Recovery checkpoint is auto-updated
+```
+
+**Starting new session:**
+```
+1. Open Claude Code
+2. Say: "Where were we?" or paste resume prompt
+3. AI loads checkpoint and resumes
+```
 
 ---
 
@@ -437,45 +552,48 @@ All rights reserved.
 
 ### Quick Start Checklist
 
-- [ ] Run `init-docs.sh` in your project
+- [ ] Run `setup.sh` in your project
 - [ ] Copy `CLAUDE.md` to project root
 - [ ] Initialize git (`git init`, `git checkout -b dev`)
 - [ ] Open Claude Code in project directory
 - [ ] Say: "Let's start Phase 1. I want to build [project]."
 - [ ] Follow 5-phase workflow
-- [ ] Use `/budget` to track tokens (Feature 3)
-- [ ] Review handoff at checkpoints (Feature 4)
-- [ ] Run `cleanup.sh --verify` before delivery (Feature 2)
+- [ ] Say "How much context left?" to track tokens
+- [ ] Say "Generate handoff" at checkpoints
+- [ ] Say "I'm done for now" for session end summary
 
-### Key Features to Use
+### Key Features (v1.1)
 
-1. **Token Estimation (Phase 2):** Get estimates for all tasks
-2. **Budget Checks (Phase 3):** Run `/budget` before each task
-3. **Token Tracking (Phase 3):** Record actuals after each task
-4. **Session Handoffs (All Phases):** Review at checkpoints
-5. **Token Retrospective (Phase 5):** Learn from variance
-6. **Framework Cleanup (Phase 5):** Remove before delivery
+1. **Agent Architecture** - 9 specialized agents with orchestrator (Phase-optimized)
+2. **Natural Language** - Just describe what you want (native Claude Code)
+3. **Clarifying Questions** - AI asks before assuming (Phase 1 & 2)
+4. **Session End Summary** - Progress, tokens, next actions
+5. **Verification Loop** - "Verify my changes" before PR (6-phase gates)
+6. **Continuous Learning** - Patterns captured automatically (instinct model)
 
 ---
 
-## 🎉 Happy Building with CodeMaestro v1.0.0!
+## 🎉 Happy Building with CodeMaestro v1.1.0!
 
 **CodeMaestro Phoenix** - Orchestrating Development, One Phase at a Time
 
-**New in v1.0.0:**
+**New in v1.1.0:**
+- 🤖 Agent-based architecture (9 specialized agents with orchestrator)
+- 💬 Natural language interface (native Claude Code support)
+- ❓ Clarifying questions (Phase 1 & 2)
+- 📊 Session end summaries
+- ✅ Automated verification loops (6-phase quality gates)
+- 🧠 Continuous learning (instinct-based pattern capture)
+
+**v1.0.0 Features:**
 - 🗂️ Reorganized structure (`.CodeMaestro/` directory)
 - 🧹 Framework cleanup system (`cleanup.sh`)
 - 💰 Token estimation & budget management
 - 🔄 Session handoff messages
 
-For detailed changelog, see git history:
-```bash
-git log --oneline --graph dev
-```
-
 ---
 
-**Version:** 1.0.0
+**Framework Version:** 1.1.0
+**Project Versioning:** Your projects start at v0.1.0
 **Codename:** Phoenix
-**Release Date:** 2026-01-16
-**Last Updated:** 2026-01-16
+**Last Updated:** 2026-01-27

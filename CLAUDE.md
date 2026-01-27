@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-**CodeMaestro v1.0** (Codename: Phoenix) is a role-based automated development system that orchestrates software development through a 5-phase lifecycle. This is a **framework/tool**, not a traditional codebase—it's designed to guide developers (and AI) through structured software development processes.
+**CodeMaestro v1.1** (Codename: Phoenix) is a role-based automated development system that orchestrates software development through a 5-phase lifecycle. This is a **framework/tool**, not a traditional codebase—it's designed to guide developers (and AI) through structured software development processes.
 
 **Key Characteristics:**
 - Documentation-driven architecture
@@ -27,14 +27,16 @@
 |----------------|---------|
 | `.CodeMaestro/` | **All framework files** (easy to exclude) |
 | `.CodeMaestro/prompts/` | Core system prompts (00-core, phase prompts, templates) |
-| `.CodeMaestro/config/` | Configuration files (git-commands, constraints, roles, etc.) |
-| `.CodeMaestro/init-docs.sh` | Project initialization script |
+| `.CodeMaestro/config/` | Configuration files (git-commands, constraints, etc.) |
+| `.CodeMaestro/agents/` | Agent definitions (product-manager, architect, developer, etc.) |
+| `.CodeMaestro/orchestrator/` | Orchestrator and handoff protocol |
+| `setup.sh` | Project initialization script |
 | `CLAUDE.md` | This file (developer guide for Claude Code) |
 | `README.md` | User-facing installation guide |
-| `.CodeMaestro/docs/COMMANDS-CORE.md` | Essential commands (Phases 1-5) |
-| `.CodeMaestro/docs/COMMANDS-ADVANCED.md` | Phase F commands (load in Phase 4-5 only) |
+| `.CodeMaestro/docs/INTERACTIONS-CORE.md` | Essential interactions (Phases 1-5) |
+| `.CodeMaestro/docs/INTERACTIONS-ADVANCED.md` | Advanced interactions (Phases 4-5 only) |
 
-**Note:** All CodeMaestro framework files are in `.CodeMaestro/` directory for easy exclusion from project deliverables. User projects will have their own `.CodeMaestro/` directory (created by init-docs.sh) and `docs/` for project-specific documentation.
+**Note:** All CodeMaestro framework files are in `.CodeMaestro/` directory for easy exclusion from project deliverables. User projects will have their own `.CodeMaestro/` directory (created by setup.sh) and `docs/` for project-specific documentation.
 
 ### Key Files to Understand
 
@@ -42,12 +44,12 @@
 |------|---------|-----------|
 | **[.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md](.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md)** | **START HERE** - Quick index of all configs with loading guidance | Always reference first |
 | **[.CodeMaestro/prompts/00-core.md](.CodeMaestro/prompts/00-core.md)** | System configuration: roles, constraints (A1-E33), thresholds, skill tiers | Every session |
-| **[.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md)** | Essential commands (daily workflow, Phases 1-5) | Phases 1-5 |
-| **[.CodeMaestro/docs/COMMANDS-ADVANCED.md](.CodeMaestro/docs/COMMANDS-ADVANCED.md)** | Phase F commands (estimation, benchmarking, ethics/compliance) | Phases 4-5 only |
+| **[.CodeMaestro/docs/INTERACTIONS-CORE.md](.CodeMaestro/docs/INTERACTIONS-CORE.md)** | Essential interactions (daily workflow) | Phases 1-5 |
+| **[.CodeMaestro/docs/INTERACTIONS-ADVANCED.md](.CodeMaestro/docs/INTERACTIONS-ADVANCED.md)** | Advanced interactions (estimation, compliance) | Phases 4-5 only |
 | **[.CodeMaestro/config/git-commands.md](.CodeMaestro/config/git-commands.md)** | Git workflow templates (reference by section ID) | All phases |
 | **[.CodeMaestro/config/constraints-reference.md](.CodeMaestro/config/constraints-reference.md)** | Complete constraint list (reference by ID: A1-E33) | Reference only |
 | **[.CodeMaestro/config/mcp-tools.md](.CodeMaestro/config/mcp-tools.md)** | MCP tool integrations (Context7, WebSearch, WebFetch) | Phase 1-4 (research) |
-| **[.CodeMaestro/init-docs.sh](.CodeMaestro/init-docs.sh)** | Creates directory structure for user projects | Project setup |
+| **[setup.sh](setup.sh)** | Creates directory structure for user projects | Project setup |
 | **[README.md](.CodeMaestro/docs/README.md)** | User-facing installation guide (not for Claude Code) | User reference only |
 
 ---
@@ -79,17 +81,22 @@ The system reduces token usage by loading templates **on-demand**:
 
 **Target:** 50-55% token reduction vs. inline approach
 
-### Role-Based State Machine
+### Agent-Based Orchestration
 
-Each phase activates specific roles with specialized behaviors:
+Each phase invokes specialized agents via the orchestrator with minimal context handoffs:
 
-- **Product Manager** (Phase 1): Domain expertise, requirements clarity
-- **Software Architect** (Phase 2): System design, task decomposition, architectural decisions
-- **Senior Developer** (Phase 3): Production code quality, pattern reuse, optimization
-- **QA Lead** (Phase 4): Evidence collection, security scanning, performance validation
-- **Release Manager** (Phase 5): Go/no-go decisions, delivery coordination, learning capture
-- **Data Interpreter** (Phase 4-5): Performance visualization, KPI dashboards
-- **Ethics & Security Engineer** (Phase 2, 4): Bias detection, GDPR compliance, accessibility
+- **product-manager** (Phase 1): Requirements gathering, competitive analysis, AC generation
+- **architect** (Phase 2): System design, task decomposition, architectural decisions
+- **planner** (Phase 2, 3): Task breakdown, implementation planning
+- **developer** (Phase 3): Production code quality, pattern reuse, anti-hallucination workflow
+- **code-reviewer** (Phase 3, 4): Code quality review, security analysis
+- **qa-lead** (Phase 4): Evidence collection, quality gate enforcement, GO/NO-GO decisions
+- **security-engineer** (Phase 2, 4): Threat modeling, vulnerability scanning, security validation
+- **data-interpreter** (Phase 4, 5): Performance visualization, KPI dashboards
+- **release-manager** (Phase 5): Release coordination, lessons learned, knowledge base updates
+
+**Orchestrator:** `orchestrator/phase-controller.md` manages agent invocation, state, and quality gates
+**Handoff Protocol:** `orchestrator/handoff-protocol.md` defines minimal context passing between agents
 
 ### Skill Tier Adaptation
 
@@ -154,14 +161,17 @@ CodeMaestro integrates with Model Context Protocol (MCP) tools:
 See templates in `02-planning-templates.md` for detailed task structures.
 ```
 
-#### Adding/Modifying Roles
+#### Adding/Modifying Agents
 
-**Files:** `.CodeMaestro/config/roles/*.md` and `.CodeMaestro/prompts/00-core.md`
+**Files:** `.CodeMaestro/agents/*.md` and `.CodeMaestro/prompts/00-core.md`
 
-1. Define role in `00-core.md` with template format
-2. Create detailed file in `.CodeMaestro/config/roles/new-role.md`
-3. Reference in phase prompts where role is active
-4. Update COMMANDS.md if adding role-specific commands
+1. Define agent in `00-core.md` agent registry
+2. Create agent file in `.CodeMaestro/agents/new-agent.md` following agent template
+3. Register in `orchestrator/phase-controller.md` with model assignment
+4. Define handoff inputs/outputs in `orchestrator/handoff-protocol.md`
+5. Update phase prompts to invoke agent where needed
+
+**Agent Template:** See `docs/MIGRATION-ROLES-TO-AGENTS.md` for agent structure (YAML frontmatter, inputs, process, outputs, quality checks, handoff)
 
 #### Updating Constraints
 
@@ -259,11 +269,12 @@ CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 3. Create implementation guidance in phase-specific templates
 4. Test command flow in test project
 
-#### Modify a role's responsibilities
-1. Update role definition in `.CodeMaestro/config/roles/*.md`
-2. Update role entry in `00-core.md`
-3. Adjust phase prompts that reference the role
-4. Test role transitions in test project
+#### Modify an agent's responsibilities
+1. Update agent definition in `.CodeMaestro/agents/*.md`
+2. Update agent entry in `00-core.md` agent registry
+3. Update orchestrator if changing model assignment or phase
+4. Adjust phase prompts that invoke the agent
+5. Test agent invocation in test project
 
 #### Improve token efficiency
 1. Identify inline content that should be templated
@@ -277,6 +288,84 @@ CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 3. Fix in isolated prompt files
 4. Verify fix doesn't break role transitions
 5. Update version tag appropriately
+
+---
+
+## Natural Language Interface (v1.1)
+
+CodeMaestro uses natural language as the primary interface in Claude Code environments.
+
+**Common Natural Language Requests:**
+
+| Intent | Examples |
+|--------|----------|
+| Search knowledge base | "Search the knowledge base for [topic]", "find pattern for [topic]" |
+| Generate commit | "Generate a commit for my changes", "save my work" |
+| Generate tests | "Generate test stubs for AC-1.2", "create tests for this feature" |
+| Show status | "What's my current progress?", "show my status" |
+| Next task | "What should I work on next?", "continue work" |
+| Verify changes | "Verify my changes", "run quality checks" |
+| Invoke agent | "Review this code" (code-reviewer), "help me decide on [architecture]" (architect) |
+
+**Note:** Natural language is processed directly by Claude Code. Slash commands (`/command`) are not supported and have been removed from CodeMaestro v1.1.
+
+---
+
+## Subagent Orchestration (v1.1)
+
+Specialized agents can be delegated for focused tasks:
+
+| Agent | Purpose | Invoke With |
+|-------|---------|-------------|
+| **code-reviewer** | Quality, security, maintainability review | "Review this code" |
+| **architect** | System design, technology decisions | "Help me decide on [architecture]" |
+| **planner** | Implementation planning, task breakdown | "Plan the implementation of [feature]" |
+
+**Agents have:**
+- Limited scope (focused on their specialty)
+- Specific tools (minimal footprint)
+- Clear output formats
+
+**See:** [.CodeMaestro/agents/](.CodeMaestro/agents/) directory
+
+---
+
+## Continuous Learning (v1.1)
+
+Automatically captures patterns from development sessions:
+
+**Instinct Model:**
+- Small learned behaviors with confidence scoring (0.3 → 0.9)
+- Auto-detected from user corrections, error resolutions, repeated workflows
+- Stored in `.CodeMaestro/knowledge-base/instincts/`
+- Confidence evolves based on reinforcement
+
+**Session End:**
+- Review for new instincts
+- Update confidence on existing instincts
+- Auto-decay unused patterns
+
+**See:** [.CodeMaestro/config/continuous-learning.md](.CodeMaestro/config/continuous-learning.md)
+
+---
+
+## Automated Verification Loop (v1.1)
+
+6-phase verification for code quality:
+
+1. **Build**: Compile without errors
+2. **Types**: Type safety (0 errors)
+3. **Lint**: Code style (0 errors)
+4. **Tests**: Pass rate + coverage (≥70%)
+5. **Security**: Vulnerability scan (0 critical/high)
+6. **Diff**: Change scope review
+
+**Triggers:**
+- "Verify my changes" → Full verification
+- Task completion (Phase 3) → Quick check
+- Before PR → Full + evidence
+
+**See:** [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
 
 ---
 
@@ -298,19 +387,25 @@ CodeMaestro enforces non-negotiable quality thresholds at phase boundaries:
 
 - **Quick config index:** See [.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md](.CodeMaestro/config/CONFIG-QUICK-REFERENCE.md) ⭐ **START HERE**
 - **Anti-hallucination guide:** See [.CodeMaestro/config/anti-hallucination-guide.md](.CodeMaestro/config/anti-hallucination-guide.md) ⭐ **CORE PHILOSOPHY**
-- **Core commands:** See [.CodeMaestro/docs/COMMANDS-CORE.md](.CodeMaestro/docs/COMMANDS-CORE.md) (Phases 1-5)
-- **Advanced commands:** See [.CodeMaestro/docs/COMMANDS-ADVANCED.md](.CodeMaestro/docs/COMMANDS-ADVANCED.md) (Phase F, Phases 4-5 only)
+- **Core interactions:** See [.CodeMaestro/docs/INTERACTIONS-CORE.md](.CodeMaestro/docs/INTERACTIONS-CORE.md) (Phases 1-5)
+- **Advanced interactions:** See [.CodeMaestro/docs/INTERACTIONS-ADVANCED.md](.CodeMaestro/docs/INTERACTIONS-ADVANCED.md) (Phases 4-5 only)
 - **System configuration:** See [.CodeMaestro/prompts/00-core.md](.CodeMaestro/prompts/00-core.md)
 - **Constraints:** See [.CodeMaestro/config/constraints-reference.md](.CodeMaestro/config/constraints-reference.md)
 - **Git workflows:** See [.CodeMaestro/config/git-commands.md](.CodeMaestro/config/git-commands.md)
 - **Installation (users):** See [README.md](.CodeMaestro/docs/README.md)
-- **Help command:** Run `/help` in Claude Code once initialized
+
+**v1.1 Features:**
+- **Agent architecture:** See [.CodeMaestro/agents/](.CodeMaestro/agents/) (9 specialized agents with orchestrator)
+- **Natural language interface:** Native support in Claude Code (see "Natural Language Interface" section above)
+- **Continuous learning:** See [.CodeMaestro/config/continuous-learning.md](.CodeMaestro/config/continuous-learning.md)
+- **Verification loop:** See [.CodeMaestro/config/verification-loop.md](.CodeMaestro/config/verification-loop.md)
+- **Iterative retrieval:** See [.CodeMaestro/config/iterative-retrieval.md](.CodeMaestro/config/iterative-retrieval.md)
 
 ---
 
 ## Version
 
-**CodeMaestro:** 1.0.0
-**Release:** 2026-01-01
+**CodeMaestro:** 1.1.0
+**Release:** 2026-01-27
 **Codename:** Phoenix
-**Last Updated:** 2026-01-12
+**Last Updated:** 2026-01-27

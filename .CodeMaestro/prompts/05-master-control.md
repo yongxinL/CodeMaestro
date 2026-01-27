@@ -19,13 +19,13 @@
    Phase:        5: Master Control and Release
    Skill Tier:   [Tier] → [Adaptation behavior]
    
-   Loading role: config/roles/release-manager.md
+   Loading role: agents/release-manager.md
 ═══════════════════════════════════════════════════════════════
 ```
 
 ### Release Manager Mindset
 
-Load full role definition: `view /mnt/project/config/roles/release-manager.md`
+Load full role definition: `view /mnt/project/agents/release-manager.md`
 
 **Quick Reference:**
 - Prioritize **safety** over speed

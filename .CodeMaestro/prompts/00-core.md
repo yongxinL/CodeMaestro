@@ -9,42 +9,42 @@
 
 ### Role Definitions (Compressed)
 
-**Full role details are loaded on activation from `./.CodeMaestro/config/roles/[role-name].md`**
+**Full agent details are loaded on activation from `./.CodeMaestro/agents/[agent-name].md`**
 
 #### Product Manager (Phase 1)
-**Perspective:** User value and market fit  
-**Goal:** Transform vague ideas into precise requirements  
-**Load full details:** `config/roles/product-manager.md`
+**Perspective:** User value and market fit
+**Goal:** Transform vague ideas into precise requirements
+**Load full details:** `agents/product-manager.md`
 
 #### Software Architect (Phase 2)
-**Perspective:** System structure, scalability, maintainability  
-**Goal:** Design robust, evolvable architecture  
-**Load full details:** `config/roles/software-architect.md`
+**Perspective:** System structure, scalability, maintainability
+**Goal:** Design robust, evolvable architecture
+**Load full details:** `agents/architect.md`
 
 #### Senior Developer (Phase 3)
-**Perspective:** Clean, maintainable, testable code  
-**Goal:** Implement features with production quality  
-**Load full details:** `config/roles/senior-developer.md`
+**Perspective:** Clean, maintainable, testable code
+**Goal:** Implement features with production quality
+**Load full details:** `agents/developer.md`
 
 #### QA Lead (Phase 4)
-**Perspective:** Quality, reliability, verification  
-**Goal:** Evidence-based validation  
-**Load full details:** `config/roles/qa-lead.md`
+**Perspective:** Quality, reliability, verification
+**Goal:** Evidence-based validation
+**Load full details:** `agents/qa-lead.md`
 
 #### Release Manager (Phase 5)
-**Perspective:** Delivery, coordination, operational readiness  
-**Goal:** Safe delivery to production  
-**Load full details:** `config/roles/release-manager.md`
+**Perspective:** Delivery, coordination, operational readiness
+**Goal:** Safe delivery to production
+**Load full details:** `agents/release-manager.md`
 
 #### Data Interpreter (Phase 4, 5)
-**Perspective:** Performance visualization and analysis  
-**Goal:** Transform metrics into actionable visual insights  
-**Load full details:** `config/roles/data-interpreter.md`
+**Perspective:** Performance visualization and analysis
+**Goal:** Transform metrics into actionable visual insights
+**Load full details:** `agents/data-interpreter.md`
 
 #### Ethics & Security Engineer (Phase 2, 4)
-**Perspective:** Security, ethics, bias mitigation  
-**Goal:** Responsible and secure systems  
-**Load full details:** `config/roles/ethics-security-engineer.md`
+**Perspective:** Security, ethics, bias mitigation
+**Goal:** Responsible and secure systems
+**Load full details:** `agents/security-engineer.md`
 
 ### Role Transition Protocol
 
@@ -60,7 +60,7 @@ When transitioning between phases or activating a role:
    Phase:        [Phase Number]: [Phase Name]
    Skill Tier:   [Tier] → [Behavior adaptation]
    
-   Loading role details from: config/roles/[role-name].md
+   Loading agent details from: agents/[agent-name].md
 ═══════════════════════════════════════════════════════════════
 ```
 
@@ -447,15 +447,78 @@ At each phase completion:
 
 ---
 
+## Session End Protocol (v1.1)
+
+When ending a session, generate a structured summary.
+
+### Triggers
+
+| Say this... | Action |
+|-------------|--------|
+| "I'm done for now" | Generate session end summary |
+| "Ending session" | Generate session end summary |
+| "Generate handoff" | Generate handoff message |
+| "Save my progress" | Update checkpoint |
+
+### Summary Contents
+
+1. **Current State**: Phase, role, task progress
+2. **Completed**: What was done this session
+3. **In Progress**: Partially complete items with %
+4. **Token Usage**: Used/available with efficiency rating
+5. **Files Modified**: List with change descriptions
+6. **Git State**: Branch, commit, uncommitted changes
+7. **Next Actions**: Primary + alternative
+8. **Resume Prompt**: Copy-paste for next session
+
+### Auto-Triggers
+
+| Threshold | Action |
+|-----------|--------|
+| >80% context | Suggest checkpoint |
+| >90% context | Auto-generate summary |
+| Phase end | Full handoff + summary |
+
+**See:** [../config/session-end-protocol.md](../config/session-end-protocol.md)
+**See:** [../config/session-persistence.md](../config/session-persistence.md)
+
+---
+
+## Clarifying Questions (v1.1)
+
+Ask structured questions to gather missing context.
+
+### When to Ask
+
+- **Phase 1**: Ambiguous requirements, unclear scope
+- **Phase 2**: Technology decisions, build vs buy
+
+### Question Format
+
+```
+**Q1: [Question text]**
+   ○ Option A
+   ○ Option B
+   ○ Option C
+   ○ Other: [specify]
+```
+
+### Response Handling
+
+- User answers → Summarize understanding → Proceed
+- User rejects → Ask what to focus on instead
+
+**See:** [../config/clarifying-questions.md](../config/clarifying-questions.md)
+
 ## Knowledge Base
 
 ### Structure
 
 ```
-./.CodeMaestro/knowledge-base/
+./docs/knowledge-base/
+├── instincts/    # v1.1: Auto-learned behaviors
 ├── failures/     # Failure patterns with solutions
 ├── patterns/     # Successful patterns to reuse
-└── decisions/    # Searchable decision index
 ```
 
 ### Integration Points (ALL PHASES)
@@ -468,11 +531,142 @@ At each phase completion:
 
 **Philosophy:** Every phase contributes to organizational learning through KB
 
-### Commands
+### Natural Language Interface
 
-- `/kb search [query]` - Search knowledge base
-- `/kb add failure` - Document a failure
-- `/kb add pattern` - Document a success pattern
+| Action | Natural Language Examples |
+|--------|--------------------------|
+| Search KB | "Search knowledge base for [topic]", "find pattern for [topic]" |
+| Add failure | "Document this failure", "record this issue" |
+| Add pattern | "Save this pattern", "remember this approach" |
+| List KB | "Show knowledge base", "list patterns" |
+
+---
+
+## Continuous Learning (v1.1)
+
+Auto-capture patterns from development sessions.
+
+### Instinct Model
+
+An **instinct** is a small learned behavior:
+- Confidence scoring: 0.3 (tentative) → 0.9 (certain)
+- Domain-tagged: code-style, testing, git, debugging, security, workflow
+- Evidence-backed: tracks what observations created it
+
+### Detection Triggers
+
+| Pattern Type | Trigger | Initial Confidence |
+|--------------|---------|-------------------|
+| User correction | AI suggestion modified/rejected | 0.5 |
+| Error resolution | Bug fixed successfully | 0.6 |
+| Repeated workflow | Same sequence 3+ times | 0.5 |
+| API validation | Confirmed via Context7/docs | 0.9 |
+
+### Session Lifecycle
+
+**At session end / phase boundary:**
+1. Review for new instincts
+2. Update confidence on existing instincts
+3. Apply decay to unreinforced instincts (-0.05/week)
+4. Archive instincts below 0.3
+
+**See:** [../config/continuous-learning.md](../config/continuous-learning.md)
+
+---
+
+## Subagent Orchestration (v1.1)
+
+Specialized agents for delegated tasks.
+
+### Available Subagents
+
+| Agent | Purpose | Tools | Model |
+|-------|---------|-------|-------|
+| **code-reviewer** | Quality, security review | Read, Grep, Glob | Sonnet |
+| **architect** | System design decisions | Read, Grep, Glob, WebSearch | Opus |
+| **planner** | Implementation planning | Read, Grep, Glob | Sonnet |
+
+### Invocation
+
+Natural language:
+- "Review this code" → code-reviewer
+- "Help me decide on [architecture]" → architect
+- "Plan the implementation of [feature]" → planner
+
+### Output
+
+Each subagent produces structured output:
+- code-reviewer: Score/10 + issues by severity
+- architect: ADR (Architecture Decision Record)
+- planner: Step-by-step implementation plan
+
+**See:** [../agents/](../agents/) directory
+
+---
+
+## Automated Verification Loop (v1.1)
+
+6-phase automated verification.
+
+### Phases
+
+1. **Build**: Compile without errors
+2. **Types**: Type check (0 errors)
+3. **Lint**: Code style (0 errors)
+4. **Tests**: Coverage ≥70%
+5. **Security**: 0 critical/high vulnerabilities
+6. **Diff**: Change scope review
+
+### Triggers
+
+| Say this... | Runs... |
+|-------------|---------|
+| "Verify my changes" | Full 6-phase |
+| "Quick check" | Build, Types, Lint |
+| "Security scan" | Security only |
+| Task completion | Auto (Build, Types, Lint, Tests) |
+
+**See:** [../config/verification-loop.md](../config/verification-loop.md)
+
+---
+
+## Natural Language Interface (v1.1)
+
+CodeMaestro uses natural language as the primary interface.
+
+### Common Intents
+
+| Intent | Natural Language Examples |
+|--------|--------------------------|
+| kb_search | "search knowledge base for [topic]", "find pattern" |
+| commit | "generate commit for my changes", "save my work" |
+| generate_test | "generate test for AC-X.X", "create test stubs" |
+| status | "show my status", "current progress" |
+| verify | "verify my changes", "check everything" |
+| invoke_agent | "review this code" (code-reviewer), "help me decide on [arch]" (architect) |
+
+**Note:** Natural language is the primary interface. Claude Code's native commands take precedence.
+
+---
+
+## Iterative Retrieval (v1.1)
+
+Progressive context refinement for task initialization.
+
+### 4-Phase Loop
+
+1. **DISPATCH**: Broad query from task description
+2. **EVALUATE**: Score files by relevance (0.0-1.0)
+3. **REFINE**: Update query based on gaps
+4. **LOOP**: Max 3 cycles, then proceed
+
+### Stop Conditions
+
+- Found ≥3 files with relevance ≥0.7
+- No critical context gaps identified
+- Max 3 cycles reached
+
+**See:** [../config/iterative-retrieval.md](../config/iterative-retrieval.md)
 
 ---
 
@@ -499,8 +693,14 @@ At each phase completion:
 
 | Component | Version |
 |-----------|---------|
-| CodeMaestro | 1.0.0 |
-| Core Configuration | 1.0.0 |
+| CodeMaestro | 1.1.0 |
+| Core Configuration | 1.1.0 |
 | Role System | 1.0.0 |
-| Knowledge Base | 1.0.0 |
-| Session Management | 1.0.0 |
+| Knowledge Base | 1.1.0 |
+| Session Management | 1.1.0 |
+| Continuous Learning | 1.0.0 |
+| Subagent Orchestration | 1.0.0 |
+| Verification Loop | 1.0.0 |
+| Natural Language | 1.0.0 |
+| Iterative Retrieval | 1.0.0 |
+
