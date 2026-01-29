@@ -36,6 +36,34 @@ Load full role definition: `view /mnt/project/agents/release-manager.md`
 
 ---
 
+## Step 5.0: Load Existing Instincts (Continuous Learning)
+
+**Action**: At phase start, load any existing instincts relevant to Phase 5.
+
+**Check for instincts:**
+```bash
+# Check if instincts directory exists
+ls docs/knowledge-base/instincts/personal/ 2>/dev/null || echo "No instincts yet"
+```
+
+**If instincts exist:**
+1. Read instinct files from `docs/knowledge-base/instincts/personal/`
+2. Filter for Phase 5 relevance (release patterns, deployment strategies, lessons learned)
+3. Apply high-confidence instincts (≥0.7) proactively
+4. Keep moderate instincts (0.5-0.7) ready for suggestion
+
+**Display (if applicable):**
+```
+───────────────────────────────────────────────────────────────
+📚 LOADED INSTINCTS (Phase 5 relevant)
+───────────────────────────────────────────────────────────────
+• [instinct-name] (0.8): [brief description]
+• [instinct-name] (0.7): [brief description]
+───────────────────────────────────────────────────────────────
+```
+
+---
+
 ## Entry Conditions
 
 From Phase 4:
@@ -218,30 +246,143 @@ view /mnt/project/05-master-control-templates.md#lessons-learned
 
 ---
 
-### 5.A.6: Knowledge Base Integration
+### 5.A.6: Continuous Learning - Capture Instincts & Knowledge Persistence
 
-**Capture project learnings:**
+**Action**: Review entire project for learnable patterns and create instinct files.
 
-**Store in Knowledge Base:**
+> **Reference:** See [../config/continuous-learning.md](../config/continuous-learning.md) for full instinct model.
 
-1. **Successful Patterns**:
+**Detection - Look for these patterns during Phase 5:**
+
+| Pattern Type | What to Look For | Initial Confidence |
+|--------------|------------------|-------------------|
+| Process improvement | Workflow that worked well or could be better | 0.6 |
+| Estimation insight | Variance patterns (overestimate/underestimate) | 0.7 |
+| Lessons learned | What went well or should change next time | 0.7 |
+| Release pattern | Deployment or release strategy worth remembering | 0.6 |
+| User correction | User modified/rejected AI suggestion | 0.5 |
+
+**Capture Process:**
+
+**1. Review Project for Learnable Patterns**
+
+Ask yourself:
+- What went well that we should repeat?
+- What could improve next time?
+- Were estimates accurate? If not, why?
+- Did we discover process improvements?
+- Did the user correct any release approaches?
+
+**2. Create Instinct Files (if patterns found)**
+
+For each captured pattern, create file in `docs/knowledge-base/instincts/personal/`:
+
+```markdown
+<!-- docs/knowledge-base/instincts/personal/[instinct-id].md -->
+---
+id: [kebab-case-id]
+trigger: "[when this instinct applies]"
+confidence: [0.3-0.9]
+domain: "[process|estimation|release|lessons-learned]"
+source: "session-observation"
+phase: "5"
+created: "[YYYY-MM-DD]"
+last_reinforced: "[YYYY-MM-DD]"
+---
+
+# [Instinct Title]
+
+## Action
+[What to do when trigger matches]
+
+## Evidence
+- [Observation that created this instinct]
+- [Context from this project]
+
+## Example
+[Concrete example if applicable]
 ```
-/kb add pattern
-```
-Document:
-- Design patterns that worked
-- Architecture decisions that paid off
-- Performance optimizations
-- Implementation approaches worth repeating
 
-2. **Key Decisions**:
+**3. Display Capture Summary**
+
+```
+═══════════════════════════════════════════════════════════════
+📚 CONTINUOUS LEARNING - PHASE 5 CAPTURE
+═══════════════════════════════════════════════════════════════
+
+New Instincts Captured: [N]
+
+1. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+2. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+Reinforced Instincts: [N]
+- [instinct-id]: confidence [old] → [new]
+
+No Instincts Captured: (if none)
+- No learnable patterns detected this session
+
+═══════════════════════════════════════════════════════════════
+```
+
+**Example Instincts for Phase 5:**
+
+```yaml
+# Estimation insight
+id: new-library-estimation-buffer
+trigger: "when estimating tasks involving new libraries"
+confidence: 0.7
+domain: "estimation"
+action: "Add 1.5x buffer for unfamiliar libraries - observed 20-40% underestimation"
+
+# Process improvement
+id: parallel-testing-review
+trigger: "when planning verification phase"
+confidence: 0.6
+domain: "process"
+action: "Run security scanning in parallel with test execution to save time"
+
+# Release pattern
+id: staged-rollout-monitoring
+trigger: "when deploying to production"
+confidence: 0.7
+domain: "release"
+action: "Use staged rollout (10% → 50% → 100%) with 24h monitoring between stages"
+
+# Lessons learned
+id: early-integration-testing
+trigger: "when planning implementation phase"
+confidence: 0.6
+domain: "lessons-learned"
+action: "Start integration testing early in Phase 3 rather than waiting for Phase 4"
+```
+
+**4. Update Knowledge Base Index**
+
 Update `knowledge-base/decisions/decision-index.md`:
 - Cross-reference decision log entries
 - Tag by category (architecture, technology, security)
 - Note impact and outcomes
 
-3. **Pattern Index**:
-Create searchable index of all patterns discovered.
+**When to Capture:**
+- Process improvements that worked
+- Estimation patterns (under/over)
+- Release strategies worth repeating
+- Cross-cutting lessons learned
+
+**When NOT to Capture:**
+- Project-specific one-time issues
+- External factors beyond control
+- Trivial observations
+
+**Deliverable:**
+- Instinct files in `docs/knowledge-base/instincts/personal/`
+- Updated decision index
+- Continuous Learning summary displayed to user
 
 ---
 

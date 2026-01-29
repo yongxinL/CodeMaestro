@@ -34,6 +34,34 @@ Load full role definition: `view /mnt/project/agents/product-manager.md`
 
 ---
 
+## Step 1.0: Load Existing Instincts (Continuous Learning)
+
+**Action**: At phase start, load any existing instincts relevant to Phase 1.
+
+**Check for instincts:**
+```bash
+# Check if instincts directory exists
+ls docs/knowledge-base/instincts/personal/ 2>/dev/null || echo "No instincts yet"
+```
+
+**If instincts exist:**
+1. Read instinct files from `docs/knowledge-base/instincts/personal/`
+2. Filter for Phase 1 relevance (domain requirements, competitive analysis patterns)
+3. Apply high-confidence instincts (≥0.7) proactively
+4. Keep moderate instincts (0.5-0.7) ready for suggestion
+
+**Display (if applicable):**
+```
+───────────────────────────────────────────────────────────────
+📚 LOADED INSTINCTS (Phase 1 relevant)
+───────────────────────────────────────────────────────────────
+• [instinct-name] (0.8): [brief description]
+• [instinct-name] (0.7): [brief description]
+───────────────────────────────────────────────────────────────
+```
+
+---
+
 ## Entry Conditions
 
 - No `./docs/specifications/locked-specification.md` exists, OR
@@ -119,6 +147,101 @@ Status: Beginning Phase 1"
 1. Listen to initial description
 2. Identify key themes
 3. Note ambiguities
+
+---
+
+### Step 1.3.5: MANDATORY Clarifying Questions ⚠️
+
+> **CRITICAL:** This step is MANDATORY. DO NOT proceed to one-line requirement or Phase 2 without completing clarifying questions.
+
+**Action**: Gather comprehensive context through structured questions BEFORE proceeding.
+
+**Reference**: See [../config/clarifying-questions.md](../config/clarifying-questions.md) for complete question bank.
+
+**MUST Ask These Questions:**
+
+```
+═══════════════════════════════════════════════════════════════
+❓ CLARIFYING QUESTIONS (MANDATORY)
+───────────────────────────────────────────────────────────────
+Before we proceed, I need to understand your project better.
+Please answer the following questions:
+───────────────────────────────────────────────────────────────
+
+**Q1: What is the primary goal of this project?**
+   ○ New product from scratch
+   ○ Add feature to existing product
+   ○ Fix/improve existing functionality
+   ○ Migration/refactoring
+   ○ Other: [please specify]
+
+**Q2: Who are the primary users?**
+   ○ Internal team only
+   ○ External customers (B2C)
+   ○ Business clients (B2B)
+   ○ Developers (API/SDK)
+   ○ Other: [please specify]
+
+**Q3: What's the expected timeline?**
+   ○ MVP in 1-2 weeks
+   ○ First release in 1-2 months
+   ○ Full product in 3-6 months
+   ○ Flexible / no deadline
+   ○ Other: [please specify]
+
+**Q4: Are there existing technology constraints?**
+   ○ Must use specific language: [which?]
+   ○ Must integrate with existing system: [what?]
+   ○ Must run on specific platform: [where?]
+   ○ No constraints - open to suggestions
+   ○ Other: [please specify]
+
+**Q5: What are the security requirements?**
+   ○ Standard (authentication, basic encryption)
+   ○ Enhanced (audit logs, encryption at rest)
+   ○ Compliance-required (HIPAA, SOC2, GDPR)
+   ○ Not sure yet
+   ○ Other: [please specify]
+
+**Q6: Expected scale?**
+   ○ Small (<100 users)
+   ○ Medium (100-10,000 users)
+   ○ Large (10,000-1M users)
+   ○ Enterprise (>1M users)
+   ○ Not sure yet
+
+───────────────────────────────────────────────────────────────
+💡 If these questions seem off-topic, say "wrong direction"
+   and explain what you'd like to focus on instead.
+═══════════════════════════════════════════════════════════════
+```
+
+**After User Responds:**
+1. **Acknowledge** the answers
+2. **Summarize** understanding
+3. **Document** answers in specification notes
+4. **Proceed** with context-informed requirement formulation
+
+**Response Template:**
+```markdown
+Thank you for the clarification!
+
+**Understanding:**
+- **Goal:** [summarized from Q1]
+- **Users:** [summarized from Q2]
+- **Timeline:** [summarized from Q3]
+- **Technology:** [summarized from Q4]
+- **Security:** [summarized from Q5]
+- **Scale:** [summarized from Q6]
+
+Proceeding with this context to formulate your one-line requirement...
+```
+
+**If User Rejects Questions:**
+```
+I understand these questions aren't what you need.
+What would you like me to focus on instead?
+```
 
 ---
 
@@ -243,69 +366,147 @@ ln -sf locked-specification-v1.0.md locked-specification.md
 
 ---
 
-### Step 1.8.5: Knowledge Base Integration
+### Step 1.8.5: Continuous Learning - Capture Instincts
 
-**Action**: Review Phase 1 work and add valuable insights to knowledge base.
+**Action**: Review Phase 1 session for learnable patterns and create instinct files.
 
-**Check for KB-worthy content:**
+> **Reference:** See [../config/continuous-learning.md](../config/continuous-learning.md) for full instinct model.
 
-**1. Domain-Specific Requirements Patterns**
-```bash
-# If domain patterns emerged (e.g., e-commerce checkout flow, healthcare HIPAA requirements)
-/kb add pattern
+**Detection - Look for these patterns during Phase 1:**
 
-# Example entry
-Pattern: E-commerce NFR-001 - PCI DSS compliance requirements
-Category: Domain Knowledge
-Phase: Requirements
-Content: Standard security requirements for payment processing
+| Pattern Type | What to Look For | Initial Confidence |
+|--------------|------------------|-------------------|
+| User correction | User modified/rejected AI suggestion | 0.5 |
+| Requirement clarification | Ambiguity resolved (e.g., "real-time" defined) | 0.6 |
+| Domain insight | Industry-specific pattern (HIPAA, PCI, etc.) | 0.7 |
+| Competitive pattern | Reusable market positioning insight | 0.5 |
+
+**Capture Process:**
+
+**1. Review Session for Learnable Patterns**
+
+Ask yourself:
+- Did the user correct any assumptions I made?
+- Did we clarify any ambiguous terms that could recur?
+- Did competitive analysis reveal reusable patterns?
+- Did domain constraints emerge that apply broadly?
+
+**2. Create Instinct Files (if patterns found)**
+
+For each captured pattern, create file in `docs/knowledge-base/instincts/personal/`:
+
+```markdown
+<!-- docs/knowledge-base/instincts/personal/[instinct-id].md -->
+---
+id: [kebab-case-id]
+trigger: "[when this instinct applies]"
+confidence: [0.3-0.9]
+domain: "[requirements|competitive|domain-knowledge]"
+source: "session-observation"
+phase: "1"
+created: "[YYYY-MM-DD]"
+last_reinforced: "[YYYY-MM-DD]"
+---
+
+# [Instinct Title]
+
+## Action
+[What to do when trigger matches]
+
+## Evidence
+- [Observation that created this instinct]
+- [Context from this session]
+
+## Example
+[Concrete example if applicable]
 ```
 
-**2. Competitive Insights**
-```bash
-# If competitor analysis revealed reusable insights
-/kb add pattern
+**3. Display Capture Summary**
 
-# Example entry
-Pattern: COMP-001 - SaaS pricing model patterns
-Category: Competitive Analysis
-Content: Freemium, usage-based, tiered pricing strategies observed
+```
+═══════════════════════════════════════════════════════════════
+📚 CONTINUOUS LEARNING - PHASE 1 CAPTURE
+═══════════════════════════════════════════════════════════════
+
+New Instincts Captured: [N]
+
+1. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+2. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+Reinforced Instincts: [N]
+- [instinct-id]: confidence [old] → [new]
+
+No Instincts Captured: (if none)
+- No learnable patterns detected this session
+
+═══════════════════════════════════════════════════════════════
 ```
 
-**3. Requirement Clarification Patterns**
-```bash
-# If specific requirement ambiguities and resolutions can help future projects
-/kb add decision
+**Example Instincts for Phase 1:**
 
-# Example entry
-Decision: REQ-001 - "Real-time" definition clarified
-Category: Requirements
-Resolution: "Real-time" = <100ms latency vs "Near real-time" = <1s vs "Periodic" = minutes
+```yaml
+# Domain-specific requirement pattern
+id: healthcare-hipaa-nfrs
+trigger: "when project involves healthcare/patient data"
+confidence: 0.7
+domain: "domain-knowledge"
+action: "Include HIPAA compliance NFRs: BAA, encryption at rest/transit, audit logging"
+
+# Competitive analysis pattern
+id: saas-pricing-models
+trigger: "when analyzing SaaS competitors"
+confidence: 0.5
+domain: "competitive"
+action: "Document pricing tiers: freemium, usage-based, seat-based, enterprise custom"
+
+# Requirement clarification
+id: realtime-definition
+trigger: "when 'real-time' is mentioned in requirements"
+confidence: 0.6
+domain: "requirements"
+action: "Clarify: real-time (<100ms) vs near-real-time (<1s) vs periodic (minutes)"
 ```
 
-**When to add to KB:**
-- Domain-specific requirement patterns that could recur
+**When to Capture:**
+- Domain-specific patterns that could recur
 - Common NFR templates for specific industries
 - Competitive positioning insights
 - Requirement clarification patterns
 - Scope boundary definitions that worked well
 
-**When NOT to add:**
+**When NOT to Capture:**
 - Project-specific functional requirements (too specific)
 - Trivial clarifications
 - One-off edge cases
 
-**Deliverable:** Updated knowledge base index with Phase 1 learnings
+**Deliverable:**
+- Instinct files in `docs/knowledge-base/instincts/personal/`
+- Continuous Learning summary displayed to user
 
 ---
 
 ### Step 1.9: Update Recovery Checkpoint with Handoff
 
+> **⚠️ CRITICAL:** UPDATE the existing `.recovery-checkpoint.md` file. DO NOT create a new checkpoint file.
+
 **Action**: Save recovery state with session transition info and update KB with Phase 1 learnings.
 
 **First: Review and add to Knowledge Base** (see Step 1.8.5)
 
-**Then: Update** `./docs/implementation/.recovery-checkpoint.md`:
+**Then: UPDATE (not create)** `./docs/implementation/.recovery-checkpoint.md`:
+
+**File Location:** `docs/implementation/.recovery-checkpoint.md` (this file should already exist from setup.sh)
+
+**⚠️ IMPORTANT:**
+- If the file exists, UPDATE its contents
+- If it doesn't exist, CREATE it at this exact path
+- NEVER create a new file with a different name (e.g., `checkpoint-phase1.md`)
+- NEVER create handoff documents in different locations
 
 ```markdown
 # Recovery Checkpoint / Phase Handoff

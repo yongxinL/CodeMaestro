@@ -61,6 +61,23 @@
 - **Uncommitted Changes:** [Yes/No]
 
 ───────────────────────────────────────────────────────────────
+## 📚 Continuous Learning
+───────────────────────────────────────────────────────────────
+
+**New Instincts Captured:** [N]
+- [instinct-id] (0.X): "[brief description]"
+- [instinct-id] (0.X): "[brief description]"
+
+**Reinforced Instincts:** [N]
+- [instinct-id]: confidence [old] → [new]
+
+**Decayed Instincts:** [N] (if any unused >7 days)
+- [instinct-id]: confidence [old] → [new]
+
+**Files Created:**
+- `docs/knowledge-base/instincts/personal/[instinct-id].md`
+
+───────────────────────────────────────────────────────────────
 ## 🎯 Suggested Next Actions
 ───────────────────────────────────────────────────────────────
 
@@ -113,6 +130,11 @@ Before generating summary, ensure:
 - [ ] Next action clearly identified
 - [ ] Key context captured
 - [ ] Token usage recorded
+- [ ] **Continuous Learning captured:**
+  - [ ] Session reviewed for learnable patterns
+  - [ ] New instinct files created (if any)
+  - [ ] Existing instincts reinforced/decayed
+  - [ ] Instinct summary included in output
 
 ---
 

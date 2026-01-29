@@ -129,11 +129,11 @@ invoke_agent:
 - [ ] ADRs documented
 
 **Artifacts Produced:**
-- `docs/blueprint-v1.0.md`
-- `docs/task-dag-v1.0.md`
-- `docs/gantt-timeline-v1.0.md`
+- `docs/architecture/blueprint-v1.0.md`
+- `docs/architecture/task-dag.md` (Markdown with embedded Mermaid)
+- `docs/architecture/gantt-timeline.md` (Markdown with embedded Mermaid)
 - `docs/architecture/decisions/ADR-*.md`
-- `docs/security/threat-model.md`
+- `docs/architecture/threat-model.md`
 
 ---
 
@@ -356,8 +356,95 @@ on_gate_failure:
 ### With Existing Systems
 
 - **Natural Language Interface**: Maps user intent to agent invocation
-- **Continuous Learning**: Captures patterns from agent interactions
+- **Continuous Learning**: Captures patterns from agent interactions (see below)
 - **Verification Loop**: Invokes code-reviewer and security-engineer
+
+---
+
+## Continuous Learning Integration
+
+The Phase Controller triggers continuous learning at specific lifecycle points.
+
+### Trigger Points
+
+| Event | Action | Reference |
+|-------|--------|-----------|
+| Phase Start | Load existing instincts relevant to phase | Step X.0 in each phase prompt |
+| Phase End | Capture new instincts, display summary | Step X.N.5 in each phase prompt |
+| Session End | Full learning summary + decay check | session-end-protocol.md |
+| User Correction | Capture immediately with 0.5 confidence | During session observation |
+| Error Resolution | Capture with 0.6 confidence | After successful fix |
+
+### Phase-Specific Learning Focus
+
+| Phase | Learning Focus | Example Triggers |
+|-------|---------------|------------------|
+| Phase 1 | Domain requirements, competitive insights | "This domain requires HIPAA" |
+| Phase 2 | Architecture patterns, build vs buy | "Prefer serverless for event-driven" |
+| Phase 3 | Implementation patterns, library quirks | "Always use try-catch with fetch" |
+| Phase 4 | Test patterns, security issues | "Mock external APIs in unit tests" |
+| Phase 5 | Lessons learned, process improvements | "Estimation was 20% low" |
+
+### Orchestrator Responsibilities
+
+**On Phase Entry:**
+```yaml
+on_phase_start:
+  - action: load_instincts
+    from: docs/knowledge-base/instincts/personal/
+    filter: phase_relevance
+  - action: apply_high_confidence
+    threshold: 0.7
+    behavior: proactive
+  - action: stage_moderate_confidence
+    threshold: 0.5
+    behavior: suggest_when_relevant
+```
+
+**On Phase Exit:**
+```yaml
+on_phase_end:
+  - action: review_session_patterns
+    detect:
+      - user_corrections
+      - error_resolutions
+      - repeated_workflows
+  - action: create_instinct_files
+    location: docs/knowledge-base/instincts/personal/
+  - action: update_existing_instincts
+    reinforce: used_instincts
+    decay: unused_instincts
+  - action: display_learning_summary
+```
+
+**On Session End:**
+```yaml
+on_session_end:
+  - action: full_learning_review
+  - action: apply_weekly_decay
+    rate: -0.05
+    threshold: 0.3
+    archive_below: true
+  - action: generate_learning_summary
+    include_in: session_end_summary
+```
+
+### Storage Structure
+
+```
+docs/knowledge-base/
+├── instincts/
+│   ├── personal/           # Auto-learned from this project
+│   │   ├── prefer-zod-validation.md
+│   │   └── always-test-first.md
+│   ├── inherited/          # Imported from other projects
+│   └── archived/           # Low-confidence (< 0.3) instincts
+├── patterns/               # Formal patterns (promoted instincts)
+├── failures/               # Failure patterns
+└── decisions/              # Decision index
+```
+
+**See:** [../config/continuous-learning.md](../config/continuous-learning.md) for full specification
 
 ### With MCP Tools
 

@@ -38,6 +38,34 @@ Load full role definition: `view /mnt/project/agents/qa-lead.md`
 
 ---
 
+## Step 4.0: Load Existing Instincts (Continuous Learning)
+
+**Action**: At phase start, load any existing instincts relevant to Phase 4.
+
+**Check for instincts:**
+```bash
+# Check if instincts directory exists
+ls docs/knowledge-base/instincts/personal/ 2>/dev/null || echo "No instincts yet"
+```
+
+**If instincts exist:**
+1. Read instinct files from `docs/knowledge-base/instincts/personal/`
+2. Filter for Phase 4 relevance (test patterns, security issues, verification strategies)
+3. Apply high-confidence instincts (≥0.7) proactively
+4. Keep moderate instincts (0.5-0.7) ready for suggestion
+
+**Display (if applicable):**
+```
+───────────────────────────────────────────────────────────────
+📚 LOADED INSTINCTS (Phase 4 relevant)
+───────────────────────────────────────────────────────────────
+• [instinct-name] (0.8): [brief description]
+• [instinct-name] (0.7): [brief description]
+───────────────────────────────────────────────────────────────
+```
+
+---
+
 ## Entry Conditions
 
 - Phase 3 checkpoint approved
@@ -323,82 +351,136 @@ view /mnt/project/04-verification-templates.md#evidence-package
 
 ---
 
-### Step 4.8.5: Knowledge Base Integration
+### Step 4.8.5: Continuous Learning - Capture Instincts
 
-**Action**: Review Phase 4 verification results and add learnings to knowledge base.
+**Action**: Review Phase 4 session for learnable patterns and create instinct files.
 
-**Check for KB-worthy content:**
+> **Reference:** See [../config/continuous-learning.md](../config/continuous-learning.md) for full instinct model.
 
-**1. Test Failure Patterns**
-```bash
-# If recurring test failures or difficult-to-find bugs discovered
-/kb add failure
+**Detection - Look for these patterns during Phase 4:**
 
-# Example entry
-Failure: F-TEST-015 - Race condition in async state updates
-Category: Testing
-Phase: Verification
-Root Cause: useEffect cleanup not properly handling unmounted component
-Solution: Add cleanup flag and conditional setState
-Prevention: Always check component mounted state before async setState
+| Pattern Type | What to Look For | Initial Confidence |
+|--------------|------------------|-------------------|
+| Test pattern | Effective testing strategy worth reusing | 0.6 |
+| Security issue | Vulnerability pattern with general applicability | 0.8 |
+| Performance fix | Optimization technique that worked well | 0.7 |
+| Quality insight | Systematic quality issue and resolution | 0.6 |
+| User correction | User modified/rejected AI suggestion | 0.5 |
+
+**Capture Process:**
+
+**1. Review Session for Learnable Patterns**
+
+Ask yourself:
+- Did we discover test patterns worth remembering?
+- Did we find security vulnerabilities that could recur?
+- Did we optimize performance in ways applicable elsewhere?
+- Did the user correct any verification approaches?
+- Did quality gate failures reveal systematic issues?
+
+**2. Create Instinct Files (if patterns found)**
+
+For each captured pattern, create file in `docs/knowledge-base/instincts/personal/`:
+
+```markdown
+<!-- docs/knowledge-base/instincts/personal/[instinct-id].md -->
+---
+id: [kebab-case-id]
+trigger: "[when this instinct applies]"
+confidence: [0.3-0.9]
+domain: "[testing|security|performance|quality]"
+source: "session-observation"
+phase: "4"
+created: "[YYYY-MM-DD]"
+last_reinforced: "[YYYY-MM-DD]"
+---
+
+# [Instinct Title]
+
+## Action
+[What to do when trigger matches]
+
+## Evidence
+- [Observation that created this instinct]
+- [Context from this session]
+
+## Example
+[Test or code example if applicable]
 ```
 
-**2. Security Vulnerability Patterns**
-```bash
-# If security issues found that could recur in future projects
-/kb add failure
+**3. Display Capture Summary**
 
-# Example entry
-Failure: F-SEC-008 - SQL injection in dynamic query builder
-Category: Security
-Phase: Verification
-Root Cause: User input concatenated into SQL without sanitization
-Solution: Migrated to parameterized queries with prepared statements
-Prevention: Use ORM or parameterized queries (A7 constraint)
+```
+═══════════════════════════════════════════════════════════════
+📚 CONTINUOUS LEARNING - PHASE 4 CAPTURE
+═══════════════════════════════════════════════════════════════
+
+New Instincts Captured: [N]
+
+1. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+2. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+Reinforced Instincts: [N]
+- [instinct-id]: confidence [old] → [new]
+
+No Instincts Captured: (if none)
+- No learnable patterns detected this session
+
+═══════════════════════════════════════════════════════════════
 ```
 
-**3. Performance Optimization Discoveries**
-```bash
-# If performance issues identified and resolved
-/kb add pattern
+**Example Instincts for Phase 4:**
 
-# Example entry
-Pattern: P-PERF-012 - Database N+1 query optimization
-Category: Performance
-Phase: Verification
-Problem: Loading 100 users triggered 100 additional queries for roles
-Solution: Added .include('roles') to eager load relationships
-Impact: Response time improved from 800ms → 45ms (94% reduction)
+```yaml
+# Test pattern
+id: mock-external-apis
+trigger: "when testing code that calls external APIs"
+confidence: 0.7
+domain: "testing"
+action: "Always mock external APIs to ensure test isolation and reliability"
+
+# Security issue
+id: sql-parameterized-queries
+trigger: "when building dynamic SQL queries"
+confidence: 0.9
+domain: "security"
+action: "Never concatenate user input - always use parameterized queries or ORM"
+
+# Performance fix
+id: eager-load-relationships
+trigger: "when loading entities with related data"
+confidence: 0.7
+domain: "performance"
+action: "Use eager loading (.include) to prevent N+1 query problems"
+
+# Quality insight
+id: test-error-paths
+trigger: "when writing test suites"
+confidence: 0.6
+domain: "quality"
+action: "Test error paths with same rigor as happy paths - aim for 80%+ error coverage"
 ```
 
-**4. Quality Gate Insights**
-```bash
-# If systematic quality issues found
-/kb add pattern
-
-# Example entry
-Pattern: P-QA-003 - Missing test coverage in error handling paths
-Category: Quality Assurance
-Phase: Verification
-Observation: Happy path well-tested (92%), error paths undertested (35%)
-Solution: Added dedicated error scenario test suite
-Recommendation: Include error path coverage in Phase 3 validation
-```
-
-**When to add to KB:**
-- Recurring bugs or failure patterns
+**When to Capture:**
+- Recurring test failure patterns
 - Security vulnerabilities with general applicability
 - Performance optimization techniques
 - Quality gate failure patterns
-- Test strategy insights
 - Verification workflow improvements
 
-**When NOT to add:**
+**When NOT to Capture:**
 - Project-specific edge cases
 - One-time configuration issues
 - Environmental problems
 
-**Deliverable:** Updated knowledge base with Phase 4 verification learnings
+**Deliverable:**
+- Instinct files in `docs/knowledge-base/instincts/personal/`
+- Continuous Learning summary displayed to user
 
 ---
 

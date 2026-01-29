@@ -382,154 +382,325 @@ erDiagram
 
 ## Template 2: Task DAG {#task-dag}
 
+> **⚠️ FORMAT:** This file MUST be in Markdown (.md) format with embedded Mermaid diagrams for VSCode readability.
+
 ```markdown
 # Task Dependency Graph v1.0
 
 **Project:** [Project Name]
 **Blueprint:** v1.0
-**Total Tasks:** [N]
-**Parallel Groups:** [M]
-**Estimated Effort:** [X] hours
-**Estimated Tokens:** [Y]K tokens
+**Date:** [YYYY-MM-DD]
+**CodeMaestro Version:** 1.1.0
+
+---
+
+## Executive Summary
+
+**Project Objective:** [One-line description of what this project delivers]
+
+**Key Metrics:**
+| Metric | Value |
+|--------|-------|
+| Total Milestones | [N] |
+| Total Modules | [M] |
+| Total Tasks | [T] |
+| Parallel Groups | [P] |
+| Critical Path Tasks | [C] |
+| Estimated Total Hours | [H] hours |
+| Estimated Total Tokens | [K]K tokens |
+| Estimated Total Cost | ~$[X.XX] |
+
+---
+
+## Model Strategy & Cost Analysis
+
+### Model Distribution
+
+| Model | Task Count | Total Tokens | Estimated Cost | Use For |
+|-------|------------|--------------|----------------|---------|
+| **Haiku 4.5** | [N] tasks | [X]K tokens | ~$[Y.YY] | Simple setup, config, CRUD, simple tests |
+| **Sonnet 4.5** | [N] tasks | [X]K tokens | ~$[Y.YY] | Business logic, integrations, most implementation |
+| **Opus 4.5** | [N] tasks | [X]K tokens | ~$[Y.YY] | Complex algorithms, architectural decisions |
+| **TOTAL** | **[T] tasks** | **[Z]K tokens** | **~$[TOTAL]** | |
+
+### Cost Optimization Recommendations
+
+1. **Batch Haiku Tasks:** Group simple tasks ([list IDs]) in single sessions → Save ~[X]%
+2. **Sonnet Primary:** Use as default for balanced cost/quality
+3. **Opus Sparingly:** Reserve for critical tasks: [list specific task IDs]
+
+### Session Planning
+
+| Session | Model | Tasks | Tokens | Est. Duration |
+|---------|-------|-------|--------|---------------|
+| Session 1 | [Model] | [Task IDs] | [X]K | [Hours] |
+| Session 2 | [Model] | [Task IDs] | [X]K | [Hours] |
+| ... | | | | |
 
 ---
 
 ## Task Hierarchy
 
-### Milestone 1: [Name]
+### Project Overview
 
-**Duration:** [X] hours
-**Token Budget:** [Y]K tokens
-**Priority:** High
+**Objective:** [Detailed project objective]
 
-#### Module 1.1: [Module Name]
+**Critical Modules:** (must complete for MVP)
+- M[X]-MOD[Y]: [Module Name] - [Why critical]
+- M[X]-MOD[Y]: [Module Name] - [Why critical]
 
-| Task ID | Description | Est. Hours | Est. Tokens | Model | Dependencies | Parallel Group | AC Mapping |
-|---------|-------------|-----------|-------------|-------|--------------|----------------|------------|
-| T-1.1.1 | [Task description] | 4 | 10K | Haiku | None | PG-001 | AC-1.1 |
-| T-1.1.2 | [Task description] | 6 | 15K | Haiku | None | PG-001 | AC-1.2 |
-| T-1.1.3 | [Task description] | 8 | 35K | Sonnet | T-1.1.1, T-1.1.2 | - | AC-1.3 |
-
-#### Module 1.2: [Module Name]
-[Repeat structure]
-
-### Milestone 2: [Name]
-[Repeat structure]
+**Non-Critical Modules:** (can defer)
+- M[X]-MOD[Y]: [Module Name] - [Defer reason]
 
 ---
 
-## Dependency Graph
+### Milestone 1: [Milestone Name]
 
-\```mermaid
+**Objective:** [What this milestone delivers]
+**Duration:** [X] hours | **Tokens:** [Y]K | **Priority:** High/Medium/Low
+**Entry Condition:** [What must be true to start]
+**Exit Condition:** [What must be true to complete]
+
+#### Module 1.1: [Module Name]
+
+**Module Objective:** [Single responsibility of this module]
+**Status:** ⏳ Pending
+
+| Task ID | Description | Difficulty | Est. Hours | Est. Tokens | Rec. Model | Dependencies | Parallel Group | AC Mapping | Status |
+|---------|-------------|------------|-----------|-------------|------------|--------------|----------------|------------|--------|
+| T-1.1.1 | [Task description] | Easy | 2 | 8K | Haiku | None | PG-001 | AC-1.1 | ⏳ |
+| T-1.1.2 | [Task description] | Easy | 3 | 12K | Haiku | None | PG-001 | AC-1.2 | ⏳ |
+| T-1.1.3 | [Task description] | Medium | 4 | 25K | Sonnet | T-1.1.1, T-1.1.2 | - | AC-1.3, AC-1.4 | ⏳ |
+
+**Module Subtotal:** [X] hours | [Y]K tokens | ~$[Z.ZZ]
+
+#### Module 1.2: [Module Name]
+
+**Module Objective:** [Single responsibility]
+**Status:** ⏳ Pending
+
+| Task ID | Description | Difficulty | Est. Hours | Est. Tokens | Rec. Model | Dependencies | Parallel Group | AC Mapping | Status |
+|---------|-------------|------------|-----------|-------------|------------|--------------|----------------|------------|--------|
+| T-1.2.1 | [Task description] | Medium | 5 | 30K | Sonnet | T-1.1.3 | - | AC-2.1 | ⏳ |
+
+**Module Subtotal:** [X] hours | [Y]K tokens | ~$[Z.ZZ]
+
+**Milestone 1 Total:** [X] hours | [Y]K tokens | ~$[Z.ZZ]
+
+---
+
+### Milestone 2: [Milestone Name]
+
+**Objective:** [What this milestone delivers]
+**Duration:** [X] hours | **Tokens:** [Y]K | **Priority:** High/Medium/Low
+
+[Repeat Module structure...]
+
+**Milestone 2 Total:** [X] hours | [Y]K tokens | ~$[Z.ZZ]
+
+---
+
+## Dependency Graph (Mermaid)
+
+```mermaid
 graph TD
-    subgraph "M1: Foundation"
-        subgraph "PG-001 [Parallel]"
-            T-1.1.1[T-1.1.1: Setup]
-            T-1.1.2[T-1.1.2: Config]
+    subgraph "M1: [Milestone 1 Name]"
+        subgraph "PG-001 [Parallel Group]"
+            T-1.1.1["T-1.1.1: [Name]<br/>Haiku | 8K"]
+            T-1.1.2["T-1.1.2: [Name]<br/>Haiku | 12K"]
         end
-        T-1.1.3[T-1.1.3: Integration]
+        T-1.1.3["T-1.1.3: [Name]<br/>Sonnet | 25K"]
+        T-1.2.1["T-1.2.1: [Name]<br/>Sonnet | 30K"]
     end
 
-    subgraph "M2: Core Features"
-        T-2.1.1[T-2.1.1: Auth]
-        T-2.1.2[T-2.1.2: CRUD]
+    subgraph "M2: [Milestone 2 Name]"
+        subgraph "PG-002 [Parallel Group]"
+            T-2.1.1["T-2.1.1: [Name]<br/>Sonnet | 35K"]
+            T-2.1.2["T-2.1.2: [Name]<br/>Sonnet | 40K"]
+        end
+        T-2.2.1["T-2.2.1: [Name]<br/>Opus | 90K"]
     end
 
     T-1.1.1 --> T-1.1.3
     T-1.1.2 --> T-1.1.3
-    T-1.1.3 --> T-2.1.1
-    T-2.1.1 --> T-2.1.2
-\```
+    T-1.1.3 --> T-1.2.1
+    T-1.2.1 --> T-2.1.1
+    T-1.2.1 --> T-2.1.2
+    T-2.1.1 --> T-2.2.1
+    T-2.1.2 --> T-2.2.1
+
+    style T-1.1.1 fill:#90EE90
+    style T-1.1.2 fill:#90EE90
+    style T-1.1.3 fill:#87CEEB
+    style T-2.2.1 fill:#FFB6C1
+
+    %% Legend: Green=Haiku, Blue=Sonnet, Pink=Opus
+```
+
+**Legend:**
+- 🟢 Green: Haiku tasks (simple, cost-efficient)
+- 🔵 Blue: Sonnet tasks (moderate complexity)
+- 🔴 Pink: Opus tasks (complex, critical)
 
 ---
 
 ## Parallel Groups
 
-### PG-001: Foundation Setup
-**Tasks:** T-1.1.1, T-1.1.2
-**Rationale:** Both are independent infrastructure tasks
-**Estimated Savings:** 4-6 hours (vs sequential)
+### PG-001: [Group Name]
 
-### PG-002: Feature Implementation
-**Tasks:** T-2.2.1, T-2.2.2, T-2.2.3
-**Rationale:** Independent feature modules
-**Estimated Savings:** 8-12 hours
+| Field | Value |
+|-------|-------|
+| Tasks | T-1.1.1, T-1.1.2 |
+| Rationale | [Why these can run in parallel] |
+| Combined Tokens | [X]K |
+| Est. Time Savings | [Y] hours vs sequential |
+| Recommended Model | [Model for all tasks in group] |
+
+### PG-002: [Group Name]
+
+| Field | Value |
+|-------|-------|
+| Tasks | T-2.1.1, T-2.1.2 |
+| Rationale | [Why these can run in parallel] |
+| Combined Tokens | [X]K |
+| Est. Time Savings | [Y] hours vs sequential |
+| Recommended Model | [Model for all tasks in group] |
 
 ---
 
 ## Critical Path
 
-**Path:** T-1.1.1 → T-1.1.3 → T-2.1.1 → T-2.1.2 → T-3.1.1
-**Duration:** [X] hours
-**Bottleneck Tasks:** [Highlight tasks with long duration or many dependencies]
+**Definition:** Longest sequence of dependent tasks that determines minimum project duration.
+
+### Critical Path Sequence
+
+```
+T-1.1.1 → T-1.1.3 → T-1.2.1 → T-2.1.1 → T-2.2.1
+```
+
+| Step | Task ID | Task Name | Hours | Tokens | Model | Cumulative |
+|------|---------|-----------|-------|--------|-------|------------|
+| 1 | T-1.1.1 | [Name] | 2h | 8K | Haiku | 2h / 8K |
+| 2 | T-1.1.3 | [Name] | 4h | 25K | Sonnet | 6h / 33K |
+| 3 | T-1.2.1 | [Name] | 5h | 30K | Sonnet | 11h / 63K |
+| 4 | T-2.1.1 | [Name] | 6h | 35K | Sonnet | 17h / 98K |
+| 5 | T-2.2.1 | [Name] | 8h | 90K | Opus | 25h / 188K |
+
+**Critical Path Duration:** [X] hours
+**Critical Path Tokens:** [Y]K tokens
+**Bottleneck Tasks:** T-[ID] (highest duration), T-[ID] (most dependencies)
 
 ---
 
-## Task Details Template
+## Token Budget Allocation
 
-### Task T-[M].[Mod].[Task]: [Task Name]
+### Budget by Milestone
 
-**Milestone:** [M] - [Milestone Name]
-**Module:** [Mod] - [Module Name]
-**Estimated Effort:** [X] hours
-**Estimated Tokens:** [Y]K tokens
+| Milestone | Tasks | Tokens | % of Total | Buffer (15%) | Total |
+|-----------|-------|--------|------------|--------------|-------|
+| M1: [Name] | [N] | [X]K | [Y]% | [Z]K | [T]K |
+| M2: [Name] | [N] | [X]K | [Y]% | [Z]K | [T]K |
+| M3: [Name] | [N] | [X]K | [Y]% | [Z]K | [T]K |
+| **TOTAL** | **[N]** | **[X]K** | **100%** | **[Z]K** | **[T]K** |
 
-**Description:**
-[Detailed description of what needs to be implemented]
+### Budget by Model
 
-**Acceptance Criteria Mapping:**
-- AC-[ID]: [Criterion that this task addresses]
+| Model | Tokens | Sessions Needed | Est. Cost |
+|-------|--------|-----------------|-----------|
+| Haiku | [X]K | [N] | ~$[Y.YY] |
+| Sonnet | [X]K | [N] | ~$[Y.YY] |
+| Opus | [X]K | [N] | ~$[Y.YY] |
+| **TOTAL** | **[X]K** | **[N]** | **~$[Y.YY]** |
 
-**Dependencies:**
-- T-[ID]: [Dependency description]
-- T-[ID]: [Dependency description]
+### Session Budget Check
 
-**Token Estimation:**
-**Estimated Tokens:** [Y],000 tokens
-**Recommended Model:** [Haiku / Sonnet / Opus]
+- **Per Session Limit (Sonnet):** 800K usable tokens
+- **Total Project Tokens:** [X]K tokens
+- **Sessions Required:** [N] sessions minimum
+- **Buffer Sessions:** [M] (for debugging, rework)
 
-**Rationale:**
-- **Base Estimate:** [Z],000 tokens (Phase 3, [complexity level])
-- **Complexity:** [Simple/Moderate/Complex/Very Complex] ([N] files, ~[LOC] LOC) → [X.X]x
-- **Multipliers:**
-  - [Multiplier name]: +[X.X]x
-- **Calculation:** [Z],000 × [multipliers] = [initial] → Adjusted to [Y],000 (refined based on [rationale])
+---
 
-**Breakdown:**
-- Code generation: [A],000 tokens
-- Testing: [B],000 tokens
-- Documentation: [C],000 tokens
-- Debugging buffer: [D],000 tokens
+## Implementation Notes
 
-**Model Selection:**
-- **Haiku:** Simple tasks (<20K tokens, repetitive patterns, CRUD, config)
-- **Sonnet:** Moderate to complex tasks (20-80K tokens, business logic, integration)
-- **Opus:** Very complex tasks (>80K tokens, architectural decisions, novel algorithms)
+### Key Patterns to Reuse
+- [Pattern 1 from KB]: Apply in [Task IDs]
+- [Pattern 2 from Context7]: Apply in [Task IDs]
 
-**Reference:** See `.CodeMaestro/config/token-estimation.md` for estimation methodology
+### Potential Challenges
+- [Challenge 1]: [Mitigation strategy]
+- [Challenge 2]: [Mitigation strategy]
 
-**Implementation Notes:**
-- [Note 1: Key consideration or approach]
-- [Note 2: Potential challenge or pattern to reuse]
+### Anti-Hallucination Reminders
+- **A7:** All APIs must be verified via Context7 before implementation
+- **A7.5:** Copy verified examples from official docs
+- All technology versions verified in Step 2.4.5
 
-**Verification:**
-- [ ] Unit tests written and passing
-- [ ] Integration tests covering AC
-- [ ] Code review completed
-- [ ] Documentation updated
+---
+
+## Development Workflow
+
+### Recommended Task Order
+
+1. **Foundation (M1):** Complete all M1 tasks first
+   - Start with PG-001 (parallel)
+   - Then sequential tasks
+2. **Core Features (M2):** After M1 complete
+3. **Advanced Features (M3):** After M2 complete
+
+### Git Strategy
+
+| Phase | Branch | Merge To |
+|-------|--------|----------|
+| M1 | `feature/M1-foundation` | `develop` |
+| M2 | `feature/M2-core` | `develop` |
+| M3 | `feature/M3-advanced` | `develop` |
+| Parallel Groups | `parallel/PG-XXX` | `develop` |
+
+### Quality Checkpoints
+
+- [ ] After each module: Unit tests pass, lint clean
+- [ ] After each milestone: Integration tests, coverage check
+- [ ] Before Phase 4: Full verification loop
+
+---
+
+## Progress Tracking
+
+### Overall Progress
+
+| Metric | Current | Target |
+|--------|---------|--------|
+| Tasks Completed | 0 / [T] | [T] |
+| Hours Used | 0 / [H] | [H] |
+| Tokens Used | 0 / [K]K | [K]K |
+| Cost Spent | $0.00 / $[X.XX] | ~$[X.XX] |
+
+### Milestone Progress
+
+| Milestone | Tasks | Status | % Complete |
+|-----------|-------|--------|------------|
+| M1 | 0/[N] | ⏳ Pending | 0% |
+| M2 | 0/[N] | ⏳ Pending | 0% |
+| M3 | 0/[N] | ⏳ Pending | 0% |
 
 ---
 
 ## Version
 
-**Task DAG Version:** 1.0
-**CodeMaestro:** v1.0.0
-**Last Updated:** [YYYY-MM-DD]
+| Field | Value |
+|-------|-------|
+| Task DAG Version | 1.0 |
+| CodeMaestro Version | 1.1.0 |
+| Last Updated | [YYYY-MM-DD] |
+| Author Role | Software Architect |
 ```
 
 ---
 
 ## Template 3: Gantt Timeline {#gantt-timeline}
+
+> **⚠️ FORMAT:** This file MUST be in Markdown (.md) format with embedded Mermaid diagrams for VSCode readability.
 
 ```markdown
 # Project Timeline v1.0
@@ -539,58 +710,100 @@ graph TD
 **Estimated End Date:** [YYYY-MM-DD]
 **Total Duration:** [X] weeks
 **Estimated Tokens:** [Y]K tokens
+**CodeMaestro Version:** 1.1.0
+
+---
+
+## Executive Summary
+
+| Metric | Value |
+|--------|-------|
+| Total Duration | [X] weeks |
+| Total Tasks | [N] tasks |
+| Parallel Groups | [P] groups |
+| Critical Path Duration | [D] days |
+| Total Tokens | [T]K tokens |
+| Estimated Cost | ~$[X.XX] |
 
 ---
 
 ## Visual Timeline
 
-\```mermaid
+```mermaid
 gantt
     title Project Timeline
     dateFormat YYYY-MM-DD
 
     section M1: Foundation
-    T-1.1.1 Setup          :2026-01-15, 2d
-    T-1.1.2 Config         :2026-01-15, 3d
-    T-1.1.3 Integration    :after T-1.1.1, 4d
+    T-1.1.1 Setup          :t111, 2026-01-15, 2d
+    T-1.1.2 Config         :t112, 2026-01-15, 3d
+    T-1.1.3 Integration    :t113, after t111, 4d
 
     section M2: Core Features
-    T-2.1.1 Authentication :after T-1.1.3, 3d
-    T-2.1.2 CRUD Operations:after T-2.1.1, 5d
-    T-2.1.3 Validation     :after T-2.1.2, 2d
+    T-2.1.1 Authentication :t211, after t113, 3d
+    T-2.1.2 CRUD Operations:t212, after t211, 5d
+    T-2.1.3 Validation     :t213, after t212, 2d
 
     section M3: Advanced Features
-    T-3.1.1 Search         :after T-2.1.3, 4d
-    T-3.1.2 Analytics      :after T-3.1.1, 3d
-\```
+    T-3.1.1 Search         :t311, after t213, 4d
+    T-3.1.2 Analytics      :t312, after t311, 3d
+```
 
 ---
 
 ## Milestone Schedule
 
-| Milestone | Start Date | End Date | Duration | Tasks | Token Budget | Status |
-|-----------|------------|----------|----------|-------|--------------|--------|
-| M1: Foundation | [YYYY-MM-DD] | [YYYY-MM-DD] | [X] days | [N] | [A]K tokens | ⏳ Pending |
-| M2: Core Features | [YYYY-MM-DD] | [YYYY-MM-DD] | [Y] days | [M] | [B]K tokens | ⏳ Pending |
-| M3: Advanced | [YYYY-MM-DD] | [YYYY-MM-DD] | [Z] days | [K] | [C]K tokens | ⏳ Pending |
+| Milestone | Start Date | End Date | Duration | Tasks | Hours | Tokens | Est. Cost | Status |
+|-----------|------------|----------|----------|-------|-------|--------|-----------|--------|
+| M1: Foundation | [YYYY-MM-DD] | [YYYY-MM-DD] | [X] days | [N] | [H]h | [A]K | ~$[X.XX] | ⏳ |
+| M2: Core Features | [YYYY-MM-DD] | [YYYY-MM-DD] | [Y] days | [M] | [H]h | [B]K | ~$[X.XX] | ⏳ |
+| M3: Advanced | [YYYY-MM-DD] | [YYYY-MM-DD] | [Z] days | [K] | [H]h | [C]K | ~$[X.XX] | ⏳ |
+| **TOTAL** | | | **[T] days** | **[N]** | **[H]h** | **[T]K** | **~$[X.XX]** | |
+
+---
+
+## Task Schedule with Model Assignments
+
+| Task ID | Task Name | Start | Duration | Model | Tokens | Dependencies | PG |
+|---------|-----------|-------|----------|-------|--------|--------------|-----|
+| T-1.1.1 | [Name] | Day 1 | 2d | Haiku | 8K | - | PG-001 |
+| T-1.1.2 | [Name] | Day 1 | 3d | Haiku | 12K | - | PG-001 |
+| T-1.1.3 | [Name] | Day 3 | 4d | Sonnet | 25K | T-1.1.1 | - |
+| T-2.1.1 | [Name] | Day 7 | 3d | Sonnet | 35K | T-1.1.3 | - |
+| ... | | | | | | | |
 
 ---
 
 ## Resource Allocation
 
-| Week | Milestone | Focus | Parallel Tasks | Team Size |
+| Week | Milestone | Focus | Parallel Tasks | Model Mix |
 |------|-----------|-------|----------------|-----------|
-| Week 1 | M1 | Infrastructure | PG-001 (2 tasks) | [N] devs |
-| Week 2 | M1-M2 | Core setup | PG-002 (3 tasks) | [N] devs |
-| Week 3 | M2 | Features | Sequential | [N] devs |
+| Week 1 | M1 | Infrastructure | PG-001 (2 tasks) | Haiku x2, Sonnet x1 |
+| Week 2 | M1-M2 | Core setup | PG-002 (3 tasks) | Sonnet x3 |
+| Week 3 | M2 | Features | Sequential | Sonnet x2, Opus x1 |
+| Week 4 | M3 | Advanced | Sequential | Sonnet x2 |
+
+---
+
+## Progress Tracking
+
+### Weekly Progress
+
+| Week | Planned Tasks | Completed | Tokens Used | On Track |
+|------|---------------|-----------|-------------|----------|
+| Week 1 | T-1.1.1, T-1.1.2, T-1.1.3 | - | 0K | ⏳ |
+| Week 2 | T-2.1.1, T-2.1.2, T-2.1.3 | - | 0K | ⏳ |
+| ... | | | | |
 
 ---
 
 ## Version
 
-**Timeline Version:** 1.0
-**CodeMaestro:** v1.0.0
-**Last Updated:** [YYYY-MM-DD]
+| Field | Value |
+|-------|-------|
+| Timeline Version | 1.0 |
+| CodeMaestro Version | 1.1.0 |
+| Last Updated | [YYYY-MM-DD] |
 ```
 
 ---
@@ -954,6 +1167,6 @@ interface [ModuleName]Interface {
 
 ## Version
 
-**Templates Version:** 1.0
-**CodeMaestro:** v1.0.0
-**Last Updated:** 2026-01-13
+**Templates Version:** 1.1.0
+**CodeMaestro:** v1.1.0
+**Last Updated:** 2026-01-29

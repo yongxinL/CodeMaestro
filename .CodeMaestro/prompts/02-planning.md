@@ -35,6 +35,34 @@ Load full role definition: `view /mnt/project/agents/architect.md`
 
 ---
 
+## Step 2.0: Load Existing Instincts (Continuous Learning)
+
+**Action**: At phase start, load any existing instincts relevant to Phase 2.
+
+**Check for instincts:**
+```bash
+# Check if instincts directory exists
+ls docs/knowledge-base/instincts/personal/ 2>/dev/null || echo "No instincts yet"
+```
+
+**If instincts exist:**
+1. Read instinct files from `docs/knowledge-base/instincts/personal/`
+2. Filter for Phase 2 relevance (architecture patterns, technology decisions, build vs buy)
+3. Apply high-confidence instincts (≥0.7) proactively
+4. Keep moderate instincts (0.5-0.7) ready for suggestion
+
+**Display (if applicable):**
+```
+───────────────────────────────────────────────────────────────
+📚 LOADED INSTINCTS (Phase 2 relevant)
+───────────────────────────────────────────────────────────────
+• [instinct-name] (0.8): [brief description]
+• [instinct-name] (0.7): [brief description]
+───────────────────────────────────────────────────────────────
+```
+
+---
+
 ## Entry Conditions
 
 - `./docs/specifications/locked-specification.md` exists with status: `✅ Locked`
@@ -359,9 +387,85 @@ view /mnt/project/architecture/domain-adaptations.md
 npm install        # Creates package-lock.json
 # OR
 pip freeze > requirements.lock
-# OR  
+# OR
 poetry lock
 ```
+
+---
+
+### Step 2.4.5: MANDATORY Version Verification via MCP Tools ⚠️
+
+> **CRITICAL:** This step is MANDATORY. All technology choices MUST be verified with MCP tools (Context7) before finalizing.
+
+**Action**: Verify library/framework versions and APIs using available MCP tools.
+
+**Reference**: See [../config/mcp-tools.md](../config/mcp-tools.md) for complete MCP integration guide.
+
+**MANDATORY Verification Process:**
+
+```
+═══════════════════════════════════════════════════════════════
+🔍 MCP VERSION VERIFICATION (MANDATORY)
+───────────────────────────────────────────────────────────────
+For EACH library/framework in the technology stack:
+═══════════════════════════════════════════════════════════════
+```
+
+**1. Resolve Library via Context7:**
+```
+Use mcp__context7__resolve-library-id to find the correct library ID.
+
+Example:
+- Query: "React hooks for frontend"
+- Get: Library ID like "/facebook/react"
+```
+
+**2. Query Current Version and APIs:**
+```
+Use mcp__context7__query-docs to verify:
+- Latest stable version
+- Current API signatures
+- Best practices and patterns
+- Breaking changes from older versions
+```
+
+**3. Document Verification in Technology Stack:**
+
+For EACH technology, document in `technology-stack.md`:
+
+```markdown
+## [Library/Framework Name]
+
+| Field | Value |
+|-------|-------|
+| Version | [Verified version from Context7] |
+| Context7 ID | [Library ID used] |
+| Verification Date | [YYYY-MM-DD] |
+| API Confirmed | ✅ Yes |
+
+**Verified APIs:**
+- [API 1]: ✅ Confirmed in Context7 docs
+- [API 2]: ✅ Confirmed in Context7 docs
+
+**Key Patterns:**
+- [Pattern from Context7 docs]
+```
+
+**4. Constraint Compliance:**
+
+- **A7 ENFORCED:** Only use APIs confirmed via Context7 documentation
+- If an API cannot be verified, DO NOT include it in the architecture
+- Document any assumptions that could not be verified
+
+**Verification Checklist:**
+
+| Technology | Context7 Verified | Version | APIs Confirmed |
+|------------|-------------------|---------|----------------|
+| [Framework] | ✅/❌ | [X.Y.Z] | ✅/❌ |
+| [Database] | ✅/❌ | [X.Y.Z] | ✅/❌ |
+| [Library] | ✅/❌ | [X.Y.Z] | ✅/❌ |
+
+> **⚠️ If Context7 is unavailable:** Use WebSearch with "[library] documentation [year]" and WebFetch to retrieve official documentation. Document the source URL.
 
 ---
 
@@ -424,7 +528,7 @@ view /mnt/project/agents/security-engineer.md
 
 **Create**: `./docs/architecture/tasks/_parallel-groups.md`
 
-**Task DAG**: `./docs/architecture/task-dag.mermaid`
+**Task DAG**: `./docs/architecture/task-dag.md` (Markdown with embedded Mermaid diagrams)
 
 **Include in Task DAG table:**
 - Model column showing recommended model per task
@@ -447,9 +551,16 @@ view /mnt/project/02-planning-templates.md#gantt-timeline
 - Dependencies (after clauses)
 - Parallel groups visible
 
-**Output**: `./docs/architecture/gantt-timeline.mermaid`
+**Output**: `./docs/architecture/gantt-timeline.md` (Markdown with embedded Mermaid diagram)
 
-**Example**:
+> **⚠️ FORMAT:** All diagrams MUST be in Markdown (.md) format with embedded Mermaid code blocks for VSCode readability.
+
+**Example** (inside markdown file):
+````markdown
+# Project Gantt Timeline
+
+## Visual Timeline
+
 ```mermaid
 gantt
     title Project Timeline
@@ -458,6 +569,7 @@ gantt
     T-1.1.1 Setup :2026-01-01, 2d
     T-1.1.2 Config :after T-1.1.1, 3d
 ```
+````
 
 ---
 
@@ -620,78 +732,144 @@ Generate:
 
 ---
 
-### Step 2.13.5: Knowledge Base Integration & Checkpoint Update
+### Step 2.13.5: Continuous Learning - Capture Instincts & Checkpoint Update
 
-**Action**: Review Phase 2 work for KB additions and update recovery checkpoint.
+**Action**: Review Phase 2 session for learnable patterns and create instinct files.
 
-**Check for KB-worthy Architectural Patterns:**
+> **Reference:** See [../config/continuous-learning.md](../config/continuous-learning.md) for full instinct model.
 
-**1. Architectural Decision Patterns**
-```bash
-# If architectural decision applicable to future projects
-/kb add pattern
+**Detection - Look for these patterns during Phase 2:**
 
-# Example entry
-Pattern: P-ARCH-024 - Microservices with API Gateway pattern
-Category: Architecture
-Phase: Planning
-Context: E-commerce platform with 3 backend services
-Decision: API Gateway (Kong) + service mesh for inter-service communication
-Rationale: Centralized auth, rate limiting, observability
-```
+| Pattern Type | What to Look For | Initial Confidence |
+|--------------|------------------|-------------------|
+| Architecture pattern | Reusable architectural decision | 0.7 |
+| Technology selection | Tech stack trade-offs worth remembering | 0.6 |
+| Build vs integrate | Decision with clear ROI analysis | 0.7 |
+| Domain adaptation | Domain-specific pattern (mobile, web, cloud, AI) | 0.6 |
+| User correction | User modified/rejected AI suggestion | 0.5 |
 
-**2. Technology Stack Learnings**
-```bash
-# If tech stack evaluation revealed important insights
-/kb add decision
+**Capture Process:**
 
-# Example entry
-Decision: TECH-009 - React vs Vue for admin dashboard
-Category: Technology Selection
-Options: React (mature ecosystem), Vue (simpler learning), Angular (enterprise)
-Selected: React
-Rationale: Team familiarity, rich ecosystem, Context7 examples available
-Considerations: Vue would be faster to learn but smaller ecosystem
-```
+**1. Review Session for Learnable Patterns**
 
-**3. Build vs Integrate Decisions** (from Step 2.2.5)
-```bash
-# If integration decisions worth documenting
-/kb add pattern
-
-# Example entry
-Pattern: P-INT-015 - Stripe integration over custom payment
-Category: Integration Strategy
-Saved: 260 hours development + $50K PCI audit
-Trade-off: 2.9% transaction fee vs full control
-Recommendation: Always prefer Stripe/Braintree for payments
-```
-
-**4. Domain-Specific Patterns**
-```bash
-# If domain adaptations revealed reusable patterns
-/kb add pattern
-
-# Example entry
-Pattern: P-DOMAIN-WEB-004 - Progressive Web App (PWA) strategy
-Category: Web Domain
-Features: Service worker, offline mode, installable
-Implementation: Workbox library + manifest.json
-Performance: 60% reduction in repeat visit load time
-```
-
-**KB Review Questions:**
+Ask yourself:
 - Did we make architectural decisions applicable to future projects?
 - Did tech stack evaluation reveal important trade-offs?
 - Did build vs integrate decisions demonstrate clear patterns?
 - Are there domain-specific patterns worth documenting?
-- Did we discover optimization or design techniques?
+- Did the user correct any assumptions I made?
 
-**If YES to any:** Add to knowledge base before checkpoint
+**2. Create Instinct Files (if patterns found)**
 
-**Update Recovery Checkpoint:**
+For each captured pattern, create file in `docs/knowledge-base/instincts/personal/`:
 
-Update `docs/implementation/.recovery-checkpoint.md`:
+```markdown
+<!-- docs/knowledge-base/instincts/personal/[instinct-id].md -->
+---
+id: [kebab-case-id]
+trigger: "[when this instinct applies]"
+confidence: [0.3-0.9]
+domain: "[architecture|technology|integration|domain-specific]"
+source: "session-observation"
+phase: "2"
+created: "[YYYY-MM-DD]"
+last_reinforced: "[YYYY-MM-DD]"
+---
+
+# [Instinct Title]
+
+## Action
+[What to do when trigger matches]
+
+## Evidence
+- [Observation that created this instinct]
+- [Context from this session]
+
+## Example
+[Concrete example if applicable]
+```
+
+**3. Display Capture Summary**
+
+```
+═══════════════════════════════════════════════════════════════
+📚 CONTINUOUS LEARNING - PHASE 2 CAPTURE
+═══════════════════════════════════════════════════════════════
+
+New Instincts Captured: [N]
+
+1. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+2. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+Reinforced Instincts: [N]
+- [instinct-id]: confidence [old] → [new]
+
+No Instincts Captured: (if none)
+- No learnable patterns detected this session
+
+═══════════════════════════════════════════════════════════════
+```
+
+**Example Instincts for Phase 2:**
+
+```yaml
+# Architectural pattern
+id: microservices-api-gateway
+trigger: "when designing multi-service architecture"
+confidence: 0.7
+domain: "architecture"
+action: "Use API Gateway (Kong/AWS) for centralized auth, rate limiting, observability"
+
+# Technology selection
+id: react-over-vue-enterprise
+trigger: "when selecting frontend framework for enterprise"
+confidence: 0.6
+domain: "technology"
+action: "Prefer React for larger ecosystem and hiring pool; Vue for smaller teams"
+
+# Build vs integrate
+id: stripe-over-custom-payments
+trigger: "when implementing payment processing"
+confidence: 0.8
+domain: "integration"
+action: "Use Stripe SDK - saves 260 hours + $50K PCI audit; 2.9% fee acceptable"
+
+# Domain-specific
+id: pwa-strategy-web
+trigger: "when building web app with offline requirements"
+confidence: 0.6
+domain: "domain-specific"
+action: "Implement PWA with Workbox: service worker, manifest.json, installable"
+```
+
+**When to Capture:**
+- Architectural decisions applicable to future projects
+- Technology trade-offs worth remembering
+- Build vs integrate decisions with clear ROI
+- Domain-specific patterns (mobile, web, cloud, AI)
+
+**When NOT to Capture:**
+- Project-specific one-off decisions
+- Trivial technology choices
+- Context-dependent trade-offs
+
+**UPDATE Recovery Checkpoint:**
+
+> **⚠️ CRITICAL:** UPDATE the existing `.recovery-checkpoint.md` file. DO NOT create a new checkpoint file.
+
+**File Location:** `docs/implementation/.recovery-checkpoint.md` (this file should already exist from Phase 1)
+
+**⚠️ IMPORTANT:**
+- If the file exists, UPDATE its contents
+- NEVER create a new file with a different name
+- NEVER create handoff documents in different locations
+
+UPDATE `docs/implementation/.recovery-checkpoint.md`:
 
 ```markdown
 # Recovery Checkpoint
@@ -762,9 +940,9 @@ tasks → docs/architecture/tasks/
 > **📁 Artifacts Created:**
 > ```
 > docs/architecture/blueprint-v1.0.md
-> docs/architecture/gantt-timeline.mermaid
+> docs/architecture/gantt-timeline.md (Markdown with embedded Mermaid)
 > docs/architecture/technology-stack.md
-> docs/architecture/task-dag.mermaid
+> docs/architecture/task-dag.md (Markdown with embedded Mermaid)
 > docs/architecture/api-contracts/openapi.yaml
 > docs/architecture/threat-model.md
 > docs/architecture/tasks/ (all task files)

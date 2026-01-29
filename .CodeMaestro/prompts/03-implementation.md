@@ -36,6 +36,34 @@ Load full role definition: `view /mnt/project/agents/developer.md`
 
 ---
 
+## Step 3.0: Load Existing Instincts (Continuous Learning)
+
+**Action**: At phase start, load any existing instincts relevant to Phase 3.
+
+**Check for instincts:**
+```bash
+# Check if instincts directory exists
+ls docs/knowledge-base/instincts/personal/ 2>/dev/null || echo "No instincts yet"
+```
+
+**If instincts exist:**
+1. Read instinct files from `docs/knowledge-base/instincts/personal/`
+2. Filter for Phase 3 relevance (implementation patterns, library quirks, debugging strategies)
+3. Apply high-confidence instincts (≥0.7) proactively
+4. Keep moderate instincts (0.5-0.7) ready for suggestion
+
+**Display (if applicable):**
+```
+───────────────────────────────────────────────────────────────
+📚 LOADED INSTINCTS (Phase 3 relevant)
+───────────────────────────────────────────────────────────────
+• [instinct-name] (0.8): [brief description]
+• [instinct-name] (0.7): [brief description]
+───────────────────────────────────────────────────────────────
+```
+
+---
+
 ## Entry Conditions
 
 - `./docs/architecture/blueprint.md` exists
@@ -550,6 +578,134 @@ Document architectural vision:
 - Log failures → `knowledge-base/failures/`
 - Document patterns → `knowledge-base/patterns/`
 - Update decision index
+
+---
+
+### Step 3.8.5: Continuous Learning - Capture Instincts
+
+**Action**: Review Phase 3 session for learnable patterns and create instinct files.
+
+> **Reference:** See [../config/continuous-learning.md](../config/continuous-learning.md) for full instinct model.
+
+**Detection - Look for these patterns during Phase 3:**
+
+| Pattern Type | What to Look For | Initial Confidence |
+|--------------|------------------|-------------------|
+| Implementation pattern | Reusable coding pattern that worked well | 0.6 |
+| Library quirk | Unexpected API behavior or workaround | 0.7 |
+| Error resolution | Bug fix that could recur | 0.6 |
+| User correction | User modified/rejected AI suggestion | 0.5 |
+| Repeated workflow | Same coding sequence done 3+ times | 0.5 |
+
+**Capture Process:**
+
+**1. Review Session for Learnable Patterns**
+
+Ask yourself:
+- Did we discover any library quirks or undocumented behaviors?
+- Did we fix bugs that might occur again in similar contexts?
+- Did the user correct any implementation approaches?
+- Did we establish useful coding patterns worth remembering?
+- Did we repeat similar code structures multiple times?
+
+**2. Create Instinct Files (if patterns found)**
+
+For each captured pattern, create file in `docs/knowledge-base/instincts/personal/`:
+
+```markdown
+<!-- docs/knowledge-base/instincts/personal/[instinct-id].md -->
+---
+id: [kebab-case-id]
+trigger: "[when this instinct applies]"
+confidence: [0.3-0.9]
+domain: "[code-style|debugging|testing|library-quirk|workflow]"
+source: "session-observation"
+phase: "3"
+created: "[YYYY-MM-DD]"
+last_reinforced: "[YYYY-MM-DD]"
+---
+
+# [Instinct Title]
+
+## Action
+[What to do when trigger matches]
+
+## Evidence
+- [Observation that created this instinct]
+- [Context from this session]
+
+## Example
+[Code example if applicable]
+```
+
+**3. Display Capture Summary**
+
+```
+═══════════════════════════════════════════════════════════════
+📚 CONTINUOUS LEARNING - PHASE 3 CAPTURE
+═══════════════════════════════════════════════════════════════
+
+New Instincts Captured: [N]
+
+1. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+2. [domain] [instinct-id] (0.X)
+   "[brief description]"
+   Evidence: [what triggered capture]
+
+Reinforced Instincts: [N]
+- [instinct-id]: confidence [old] → [new]
+
+No Instincts Captured: (if none)
+- No learnable patterns detected this session
+
+═══════════════════════════════════════════════════════════════
+```
+
+**Example Instincts for Phase 3:**
+
+```yaml
+# Library quirk
+id: react-useeffect-cleanup
+trigger: "when using useEffect with subscriptions or timers"
+confidence: 0.8
+domain: "library-quirk"
+action: "Always return cleanup function to prevent memory leaks"
+
+# Error resolution
+id: async-await-try-catch
+trigger: "when making async API calls"
+confidence: 0.7
+domain: "debugging"
+action: "Wrap in try-catch with specific error handling, not generic catch"
+
+# Implementation pattern
+id: early-return-validation
+trigger: "when validating function inputs"
+confidence: 0.6
+domain: "code-style"
+action: "Use early returns for validation instead of nested if-else"
+
+# Repeated workflow
+id: test-after-src-change
+trigger: "after modifying source files"
+confidence: 0.5
+domain: "workflow"
+action: "Run related tests immediately to catch regressions"
+```
+
+**When to Capture:**
+- Library quirks and undocumented behaviors
+- Effective debugging strategies
+- Code patterns that improved readability/performance
+- Workflow optimizations
+
+**When NOT to Capture:**
+- Project-specific implementation details
+- One-time fixes for unique bugs
+- Trivial code style preferences
 
 ---
 
